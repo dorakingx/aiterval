@@ -44,7 +44,7 @@ Detailed design: [docs/architecture.md](docs/architecture.md).
 
 ## Prerequisites on macOS
 
-1. Install Node.js 20.19 or newer (Node 22 LTS is recommended).
+1. Install Node.js 22 or newer.
 2. Enable pnpm with `corepack enable`.
 3. Install Google Chrome.
 4. Optional for E2E: install Playwright Chromium with `pnpm exec playwright install chromium`.
@@ -86,6 +86,7 @@ pnpm typecheck
 pnpm test
 pnpm test:e2e
 pnpm build
+pnpm build:web-worker
 pnpm zip:extension
 pnpm check
 ```

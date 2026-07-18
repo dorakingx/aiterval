@@ -2,6 +2,9 @@ node_modules/
 .next/
 .wxt/
 .output/
+.open-next/
+.wrangler/
+dist/
 dist/
 coverage/
 playwright-report/

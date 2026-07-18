@@ -5,6 +5,7 @@ export default tseslint.config(
     ignores: [
       "**/.next/**",
       "**/.output/**",
+      "**/.open-next/**",
       "**/.wxt/**",
       "**/dist/**",
       "**/coverage/**",
