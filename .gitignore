@@ -21,3 +21,4 @@ artifacts/demo/final/
 artifacts/demo/verification/
 artifacts/demo/*.log
 artifacts/demo/recorded-text.txt
+artifacts/brave-ux-audit/

@@ -4,6 +4,7 @@ import { generatedExercisesForScheduling } from "@aiterval/core";
 import uiStyles from "@aiterval/ui/styles.css?inline";
 import { exercises } from "@aiterval/content";
 import { repository } from "./repository";
+import { detectDocumentTheme } from "./theme";
 
 let root: Root | undefined;
 let host: HTMLElement | undefined;
@@ -27,6 +28,7 @@ export async function showOverlay(
   )?.id;
   host = document.createElement("div");
   host.id = "aiterval-shadow-host";
+  host.dataset.aiTheme = detectDocumentTheme(document);
   host.style.position = "fixed";
   host.style.zIndex = "2147483646";
   host.style.bottom = "16px";
@@ -36,7 +38,7 @@ export async function showOverlay(
   document.documentElement.append(host);
   const shadow = host.attachShadow({ mode: "open" });
   const style = document.createElement("style");
-  style.textContent = `${uiStyles}\n:host{all:initial}`;
+  style.textContent = `:host{all:initial;display:block;color-scheme:light dark}\n${uiStyles}`;
   const mount = document.createElement("div");
   shadow.append(style, mount);
   root = createRoot(mount);

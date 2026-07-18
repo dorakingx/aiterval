@@ -244,7 +244,10 @@ export function ListeningPlayer({
   };
   if (stage === "ai-ready")
     return (
-      <Card className="ai-player ai-ready">
+      <Card
+        className="ai-player ai-ready"
+        aria-label="AIterval: your AI is ready"
+      >
         <Badge>Your AI is ready</Badge>
         <h2>Return when you’re ready</h2>
         <p>Your listening sprint is paused. Your progress is safe.</p>

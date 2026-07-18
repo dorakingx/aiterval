@@ -1,14 +1,39 @@
-:root {
+:root,
+:host {
+  --ai-surface: #fffdf7;
+  --ai-surface-subtle: #f1ece3;
+  --ai-surface-selected: #fff1eb;
+  --ai-text-primary: #172638;
+  --ai-text-secondary: #52606e;
+  --ai-boundary: #c9c1b5;
+  --ai-boundary-strong: #6f7d8b;
+  --ai-focus: #b84220;
+  --ai-focus-contrast: #fffdf7;
+  --ai-interactive: #172638;
+  --ai-interactive-hover: #253a50;
+  --ai-interactive-text: #ffffff;
+  --ai-secondary-surface: #fffdf7;
+  --ai-secondary-hover: #f1ece3;
+  --ai-disabled-surface: #e1ddd5;
+  --ai-disabled-text: #59636e;
+  --ai-badge-surface: #dff3eb;
+  --ai-badge-text: #14553f;
+  --ai-success: #155b45;
+  --ai-danger: #8b2f24;
+  --ai-mark-surface: #f6c67b;
+  --ai-mark-text: #3f2b0e;
   --ai-navy: #101d2b;
-  --ai-ink: #172638;
-  --ai-paper: #fffdf7;
-  --ai-warm: #f5f0e7;
-  --ai-accent: #e96c4c;
-  --ai-mint: #71c7a4;
-  --ai-border: #d9d3c8;
-  --ai-muted: #66717f;
+  --ai-ink: var(--ai-text-primary);
+  --ai-paper: var(--ai-surface);
+  --ai-warm: var(--ai-surface-subtle);
+  --ai-accent: #b9472f;
+  --ai-accent-text: #ffffff;
+  --ai-mint: #2b7a60;
+  --ai-border: var(--ai-boundary);
+  --ai-muted: var(--ai-text-secondary);
   --ai-radius: 18px;
-  --ai-shadow: 0 16px 50px rgba(16, 29, 43, 0.14);
+  --ai-shadow:
+    0 18px 55px rgba(16, 29, 43, 0.28), 0 2px 8px rgba(16, 29, 43, 0.18);
   font-family:
     Inter,
     ui-sans-serif,
@@ -16,6 +41,36 @@
     -apple-system,
     sans-serif;
   color: var(--ai-ink);
+}
+:host([data-ai-theme="dark"]) {
+  --ai-surface: #152537;
+  --ai-surface-subtle: #203246;
+  --ai-surface-selected: #3d2b27;
+  --ai-text-primary: #f4f7fa;
+  --ai-text-secondary: #c5d0dc;
+  --ai-boundary: #56697d;
+  --ai-boundary-strong: #8fa0b2;
+  --ai-focus: #ffb49d;
+  --ai-focus-contrast: #152537;
+  --ai-interactive: #f4f7fa;
+  --ai-interactive-hover: #ffffff;
+  --ai-interactive-text: #152537;
+  --ai-secondary-surface: #22384d;
+  --ai-secondary-hover: #2d4760;
+  --ai-disabled-surface: #344453;
+  --ai-disabled-text: #bfc9d3;
+  --ai-badge-surface: #174c3b;
+  --ai-badge-text: #dff9ed;
+  --ai-success: #a6f0d0;
+  --ai-danger: #ffb4a2;
+  --ai-mark-surface: #8a5b16;
+  --ai-mark-text: #fff3d7;
+  --ai-navy: #f4f7fa;
+  --ai-accent: #ff987b;
+  --ai-accent-text: #152537;
+  --ai-mint: #72d6b0;
+  --ai-shadow: 0 20px 60px rgba(0, 0, 0, 0.52), 0 2px 10px rgba(0, 0, 0, 0.42);
+  color-scheme: dark;
 }
 * {
   box-sizing: border-box;
@@ -29,8 +84,9 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 a:focus-visible {
-  outline: 3px solid #f49a81;
-  outline-offset: 3px;
+  outline: 3px solid var(--ai-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--ai-focus-contrast);
 }
 .ai-button {
   display: inline-flex;
@@ -38,30 +94,40 @@ a:focus-visible {
   justify-content: center;
   gap: 0.5rem;
   min-height: 44px;
-  border: 1px solid var(--ai-navy);
+  border: 1px solid var(--ai-boundary-strong);
   border-radius: 999px;
   padding: 0.7rem 1rem;
-  background: var(--ai-navy);
-  color: white;
+  background: var(--ai-interactive);
+  color: var(--ai-interactive-text);
   font-weight: 750;
   cursor: pointer;
 }
 .ai-button:hover {
+  background: var(--ai-interactive-hover);
   transform: translateY(-1px);
 }
 .ai-button:disabled {
-  opacity: 0.45;
+  border-color: var(--ai-boundary);
+  background: var(--ai-disabled-surface);
+  color: var(--ai-disabled-text);
+  opacity: 1;
   cursor: not-allowed;
   transform: none;
 }
 .ai-button.secondary {
-  background: white;
-  color: var(--ai-navy);
+  background: var(--ai-secondary-surface);
+  color: var(--ai-text-primary);
+}
+.ai-button.secondary:hover {
+  background: var(--ai-secondary-hover);
 }
 .ai-button.ghost {
   background: transparent;
-  color: var(--ai-navy);
+  color: var(--ai-text-primary);
   border-color: transparent;
+}
+.ai-button.ghost:hover {
+  background: var(--ai-surface-subtle);
 }
 .ai-icon-button {
   width: 40px;
@@ -82,6 +148,7 @@ a:focus-visible {
 }
 .ai-card {
   background: var(--ai-paper);
+  color: var(--ai-text-primary);
   border: 1px solid var(--ai-border);
   border-radius: var(--ai-radius);
   box-shadow: 0 6px 22px rgba(16, 29, 43, 0.06);
@@ -91,8 +158,8 @@ a:focus-visible {
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
-  background: #e6f4ee;
-  color: #1d654e;
+  background: var(--ai-badge-surface);
+  color: var(--ai-badge-text);
   padding: 0.25rem 0.6rem;
   font-size: 0.72rem;
   font-weight: 800;
@@ -101,7 +168,7 @@ a:focus-visible {
 }
 .ai-progress {
   height: 8px;
-  background: #e8e3da;
+  background: var(--ai-surface-subtle);
   border-radius: 99px;
   overflow: hidden;
 }
@@ -126,7 +193,7 @@ a:focus-visible {
   width: 42px;
   height: 24px;
   border-radius: 99px;
-  background: #bbb;
+  background: var(--ai-disabled-text);
   position: relative;
 }
 .ai-toggle span:after {
@@ -135,7 +202,7 @@ a:focus-visible {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: white;
+  background: var(--ai-surface);
   top: 3px;
   left: 3px;
   transition: 0.2s;
@@ -218,7 +285,7 @@ a:focus-visible {
   border: 0;
   border-radius: 50%;
   background: var(--ai-accent);
-  color: white;
+  color: var(--ai-accent-text);
   display: grid;
   place-items: center;
   align-content: center;
@@ -237,18 +304,22 @@ a:focus-visible {
   gap: 0.35rem;
 }
 .ai-rate button {
-  border: 1px solid var(--ai-border);
+  border: 1px solid var(--ai-boundary-strong);
   border-radius: 99px;
-  background: white;
+  background: var(--ai-secondary-surface);
+  color: var(--ai-text-primary);
   padding: 0.35rem 0.65rem;
   cursor: pointer;
 }
+.ai-rate button:hover {
+  background: var(--ai-secondary-hover);
+}
 .ai-rate button[aria-pressed="true"] {
-  background: var(--ai-navy);
-  color: white;
+  background: var(--ai-interactive);
+  color: var(--ai-interactive-text);
 }
 .ai-error {
-  color: #9b2c2c;
+  color: var(--ai-danger);
 }
 .ai-player > .ai-button {
   width: 100%;
@@ -266,16 +337,17 @@ a:focus-visible {
   align-items: center;
   gap: 0.7rem;
   text-align: left;
-  border: 1px solid var(--ai-border);
+  border: 1px solid var(--ai-boundary-strong);
   border-radius: 12px;
-  background: white;
+  background: var(--ai-secondary-surface);
+  color: var(--ai-text-primary);
   padding: 0.75rem;
   cursor: pointer;
 }
 .ai-choices button:hover,
 .ai-choices button.selected {
   border-color: var(--ai-accent);
-  background: #fff4ef;
+  background: var(--ai-surface-selected);
 }
 .ai-choices button span {
   display: grid;
@@ -298,18 +370,20 @@ a:focus-visible {
   font-weight: 800;
 }
 .ai-feedback > .correct {
-  color: #1d654e;
+  color: var(--ai-success);
 }
 .ai-feedback > .incorrect {
-  color: #9b452c;
+  color: var(--ai-danger);
 }
 .ai-transcript {
   background: var(--ai-warm);
+  color: var(--ai-text-primary);
   padding: 1rem;
   border-radius: 12px;
 }
 .ai-transcript mark {
-  background: #ffd6a8;
+  background: var(--ai-mark-surface);
+  color: var(--ai-mark-text);
   padding: 0.05rem 0.15rem;
 }
 .ai-feedback dl {
@@ -330,7 +404,7 @@ a:focus-visible {
   grid-template-columns: auto 1fr;
   gap: 0.35rem 0.6rem;
   padding: 1rem;
-  border: 1px dashed var(--ai-border);
+  border: 1px dashed var(--ai-boundary-strong);
   border-radius: 12px;
 }
 .ai-shadow svg {
@@ -342,12 +416,17 @@ a:focus-visible {
 }
 .ai-shadow button,
 .ai-feedback-actions button {
-  border: 0;
-  background: var(--ai-warm);
+  border: 1px solid var(--ai-boundary-strong);
+  background: var(--ai-secondary-surface);
+  color: var(--ai-text-primary);
   border-radius: 99px;
   padding: 0.35rem 0.65rem;
   margin-right: 0.3rem;
   cursor: pointer;
+}
+.ai-shadow button:hover,
+.ai-feedback-actions button:hover {
+  background: var(--ai-secondary-hover);
 }
 .ai-feedback-actions {
   display: flex;
@@ -390,10 +469,11 @@ a:focus-visible {
 .ai-field input {
   width: 100%;
   min-height: 42px;
-  border: 1px solid var(--ai-border);
+  border: 1px solid var(--ai-boundary-strong);
   border-radius: 10px;
   padding: 0.5rem;
-  background: white;
+  background: var(--ai-secondary-surface);
+  color: var(--ai-text-primary);
 }
 .ai-tooltip {
   position: relative;
@@ -404,11 +484,48 @@ a:focus-visible {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--ai-navy);
-  color: white;
+  background: var(--ai-interactive);
+  color: var(--ai-interactive-text);
   padding: 0.35rem 0.5rem;
   border-radius: 6px;
   white-space: nowrap;
+}
+.ai-ready {
+  isolation: isolate;
+  background: var(--ai-surface);
+  color: var(--ai-text-primary);
+  border: 2px solid var(--ai-boundary-strong);
+  box-shadow: var(--ai-shadow);
+}
+.ai-ready h2 {
+  color: var(--ai-text-primary);
+}
+.ai-ready > p {
+  color: var(--ai-text-secondary);
+}
+.ai-ready .ai-actions {
+  margin-top: 0.25rem;
+}
+@media (prefers-contrast: more) {
+  .ai-card,
+  .ai-ready,
+  .ai-button,
+  .ai-choices button,
+  .ai-field select,
+  .ai-field input {
+    border-width: 2px;
+  }
+}
+@media (forced-colors: active) {
+  .ai-card,
+  .ai-button,
+  .ai-badge,
+  .ai-choices button,
+  .ai-shadow,
+  .ai-field select,
+  .ai-field input {
+    forced-color-adjust: auto;
+  }
 }
 @media (max-width: 520px) {
   .ai-player {
