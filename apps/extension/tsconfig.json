@@ -1,0 +1,5 @@
+{
+  "extends": "../../packages/config/tsconfig.base.json",
+  "compilerOptions": { "noEmit": true, "types": ["chrome"] },
+  "include": [".wxt/wxt.d.ts", "**/*.ts", "**/*.tsx"]
+}

@@ -1,0 +1,64 @@
+body {
+  margin: 0;
+  background: #f5f0e7;
+  width: 340px;
+}
+main {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+header > div {
+  display: grid;
+}
+header small {
+  color: #66717f;
+}
+.mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #e96c4c;
+  color: white;
+  font-weight: 900;
+}
+main > .ai-button {
+  width: 100%;
+}
+section {
+  display: grid;
+  gap: 0.4rem;
+  background: #fffdf7;
+  border: 1px solid #d9d3c8;
+  border-radius: 14px;
+  padding: 0.8rem;
+}
+section > strong {
+  font-size: 1.4rem;
+}
+section > div {
+  display: flex;
+  justify-content: space-between;
+}
+.status span,
+.status small {
+  color: #66717f;
+}
+.snooze {
+  display: flex;
+  gap: 0.35rem;
+  margin-top: 0.6rem;
+}
+.snooze button {
+  border: 1px solid #d9d3c8;
+  background: white;
+  border-radius: 99px;
+  padding: 0.35rem 0.55rem;
+}

@@ -1,0 +1,41 @@
+{
+  "name": "aiterval",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @aiterval/web --filter @aiterval/extension dev",
+    "dev:web": "pnpm --filter @aiterval/web dev",
+    "dev:extension": "pnpm --filter @aiterval/extension dev",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "build": "pnpm -r --if-present build",
+    "zip:extension": "pnpm --filter @aiterval/extension zip",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:e2e && pnpm zip:extension",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "24.3.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.5",
+    "jsdom": "29.1.1",
+    "prettier": "3.9.0",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.64.0",
+    "vitest": "4.1.10"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-darwin-arm64": "1.1.5"
+  }
+}
