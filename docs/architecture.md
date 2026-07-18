@@ -27,11 +27,19 @@ The helpers query controls and state attributes only. They never read page text,
 
 ## Packages
 
-- `@aiterval/core`: pure types, deterministic state/scheduling rules, transparent recommendation scoring, stats helpers, Zod-validated storage repository, and schema migration entry point.
+- `@aiterval/core`: pure types, deterministic state/scheduling rules, transparent recommendation scoring, canonical built-in/generated exercise schemas, lecture-generation schemas, stats helpers, Zod-validated storage repository, and schema migration entry point.
 - `@aiterval/content`: 132 original exercises and startup/test-time validation.
 - `@aiterval/ui`: shared accessible controls, design tokens, Web Speech provider, and the complete listening player used by extension and web demo.
 - `apps/extension`: WXT entry points, local repository adapter, site adapters, and isolated overlay.
-- `apps/web`: static-friendly Next.js App Router pages and interactive demo.
+- `apps/web`: Next.js App Router pages, the no-login judge demo, Lecture-to-Sprints form, and a server-only Responses API route.
+
+## Lecture-to-Sprints boundary
+
+The browser deliberately sends only fields the user enters in the lecture form plus explicit learning preferences. The Next.js route validates that request, authenticates the private demo code with a timing-safe comparison, applies per-session and daily limits, then calls the OpenAI Responses API from the server. `OPENAI_API_KEY` and `DEMO_ACCESS_CODE` are never serialized into props or client JavaScript.
+
+The server uses the same strict Zod schemas for Structured Outputs, post-response validation, exported packs, extension import, and tests. It allows one retry only for invalid structured output. It stores neither source input nor full API responses and logs only safe operational metadata.
+
+The extension does not call the generation API. The web app exports a schema-versioned JSON pack, and the extension validates it locally before saving it. This keeps the extension host permissions and Content Security Policy unchanged.
 
 ## Audio
 
@@ -45,8 +53,10 @@ The local selector scores due reviews, weak skills with sufficient evidence, sel
 
 ## Storage and retention
 
-`StorageRepository` separates schema version, settings, detailed sessions, reviews, runtime sprint state, and aggregates. `CURRENT_SCHEMA_VERSION` is 1. Imports pass a strict runtime schema before writes. Detailed history is capped at 500 sessions; aggregate total time and completions are preserved. Future migrations are added as explicit version-to-version functions inside `migrateStorage`.
+`StorageRepository` separates schema version, settings, detailed sessions, reviews, generated packs, runtime sprint state, and aggregates. `CURRENT_SCHEMA_VERSION` is 2; version 1 migrates by adding an empty generated-pack collection and an opt-in personalization setting. Imports pass a strict runtime schema before writes. Detailed history is capped at 500 sessions; aggregate total time and completions are preserved. Future migrations are added as explicit version-to-version functions inside `migrateStorage`.
 
 ## Security boundaries
 
 The Manifest V3 policy allows self-hosted extension scripts only and blocks objects and external connections. The extension uses no remote code, analytics, cookies, secrets, or user HTML injection. User-controlled data is rendered as React text and never through `dangerouslySetInnerHTML`.
+
+The web app sets a restrictive production CSP and security headers. Generation responses are `no-store`. Access identities are one-way hashed in memory, abstract text is never logged, and error responses do not expose provider details. The in-memory limiter is intentionally a best-effort demo safeguard rather than a distributed production rate limiter.

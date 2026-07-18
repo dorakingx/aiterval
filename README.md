@@ -45,6 +45,8 @@ The extension observes only generation-state controls. It never reads prompt or 
 
 The user deliberately enters an upcoming lecture title, abstract, expected terms, level, difficulty, duration, focus, and locale. A server-only endpoint calls the OpenAI Responses API with `gpt-5.6` by default, applies Structured Outputs from the same Zod schema used by runtime and import validation, and rejects malformed content. One corrective schema retry is allowed; requests are timed out, rate-limited, quota-bounded, and never logged with their abstract.
 
+![Lecture-to-Sprints with an explicitly labeled curated sample](docs/screenshots/lecture-to-sprints.png)
+
 Generated packs include model, generation timestamp, lecture title, and schema provenance. The web app exports a validated pack; the extension validates it again, stores it locally, prioritizes it during future waits, and lets the user pause, rename, export, regenerate, or delete it. This safer import flow adds no extension network host permission and leaves the existing extension CSP unchanged.
 
 ## How Codex was used
@@ -75,6 +77,8 @@ AIterval observes generation-state interface signals only. It never reads, store
 See [docs/privacy.md](docs/privacy.md) for the exact data and permission model.
 
 ## Judge quick start
+
+![Public no-login Build Week judge demo](docs/screenshots/judge-demo.png)
 
 1. Open the [public judge demo](https://aiterval-build-week.vercel.app/demo/judge); no login or code is required.
 2. Select **Send prompt and try it**, listen, answer once, and observe the AI-ready interruption and recovered-time update.

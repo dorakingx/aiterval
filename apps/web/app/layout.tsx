@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "@aiterval/ui/styles.css";
 import "./globals.css";
-const socialImage = "https://aiterval.local/og.png";
+const publicOrigin = "https://aiterval-build-week.vercel.app";
+const socialImage = `${publicOrigin}/og.png`;
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aiterval.local"),
+  metadataBase: new URL(publicOrigin),
   title: {
     default: "AIterval — Listen while AI thinks",
     template: "%s · AIterval",
@@ -40,6 +41,7 @@ const links = [
   ["/demo/judge", "Judge demo"],
   ["/lecture", "Lecture-to-Sprints"],
   ["/privacy", "Privacy"],
+  ["/feedback", "Feedback"],
   ["/faq", "FAQ"],
 ];
 export default function RootLayout({

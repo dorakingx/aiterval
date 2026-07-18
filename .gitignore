@@ -5,6 +5,7 @@ out/
 .output/
 .open-next/
 .wrangler/
+.vercel/
 dist/
 coverage/
 playwright-report/
@@ -13,3 +14,4 @@ test-results/
 *.tgz
 *.tsbuildinfo
 .DS_Store
+.vercel
