@@ -691,11 +691,174 @@ body {
   color: #66717f;
   line-height: 1.6;
 }
+.install-download-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 2rem;
+  border: 1px solid #d7c3ae;
+  border-radius: 22px;
+  background: #fff9ef;
+  box-shadow: 0 18px 45px rgb(86 58 33 / 10%);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+.install-download-card h2 {
+  margin: 0.35rem 0 0.5rem;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+.install-download-card p {
+  max-width: 620px;
+  margin: 0;
+  color: #66717f;
+  line-height: 1.6;
+}
+.install-download-label {
+  color: #a6412a;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+.install-download-actions {
+  display: flex;
+  min-width: min(100%, 350px);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.8rem;
+  text-align: center;
+}
+.install-download-actions .primary-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.2rem;
+}
+.install-download-actions .primary-link svg,
+.install-release-link svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: 0 0 auto;
+}
+.install-release-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  color: #7c3726;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-underline-offset: 3px;
+}
+.install-browser-address {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 2rem;
+  border: 1px solid #d9d3c8;
+  border-radius: 18px;
+  padding: 1.25rem;
+}
+.install-browser-address h2,
+.install-browser-address p {
+  margin: 0;
+}
+.install-browser-address h2 {
+  margin: 0.25rem 0;
+}
+.install-browser-address > div > p:last-child {
+  color: #66717f;
+  line-height: 1.5;
+}
+.copyable-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  border: 1px solid #cfc7bb;
+  border-radius: 12px;
+  background: white;
+  padding: 0.45rem;
+}
+.copyable-value code {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0 0.55rem;
+  color: #293845;
+  font-size: 0.95rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.copyable-value button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: 9px;
+  background: #f0e7db;
+  color: #713522;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 900;
+  padding: 0.65rem 0.8rem;
+}
+.copyable-value button:hover {
+  background: #e7d8c7;
+}
+.copyable-value button:focus-visible {
+  outline: 3px solid rgb(233 108 76 / 35%);
+  outline-offset: 2px;
+}
+.copyable-value button svg {
+  width: 1rem;
+  height: 1rem;
+}
+.install-troubleshooting {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  border: 1px solid #e7c98f;
+  border-radius: 16px;
+  background: #fff7df;
+  padding: 1.25rem;
+}
+.install-troubleshooting > svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex: 0 0 auto;
+  color: #9f641d;
+}
+.install-troubleshooting p {
+  margin: 0.4rem 0 0;
+  color: #5f5548;
+  line-height: 1.6;
+}
 .notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
   margin-top: 2rem;
   border-left: 5px solid #e96c4c;
   background: #f5f0e7;
   padding: 1.25rem;
+}
+.notice > svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  color: #a6412a;
+}
+.notice p {
+  margin: 0.35rem 0 0;
+  line-height: 1.6;
+}
+.install-developer-note {
+  display: block;
+  margin-top: 1rem;
 }
 .notice code {
   background: white;
@@ -767,8 +930,34 @@ body {
   .install-steps {
     grid-template-columns: 1fr;
   }
+  .install-download-card,
+  .install-browser-address {
+    grid-template-columns: 1fr;
+  }
+  .install-download-actions {
+    min-width: 0;
+  }
   .site-footer {
     padding-bottom: 6rem;
+  }
+}
+@media (max-width: 520px) {
+  .content-page {
+    padding-top: 4rem;
+  }
+  .page-hero {
+    margin-bottom: 3rem;
+  }
+  .copyable-value {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .copyable-value code {
+    padding: 0.55rem;
+    text-align: center;
+  }
+  .copyable-value button {
+    justify-content: center;
   }
 }
 @media (prefers-reduced-motion: reduce) {
