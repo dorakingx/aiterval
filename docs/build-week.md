@@ -15,6 +15,7 @@ The official rules state that the Submission Period opened **July 13, 2026 at 9:
 | [`b6f68a3`](https://github.com/dorakingx/aiterval/commit/b6f68a38ed6cc64fb51f337fe383012e9bdf6790) | 2026-07-18 16:38:21 JST | Sites worker dependency packaging fix                                                              |
 | [`b352fe4`](https://github.com/dorakingx/aiterval/commit/b352fe41b7c115ac8d3ef4b7ecc01627097d7295) | 2026-07-18 16:50:53 JST | Static web package fix                                                                             |
 | [`d09b098`](https://github.com/dorakingx/aiterval/commit/d09b0987322074d7fad27a2ea22133d53e6257a7) | 2026-07-18 20:30:04 JST | GPT-5.6 Lecture-to-Sprints, generated packs, judge route, privacy controls, and expanded tests     |
+| [`25e2884`](https://github.com/dorakingx/aiterval/commit/25e28841310a39dcd463d82602c42512b7a1a1da) | 2026-07-18 20:47:50 JST | Build Week evidence, Devpost/video package, real screenshots, silent demo, and feedback path       |
 
 `git log --reverse --format='%H|%aI|%s' --all` shows no earlier AIterval commit. On the available repository evidence, the project began during the Submission Period; nothing in this repository predates it.
 

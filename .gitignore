@@ -14,4 +14,3 @@ test-results/
 *.tgz
 *.tsbuildinfo
 .DS_Store
-.vercel

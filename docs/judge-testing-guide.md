@@ -22,7 +22,7 @@ The committed repository intentionally contains no real access code. Do not past
 
 - Release: [AIterval v0.2.0](https://github.com/dorakingx/aiterval/releases/tag/v0.2.0)
 - ZIP name: `aitervalextension-0.2.0-chrome.zip`
-- SHA-256: **[INSERT VERIFIED RELEASE CHECKSUM]**
+- SHA-256: `c22ce963ece1890c146d64ad4e5b3c6fb482d581a2a4227532b8d1be736187c3`
 - Supported: current desktop Google Chrome on macOS, Windows, and Linux. Manifest V3 and browser speech synthesis are required.
 
 Installation:
