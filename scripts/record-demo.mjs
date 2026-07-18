@@ -1,5 +1,12 @@
 import { chromium } from "@playwright/test";
-import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import {
+  copyFile,
+  mkdir,
+  readFile,
+  rm,
+  stat,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -72,9 +79,11 @@ async function waitUntilDuration(startedAt, seconds) {
 
 async function saveVideo(page, context, target) {
   const video = page.video();
-  await context.close();
   if (!video) throw new Error(`Video was not created for ${target}`);
-  await video.saveAs(target);
+  await page.close();
+  const recordedPath = await video.path();
+  await copyFile(recordedPath, target);
+  await context.close();
 }
 
 async function titleCard(page, eyebrow, title, body, footer = "") {
