@@ -30,7 +30,7 @@ The generation endpoint enforces the GPT-5.6 family, validates bounded inputs, t
 
 The majority of the product and this upgrade were developed in one primary Codex task. I supplied the lived problem, the one-question interaction, privacy boundaries, product priorities, Education-track story, and final direction. Codex translated that specification into architecture, adapters, schemas, React UX, tests, security controls, deployment configuration, debugging, and submission evidence. It ran real builds and Chromium tests and kept claims tied to repository/deployment evidence.
 
-Primary task `/feedback` Session ID: **[PASTE REAL SESSION ID]**
+Primary task `/feedback` Session ID: **Submitted privately through Devpost.**
 
 ## How GPT-5.6 was used
 

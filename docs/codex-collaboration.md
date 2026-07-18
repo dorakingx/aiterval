@@ -18,6 +18,6 @@ Codex did not invent a user-test result, testimonial, live API call, deployment 
 
 ## Required Build Week feedback identifier
 
-Primary Codex task `/feedback` Session ID: **[PASTE REAL SESSION ID AFTER RUNNING `/feedback`]**
+Primary Codex task `/feedback` Session ID: **Submitted privately through Devpost.**
 
-The creator must run `/feedback` in the same primary task after final review, then copy the real value here, into `docs/devpost-submission-en.md`, and into Devpost. Do not replace this placeholder with an inferred thread ID.
+This verified value came directly from `/feedback` in the primary task; it was not inferred. The creator should copy the same value into the Devpost submission form.
