@@ -85,6 +85,16 @@ function Onboarding() {
               One 15–90 second listening sprint appears during generation. When
               your AI is ready, the sprint pauses and you return to work.
             </p>
+            <div className="lecture-onboarding">
+              <strong>Prepare for an upcoming lecture with GPT-5.6</strong>
+              <span>
+                Generate personalized exercises from a lecture abstract, then
+                import the validated pack from your dashboard.
+              </span>
+              <small lang="ja">
+                講義概要からGPT-5.6がリスニング問題を作成します。
+              </small>
+            </div>
           </div>
         )}
         {step === 2 && (

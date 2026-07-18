@@ -228,6 +228,202 @@ body {
   bottom: -2rem;
   z-index: 2;
 }
+.demo-recovered {
+  margin: 0 1.25rem;
+  padding: 1rem 0;
+  border-top: 1px solid #eee;
+  color: #66717f;
+}
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background: #172638;
+  color: white;
+  text-decoration: none;
+  font-weight: 800;
+}
+.lecture-builder {
+  display: grid;
+  gap: 2rem;
+}
+.lecture-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 2rem;
+}
+.lecture-heading h1 {
+  margin: 0.4rem 0;
+  font-size: clamp(2.8rem, 7vw, 5.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+.lecture-heading > div:first-child > p:last-child {
+  font-size: 1.2rem;
+}
+.language-switch {
+  display: flex;
+  padding: 0.25rem;
+  border: 1px solid #d5cfc5;
+  border-radius: 999px;
+}
+.language-switch button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  padding: 0 0.8rem;
+  cursor: pointer;
+}
+.language-switch button[aria-pressed="true"] {
+  background: #172638;
+  color: white;
+}
+.lecture-form-card {
+  padding: clamp(1rem, 4vw, 2rem);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.form-grid label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 750;
+}
+.form-grid label > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.form-grid small {
+  color: #66717f;
+  font-weight: 500;
+}
+.form-grid .wide {
+  grid-column: 1 / -1;
+}
+.form-grid input,
+.form-grid textarea,
+.form-grid select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #cfc8bc;
+  border-radius: 10px;
+  background: white;
+  color: #172638;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+}
+.form-grid textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+.form-grid .check {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+.form-grid .check input {
+  width: 20px;
+  min-height: 20px;
+}
+.privacy-disclosure {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #cdded7;
+  border-radius: 12px;
+  background: #f1faf6;
+}
+.privacy-disclosure summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.privacy-disclosure svg {
+  width: 20px;
+}
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+.form-error {
+  color: #8b2f2f;
+  font-weight: 700;
+}
+.lecture-results,
+.sample-pack {
+  display: grid;
+  gap: 1rem;
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.result-card {
+  display: grid;
+  gap: 0.8rem;
+}
+.result-card h3,
+.result-card p,
+.result-card ol {
+  margin: 0;
+}
+.result-card p {
+  line-height: 1.65;
+}
+.judge-page {
+  display: grid;
+  gap: 5rem;
+}
+.judge-page .demo-shell {
+  margin-top: 1rem;
+}
+.judge-notes {
+  display: grid;
+  gap: 0.8rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+@media (max-width: 760px) {
+  .site-nav nav {
+    display: none;
+  }
+  .lecture-heading {
+    flex-direction: column;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid .wide {
+    grid-column: auto;
+  }
+  .demo-overlay {
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: -1rem;
+  }
+  .demo-overlay .ai-player {
+    width: auto;
+  }
+}
 .statement {
   background: #101d2b;
   color: #fffdf7;

@@ -145,6 +145,18 @@ footer {
   max-width: 620px;
   margin-top: 2rem;
 }
+.lecture-onboarding {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-left: 4px solid #e96c4c;
+  background: #fff4ef;
+}
+.lecture-onboarding span,
+.lecture-onboarding small {
+  color: #66717f;
+}
 .sample {
   display: grid;
   place-items: center;

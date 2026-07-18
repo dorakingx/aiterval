@@ -11,6 +11,7 @@ import { exercises } from "@aiterval/content";
 export function Demo({ compact = false }: { compact?: boolean }) {
   const [state, setState] = useState<"idle" | "generating" | "ready">("idle");
   const [sprint, setSprint] = useState(false);
+  const [recoveredSeconds, setRecoveredSeconds] = useState(0);
   useEffect(() => {
     if (state !== "generating") return;
     const overlay = window.setTimeout(() => setSprint(true), 900);
@@ -56,15 +57,22 @@ export function Demo({ compact = false }: { compact?: boolean }) {
             </div>
           )}
         </div>
+        <footer className="demo-recovered" aria-live="polite">
+          Recovered waiting time: <strong>{recoveredSeconds}s</strong>
+        </footer>
       </div>
       {sprint && (
         <div className="demo-overlay">
           <ListeningPlayer
+            key={state}
             exercise={exercises[18]!}
             initialStage={state === "ready" ? "ai-ready" : "listen"}
             onClose={() => setSprint(false)}
             onSave={() => setSprint(false)}
-            onComplete={() => setSprint(false)}
+            onComplete={(result) => {
+              setRecoveredSeconds((current) => current + result.activeSeconds);
+              setSprint(false);
+            }}
           />
         </div>
       )}

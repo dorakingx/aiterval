@@ -1,6 +1,6 @@
 {
   "name": "aiterval",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "packageManager": "pnpm@10.34.5",
   "engines": {
@@ -14,6 +14,7 @@
     "typecheck": "pnpm -r typecheck",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:gpt56:smoke": "tsx apps/web/scripts/gpt56-smoke.ts",
     "build": "pnpm -r --if-present build",
     "build:web-worker": "pnpm --filter @aiterval/web build:sites",
     "zip:extension": "pnpm --filter @aiterval/extension zip",
@@ -32,6 +33,7 @@
     "eslint": "9.39.5",
     "jsdom": "29.1.1",
     "prettier": "3.9.0",
+    "tsx": "4.23.1",
     "typescript": "5.9.3",
     "typescript-eslint": "8.64.0",
     "vitest": "4.1.10"

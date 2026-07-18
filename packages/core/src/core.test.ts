@@ -123,7 +123,7 @@ describe("core", () => {
     expect(weeklyProgress(6, 5)).toBe(1);
   });
   it("validates imports and migration defaults", () => {
-    expect(importData(emptyStoredData()).schemaVersion).toBe(1);
+    expect(importData(emptyStoredData()).schemaVersion).toBe(2);
     expect(() =>
       importData({ ...emptyStoredData(), sessions: [{ unsafe: "x" }] }),
     ).toThrow();

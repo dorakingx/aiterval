@@ -1,85 +1,16 @@
-import { z } from "zod";
 import type {
   ExerciseMode,
   ListeningExercise,
   QuestionType,
 } from "@aiterval/core";
+import {
+  exerciseSchema,
+  listeningSkillTags,
+  topicTags,
+  validTags,
+} from "@aiterval/core";
 
-export const listeningSkillTags = [
-  "main-idea",
-  "detail",
-  "numbers",
-  "names",
-  "connected-speech",
-  "reduced-forms",
-  "technical-terms",
-  "speaker-intent",
-  "academic-signposting",
-  "conversational-fillers",
-] as const;
-export const topicTags = [
-  "academic",
-  "research",
-  "summer-school",
-  "networking",
-  "group-discussion",
-  "daily",
-  "ai",
-  "software",
-  "quantum",
-  "machine-learning",
-  "web3",
-  "technology",
-] as const;
-export const validTags = [...listeningSkillTags, ...topicTags] as const;
-
-export const exerciseSchema = z
-  .object({
-    id: z.string().min(1),
-    title: z.string().min(1),
-    mode: z.enum(["academic", "conversation", "technology", "daily"]),
-    difficulty: z.union([
-      z.literal(1),
-      z.literal(2),
-      z.literal(3),
-      z.literal(4),
-      z.literal(5),
-    ]),
-    estimatedSeconds: z.number().int().min(15).max(90),
-    transcript: z.string().min(10),
-    audioUrl: z.url().optional(),
-    preferredLocales: z.array(z.string().regex(/^en-[A-Z]{2}$/)).min(1),
-    question: z.object({
-      type: z.enum([
-        "main-idea",
-        "heard-word",
-        "number",
-        "fill-blank",
-        "speaker-intent",
-      ]),
-      prompt: z.string().min(1),
-      choices: z.array(z.string().min(1)).min(2).max(5),
-      correctIndex: z.number().int().min(0),
-    }),
-    explanationJa: z.string().min(2),
-    keyExpression: z.string().min(1),
-    answerEvidence: z.string().min(1),
-    tags: z.array(z.enum(validTags)).min(2),
-  })
-  .superRefine((exercise, context) => {
-    if (exercise.question.correctIndex >= exercise.question.choices.length)
-      context.addIssue({
-        code: "custom",
-        path: ["question", "correctIndex"],
-        message: "Correct choice index is out of range",
-      });
-    if (!exercise.transcript.includes(exercise.answerEvidence))
-      context.addIssue({
-        code: "custom",
-        path: ["answerEvidence"],
-        message: "Evidence must appear in transcript",
-      });
-  });
+export { exerciseSchema, listeningSkillTags, topicTags, validTags };
 
 type Theme = {
   slug: string;

@@ -32,6 +32,7 @@ import {
 import { exercises } from "@aiterval/content";
 import { repository } from "../../lib/repository";
 import "./options.css";
+import { LecturePacks } from "./lecture-packs";
 function Dashboard() {
   const [data, setData] = useState<StoredData>();
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -51,6 +52,10 @@ function Dashboard() {
     value: Settings[K],
   ) => {
     const next = { ...data, settings: { ...data.settings, [key]: value } };
+    setData(next);
+    await repository.save(next);
+  };
+  const saveData = async (next: StoredData) => {
     setData(next);
     await repository.save(next);
   };
@@ -92,6 +97,7 @@ function Dashboard() {
         </a>
         <div>
           <a href="#today">Today</a>
+          <a href="#lecture-packs">Lecture packs</a>
           <a href="#map">Listening map</a>
           <a href="#history">History</a>
           <a href="#settings">Settings</a>
@@ -116,6 +122,7 @@ function Dashboard() {
             Start focused sprint
           </Button>
         </header>
+        <LecturePacks data={data} save={saveData} />
         <section className="stats">
           <StatCard
             label="Recovered this week"

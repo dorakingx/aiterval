@@ -1,5 +1,6 @@
 import { createRoot, type Root } from "react-dom/client";
 import { ListeningPlayer } from "@aiterval/ui";
+import { generatedExercisesForScheduling } from "@aiterval/core";
 import uiStyles from "@aiterval/ui/styles.css?inline";
 import { exercises } from "@aiterval/content";
 import { repository } from "./repository";
@@ -11,10 +12,19 @@ export async function showOverlay(
 ): Promise<void> {
   if (host?.isConnected) return;
   const data = await repository.load();
+  const generated = generatedExercisesForScheduling(
+    data.generatedPacks,
+    data.sessions.slice(-10).map((session) => session.exerciseId),
+  );
   const exercise =
+    generated.find((item) => item.id === data.runtime.exerciseId) ??
     exercises.find((item) => item.id === data.runtime.exerciseId) ??
+    generated[0] ??
     exercises[0];
   if (!exercise) return;
+  const generatedPackId = data.generatedPacks.find((pack) =>
+    pack.exercises.some((item) => item.id === exercise.id),
+  )?.id;
   host = document.createElement("div");
   host.id = "aiterval-shadow-host";
   host.style.position = "fixed";
@@ -33,6 +43,7 @@ export async function showOverlay(
   data.runtime = {
     sprintState: input.aiReady ? "paused_ai_ready" : "listening",
     exerciseId: exercise.id,
+    generatedPackId,
     startedAt: data.runtime.startedAt ?? Date.now(),
   };
   await repository.save(data);
@@ -54,6 +65,7 @@ export async function showOverlay(
         current.runtime = {
           sprintState: "saved_for_later",
           exerciseId: exercise.id,
+          generatedPackId,
           startedAt: data.runtime.startedAt,
         };
         await repository.save(current);

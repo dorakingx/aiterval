@@ -1,0 +1,41 @@
+{
+  "kind": "aiterval-generated-pack",
+  "schemaVersion": 1,
+  "pack": {
+    "id": "lecture-pack-e2e",
+    "name": "Reliable experiments",
+    "lectureTitle": "Reliable experiments",
+    "createdAt": 1700000000000,
+    "updatedAt": 1700000000000,
+    "source": "gpt-5.6",
+    "model": "gpt-5.6-sol",
+    "generationVersion": 1,
+    "status": "active",
+    "exercises": [
+      {
+        "id": "generated-e2e-1",
+        "title": "A generated baseline sprint",
+        "mode": "academic",
+        "difficulty": 3,
+        "estimatedSeconds": 40,
+        "transcript": "The speaker establishes a baseline before treatment so the team can compare later measurements clearly.",
+        "preferredLocales": ["en-GB"],
+        "question": {
+          "type": "main-idea",
+          "prompt": "Why establish a baseline?",
+          "choices": ["For comparison", "To stop the study"],
+          "correctIndex": 0
+        },
+        "explanationJa": "比較のためです。",
+        "keyExpression": "establishes a baseline",
+        "answerEvidence": "establishes a baseline",
+        "tags": ["academic", "main-idea"],
+        "source": "gpt-5.6",
+        "model": "gpt-5.6-sol",
+        "generatedAt": 1700000000000,
+        "lectureTitle": "Reliable experiments",
+        "generationVersion": 1
+      }
+    ]
+  }
+}

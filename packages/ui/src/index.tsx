@@ -265,7 +265,14 @@ export function ListeningPlayer({
     <Card className="ai-player" aria-label="AIterval listening sprint">
       <header>
         <div>
-          <Badge>{exercise.estimatedSeconds}s sprint</Badge>
+          <div className="ai-badge-row">
+            <Badge>{exercise.estimatedSeconds}s sprint</Badge>
+            <Badge>
+              {"source" in exercise && exercise.source === "gpt-5.6"
+                ? "Generated with GPT-5.6"
+                : "Built-in exercise"}
+            </Badge>
+          </div>
           <h2>
             {stage === "listen"
               ? "Listen first"

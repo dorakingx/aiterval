@@ -125,3 +125,33 @@ test("popup and dashboard render persisted local metrics", async () => {
   await popup.close();
   await dashboard.close();
 });
+
+test("a saved GPT-5.6 lecture pack is prioritized for the next manual sprint", async () => {
+  const fixture = JSON.parse(
+    await readFile(path.join(fixtureRoot, "generated-pack.json"), "utf8"),
+  ) as { pack: unknown };
+  const worker =
+    context.serviceWorkers()[0] ??
+    (await context.waitForEvent("serviceworker"));
+  await worker.evaluate(async (pack) => {
+    const key = "aiterval-data";
+    const current = (await chrome.storage.local.get(key))[key];
+    current.generatedPacks = [pack];
+    current.runtime = { sprintState: "idle" };
+    await chrome.storage.local.set({ [key]: current });
+  }, fixture.pack);
+  const page = await openFixture("chatgpt");
+  await worker.evaluate(async () => {
+    const [tab] = await chrome.tabs.query({ url: "https://chatgpt.com/*" });
+    if (!tab?.id) throw new Error("Fixture tab not found");
+    await chrome.tabs.sendMessage(tab.id, { type: "AIT_START_MANUAL" });
+  });
+  const host = page.locator("#aiterval-shadow-host");
+  await expect(host.getByText("Generated with GPT-5.6")).toBeVisible();
+  await expect(
+    host.getByRole("heading", { name: "Listen first" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Finish generation" }).click();
+  await expect(host.getByText("Your AI is ready")).toBeVisible();
+  await page.close();
+});

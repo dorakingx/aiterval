@@ -59,6 +59,29 @@ export interface ListeningExercise {
   tags: string[];
 }
 
+export interface GeneratedListeningExercise extends ListeningExercise {
+  source: "gpt-5.6";
+  model: string;
+  generatedAt: number;
+  lectureTitle: string;
+  generationVersion: number;
+}
+
+export type GeneratedPackStatus = "active" | "paused";
+
+export interface GeneratedExercisePack {
+  id: string;
+  name: string;
+  lectureTitle: string;
+  createdAt: number;
+  updatedAt: number;
+  source: "gpt-5.6";
+  model: string;
+  generationVersion: number;
+  status: GeneratedPackStatus;
+  exercises: GeneratedListeningExercise[];
+}
+
 export interface ReviewState {
   exerciseId: string;
   attempts: number;
@@ -101,6 +124,7 @@ export interface Settings {
   overlayPosition: "bottom-right" | "bottom-left";
   maxQuestions: 1 | 2 | 3;
   reducedMotion: boolean;
+  personalizedGenerationOptIn: boolean;
   snoozedUntil?: number | undefined;
 }
 
@@ -123,4 +147,5 @@ export const defaultSettings: Settings = {
   overlayPosition: "bottom-right",
   maxQuestions: 1,
   reducedMotion: false,
+  personalizedGenerationOptIn: false,
 };

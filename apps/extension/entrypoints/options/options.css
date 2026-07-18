@@ -179,6 +179,67 @@ fieldset {
   min-height: 100vh;
   place-items: center;
 }
+.lecture-packs {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.lecture-cta,
+.lecture-cta-actions,
+.pack-privacy,
+.pack-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.lecture-cta {
+  background: #172638;
+  color: white;
+}
+.lecture-cta .eyebrow {
+  color: #f8ad98;
+}
+.lecture-cta p {
+  max-width: 680px;
+}
+.lecture-cta-actions {
+  align-items: stretch;
+  flex-direction: column;
+  min-width: 260px;
+}
+.pack-privacy {
+  align-items: start;
+}
+.pack-privacy p {
+  color: #66717f;
+  max-width: 700px;
+}
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+.pack-card {
+  display: grid;
+  gap: 0.8rem;
+}
+.pack-card h3,
+.pack-card p {
+  margin: 0;
+}
+.pack-actions {
+  justify-content: start;
+  flex-wrap: wrap;
+}
+.pack-actions .ai-button {
+  min-height: 38px;
+  padding: 0.45rem 0.7rem;
+}
+.pack-error {
+  color: #8b2f2f;
+  font-weight: 700;
+}
 @media (max-width: 800px) {
   nav > div {
     display: none;
@@ -193,7 +254,9 @@ fieldset {
     grid-template-columns: 1fr;
   }
   .data-actions,
-  .data-actions > div {
+  .data-actions > div,
+  .lecture-cta,
+  .pack-privacy {
     align-items: stretch;
     flex-direction: column;
   }

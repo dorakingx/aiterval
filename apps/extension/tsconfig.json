@@ -1,5 +1,8 @@
 {
   "extends": "../../packages/config/tsconfig.base.json",
-  "compilerOptions": { "noEmit": true, "types": ["chrome"] },
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["chrome", "vitest/globals", "@testing-library/jest-dom"]
+  },
   "include": [".wxt/wxt.d.ts", "**/*.ts", "**/*.tsx"]
 }

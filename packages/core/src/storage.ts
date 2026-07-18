@@ -1,13 +1,15 @@
 import { z } from "zod";
 import {
   defaultSettings,
+  type GeneratedExercisePack,
   type ReviewState,
   type SessionRecord,
   type Settings,
   type SprintStateName,
 } from "./types";
+import { generatedPackSchema } from "./generation";
 
-export const CURRENT_SCHEMA_VERSION = 1;
+export const CURRENT_SCHEMA_VERSION = 2;
 const settingsSchema = z.object({
   language: z.enum(["ja", "en"]),
   autoStart: z.boolean(),
@@ -31,7 +33,12 @@ const settingsSchema = z.object({
   overlayPosition: z.enum(["bottom-right", "bottom-left"]),
   maxQuestions: z.union([z.literal(1), z.literal(2), z.literal(3)]),
   reducedMotion: z.boolean(),
+  personalizedGenerationOptIn: z.boolean(),
   snoozedUntil: z.number().optional(),
+});
+
+const legacySettingsSchema = settingsSchema.omit({
+  personalizedGenerationOptIn: true,
 });
 
 const sessionSchema = z.object({
@@ -61,10 +68,12 @@ export interface StoredData {
   settings: Settings;
   sessions: SessionRecord[];
   reviews: ReviewState[];
+  generatedPacks: GeneratedExercisePack[];
   runtime: {
     sprintState: SprintStateName;
     exerciseId?: string | undefined;
     startedAt?: number | undefined;
+    generatedPackId?: string | undefined;
   };
   aggregates: {
     totalRecoveredSeconds: number;
@@ -76,6 +85,25 @@ export interface StoredData {
 const storedDataSchema = z.object({
   schemaVersion: z.literal(CURRENT_SCHEMA_VERSION),
   settings: settingsSchema,
+  sessions: z.array(sessionSchema).max(500),
+  reviews: z.array(reviewSchema).max(1000),
+  generatedPacks: z.array(generatedPackSchema).max(30),
+  runtime: z.object({
+    sprintState: z.string(),
+    exerciseId: z.string().optional(),
+    startedAt: z.number().optional(),
+    generatedPackId: z.string().max(120).optional(),
+  }),
+  aggregates: z.object({
+    totalRecoveredSeconds: z.number().min(0),
+    totalCompleted: z.number().int().min(0),
+    bestWeeklyTotal: z.number().int().min(0),
+  }),
+});
+
+const storedDataSchemaV1 = z.object({
+  schemaVersion: z.literal(1),
+  settings: legacySettingsSchema,
   sessions: z.array(sessionSchema).max(500),
   reviews: z.array(reviewSchema).max(1000),
   runtime: z.object({
@@ -96,6 +124,7 @@ export function emptyStoredData(): StoredData {
     settings: defaultSettings,
     sessions: [],
     reviews: [],
+    generatedPacks: [],
     runtime: { sprintState: "idle" },
     aggregates: {
       totalRecoveredSeconds: 0,
@@ -109,6 +138,18 @@ export function migrateStorage(input: unknown): StoredData {
   if (!input || typeof input !== "object") return emptyStoredData();
   const record = input as Record<string, unknown>;
   if (record.schemaVersion === CURRENT_SCHEMA_VERSION) return importData(input);
+  if (record.schemaVersion === 1) {
+    const legacy = storedDataSchemaV1.parse(input);
+    return importData({
+      ...legacy,
+      schemaVersion: CURRENT_SCHEMA_VERSION,
+      settings: {
+        ...legacy.settings,
+        personalizedGenerationOptIn: false,
+      },
+      generatedPacks: [],
+    });
+  }
   return emptyStoredData();
 }
 
