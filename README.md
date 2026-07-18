@@ -13,8 +13,8 @@ AIterval is a local-first Chrome extension that turns the short wait after a pro
 
 AIterval 0.2.0 is the Education-track Build Week edition. It was created with Codex and meaningfully uses GPT-5.6 through the server-side OpenAI Responses API and Structured Outputs. The first repository commit is dated July 18, 2026, within the official July 13–21 Submission Period; [docs/build-week.md](docs/build-week.md) records the unmodified Git evidence.
 
-- Public no-login judge demo: <https://aiterval-build-week-doraking.vercel.app/demo/judge>
-- Lecture-to-Sprints: <https://aiterval-build-week-doraking.vercel.app/lecture>
+- Public no-login judge demo: <https://aiterval-build-week.vercel.app/demo/judge>
+- Lecture-to-Sprints: <https://aiterval-build-week.vercel.app/lecture>
 - Private source repository: <https://github.com/dorakingx/aiterval>
 - Submission track: **Education**
 
@@ -80,9 +80,9 @@ See [docs/privacy.md](docs/privacy.md) for the exact data and permission model.
 
 ![Public no-login Build Week judge demo](docs/screenshots/judge-demo.png)
 
-1. Open the [public judge demo](https://aiterval-build-week-doraking.vercel.app/demo/judge); no login or code is required.
+1. Open the [public judge demo](https://aiterval-build-week.vercel.app/demo/judge); no login or code is required.
 2. Select **Send prompt and try it**, listen, answer once, and observe the AI-ready interruption and recovered-time update.
-3. Open [Lecture-to-Sprints](https://aiterval-build-week-doraking.vercel.app/lecture) and choose **Try the no-key sample**.
+3. Open [Lecture-to-Sprints](https://aiterval-build-week.vercel.app/lecture) and choose **Try the no-key sample**.
 4. For the packaged extension, download the `v0.2.0` release ZIP, load its unpacked directory from `chrome://extensions`, and follow [docs/judge-testing-guide.md](docs/judge-testing-guide.md).
 
 The private live-generation access code belongs only in the Devpost testing instructions. It is never committed. Chrome Web Store publication is not complete.

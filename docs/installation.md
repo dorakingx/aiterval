@@ -19,7 +19,7 @@ Automatic waits are supported on `chatgpt.com`, `claude.ai`, and `gemini.google.
 
 ## Generated lecture pack
 
-Open the [Lecture-to-Sprints page](https://aiterval-build-week-doraking.vercel.app/lecture), use sample or private live generation, and download the JSON. In the extension dashboard, open **Generated lecture packs**, choose import, and select that file. The extension validates it before writing local storage.
+Open the [Lecture-to-Sprints page](https://aiterval-build-week.vercel.app/lecture), use sample or private live generation, and download the JSON. In the extension dashboard, open **Generated lecture packs**, choose import, and select that file. The extension validates it before writing local storage.
 
 ## Remove AIterval
 
