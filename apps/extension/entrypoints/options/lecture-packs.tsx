@@ -23,7 +23,7 @@ import {
   Toggle,
 } from "@aiterval/ui";
 
-const GENERATOR_URL = "https://aiterval-build-week.vercel.app/lecture";
+const GENERATOR_URL = "https://aiterval-build-week-doraking.vercel.app/lecture";
 
 export function LecturePacks({
   data,

@@ -4,9 +4,9 @@ No build, account, OpenAI key, or access code is required for the primary judgin
 
 ## Two-minute path
 
-1. Open [the public judge demo](https://aiterval-build-week.vercel.app/demo/judge).
+1. Open [the public judge demo](https://aiterval-build-week-doraking.vercel.app/demo/judge).
 2. Select **Send prompt and try it**. Play the sprint, answer the question, and observe the **AI is ready** interruption and recovered-time update.
-3. Open [Lecture-to-Sprints](https://aiterval-build-week.vercel.app/lecture).
+3. Open [Lecture-to-Sprints](https://aiterval-build-week-doraking.vercel.app/lecture).
 4. Select **Try the no-key sample**. Confirm the visible **Curated sample—not a live GPT-5.6 call** label and inspect/export the generated-pack shape.
 5. Optional: install the release extension and import `test-fixtures/generated-pack.json` to see a generated exercise prioritized during a real supported-site wait.
 

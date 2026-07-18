@@ -67,8 +67,8 @@ Codex, GPT-5.6, OpenAI Responses API, Structured Outputs, OpenAI JavaScript SDK,
 
 ## Links
 
-- Public demo: <https://aiterval-build-week.vercel.app/demo/judge>
-- Lecture-to-Sprints: <https://aiterval-build-week.vercel.app/lecture>
+- Public demo: <https://aiterval-build-week-doraking.vercel.app/demo/judge>
+- Lecture-to-Sprints: <https://aiterval-build-week-doraking.vercel.app/lecture>
 - Private repository: <https://github.com/dorakingx/aiterval>
 - Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.0>
 

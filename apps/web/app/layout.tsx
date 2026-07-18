@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "@aiterval/ui/styles.css";
 import "./globals.css";
-const publicOrigin = "https://aiterval-build-week.vercel.app";
+const publicOrigin = "https://aiterval-build-week-doraking.vercel.app";
 const socialImage = `${publicOrigin}/og.png`;
 export const metadata: Metadata = {
   metadataBase: new URL(publicOrigin),

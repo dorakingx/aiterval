@@ -48,8 +48,8 @@ TypeScript、React、WXT、Chrome Manifest V3、Next.js App Router、Zod、OpenA
 
 ## リンク・テスト・プライバシー
 
-- 公開デモ: <https://aiterval-build-week.vercel.app/demo/judge>
-- 講義生成: <https://aiterval-build-week.vercel.app/lecture>
+- 公開デモ: <https://aiterval-build-week-doraking.vercel.app/demo/judge>
+- 講義生成: <https://aiterval-build-week-doraking.vercel.app/lecture>
 - 非公開リポジトリ: <https://github.com/dorakingx/aiterval>
 
 公開デモはログイン・キー不要です。ライブ生成コードはDevpostの非公開テスト欄だけへ記載します。AI作業中のプロンプトや回答は読み取りも送信もしません。講義情報は生成ボタンを押した時だけOpenAIへ送られ、分析・広告・追跡SDKはありません。ライブ生成はサーバー認証情報と上限に依存し、Chrome Web Store公開と5名の実地テストは未完了の手動作業です。

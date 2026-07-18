@@ -14,7 +14,7 @@ AIterval turns those waits into one short listening sprint. GPT-5.6 adds specifi
 
 ## Final-entry placeholders
 
-- Public demo: <https://aiterval-build-week.vercel.app/demo/judge>
+- Public demo: <https://aiterval-build-week-doraking.vercel.app/demo/judge>
 - Private repository: <https://github.com/dorakingx/aiterval>
 - Public YouTube video: **[PASTE REVIEWED PUBLIC VIDEO URL]**
 - Private judge code: **[PASTE ONLY INTO DEVPOST PRIVATE TESTING INSTRUCTIONS]**
