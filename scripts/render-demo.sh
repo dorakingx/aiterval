@@ -11,14 +11,16 @@ mkdir -p "$WORK_DIR" "$FINAL_DIR"
 
 names=(01-intro 02-judge 03-extension-dashboard 04-privacy 05-development 06-closing)
 durations=(15 40 55 20 25 10)
+offsets=(0 0 8 0 0 1.5)
 
 for index in "${!names[@]}"; do
   input="$RAW_DIR/${names[$index]}.webm"
   output="$WORK_DIR/${names[$index]}.mp4"
   duration="${durations[$index]}"
+  offset="${offsets[$index]}"
   test -s "$input"
   ffmpeg -hide_banner -loglevel warning -y -i "$input" \
-    -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=#fffdf7,setsar=1,fps=30,tpad=stop_mode=clone:stop_duration=${duration},trim=duration=${duration},setpts=PTS-STARTPTS,format=yuv420p" \
+    -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=#fffdf7,setsar=1,fps=30,tpad=stop_mode=clone:stop_duration=${duration},trim=start=${offset}:duration=${duration},setpts=PTS-STARTPTS,format=yuv420p" \
     -an -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p "$output"
 done
 
@@ -43,6 +45,7 @@ cp "$REPO_ROOT/docs/video/captions-ja.srt" "$FINAL_DIR/aiterval-build-week-demo-
 
 ffmpeg -hide_banner -loglevel warning -y -ss 10 -i "$NARRATED" -frames:v 1 \
   -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=#fffdf7" \
+  -update 1 \
   "$FINAL_DIR/thumbnail.png"
 
 voice="$(tr -d '\r\n' < "$WORK_DIR/narration-voice.txt")"

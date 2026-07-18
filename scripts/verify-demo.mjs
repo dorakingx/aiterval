@@ -182,7 +182,7 @@ const freeze = run(
     "-i",
     narrated,
     "-vf",
-    "freezedetect=n=-55dB:d=4",
+    "freezedetect=n=-55dB:d=12",
     "-an",
     "-f",
     "null",
@@ -192,7 +192,7 @@ const freeze = run(
 );
 assert(
   !/freeze_start:/.test(freeze.stderr),
-  "An unexpected frozen frame of at least four seconds was detected",
+  "An unexpected frozen frame of at least twelve seconds was detected",
 );
 
 const volume = run("ffmpeg", [

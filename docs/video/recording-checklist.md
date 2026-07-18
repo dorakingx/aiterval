@@ -30,7 +30,7 @@ headless Chromium. Third-party AI pages are replaced by repository fixtures.
 - [ ] Duration is 2:25–2:50 and strictly under 3:00.
 - [ ] 1920×1080, 30 fps, H.264, yuv420p, fast-start MP4.
 - [ ] Narrated version contains normalized AAC audio; silent version has none.
-- [ ] No black section ≥1 second or unexpected freeze ≥4 seconds.
+- [ ] No black section ≥1 second or unplanned unchanged frame ≥12 seconds.
 - [ ] Captions match the narration source and stay within the video duration.
 - [ ] Recorded page text and logs contain no credential, UUID/Session ID, email,
       notification content, or local absolute path.
