@@ -1,20 +1,32 @@
 # AIterval 0.2.0 — OpenAI Build Week Edition
 
-## Highlights
+## Final submission scope
 
-- **Lecture-to-Sprints:** turn an explicitly submitted upcoming lecture abstract into 1–5 schema-validated listening exercises with GPT-5.6.
-- Current OpenAI Responses API and Zod Structured Outputs with server revalidation, trusted provenance, and one bounded schema retry.
-- Public no-login judge journey plus clearly labeled curated sample mode.
-- Safe JSON export/import keeps the extension’s host permissions and CSP unchanged.
-- Generated-pack progress, pause/resume, rename, export, regenerate, delete, source badge, and scheduling.
-- Aggregate-only opt-in personalization without raw session history.
-- Storage schema v2 migration and 38 unit/component/API tests plus Chromium web/extension E2E.
-- Accurate external-call privacy copy, server-only credentials, access-code enforcement, timeout, rate limits, and daily quota.
+The v0.2.0 tag and release assets are preserved unchanged as Build Week
+evidence. For the final submission, AIterval is presented and deployed as a
+local-first extension using only its 132 original pre-authored exercises.
+Runtime AI exercise generation is archived, not advertised, and not configured
+in production.
+
+## Submitted highlights
+
+- One 15–90 second listening sprint during a normal AI wait.
+- 132 original built-in exercises with local scheduling and review.
+- Narrow semantic wait-state observation that never reads prompts or responses.
+- Immediate speech interruption when AI work finishes.
+- Local progress, weak-skill view, recovered-time totals, and settings.
+- Public no-login judge journey and deterministic real-extension E2E fixtures.
+- Manifest V3 permissions and CSP with no remote extension code.
 
 ## Install
 
-Download the Chrome ZIP and `SHA256SUMS.txt`, verify the checksum, unzip, and load the extracted `manifest.json` directory through `chrome://extensions` Developer mode. See `docs/installation.md` for the full no-build path.
+Download the Chrome ZIP and `SHA256SUMS.txt`, verify the checksum, unzip, and
+load the extracted `manifest.json` directory through `chrome://extensions`
+Developer mode. See `docs/installation.md`.
 
 ## Compatibility and limitations
 
-Current desktop Chrome is supported. Automatic wait detection depends on third-party UI; manual start remains available. Browser speech quality depends on installed voices. Live GPT-5.6 generation requires a configured server key and private demo code, while built-in exercises and the public sample require neither. This release is not a Chrome Web Store publication.
+Current desktop Chrome is supported. Automatic detection depends on third-party
+UI; manual start remains available. Speech quality depends on installed voices.
+The release is not a Chrome Web Store publication. No OpenAI key or model access
+is required for the submitted experience.

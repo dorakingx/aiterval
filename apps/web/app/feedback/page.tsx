@@ -8,7 +8,7 @@ const questions = [
   "Could you start the first listening sprint without help?",
   "Was the AI-ready interruption understandable?",
   "Would you use this during normal AI work? Why or why not?",
-  "Would a GPT-5.6 lecture pack help you prepare for a real event?",
+  "Which listening topics would make the built-in library more useful?",
   "What was confusing?",
   "Would you prefer automatic start, manual start, or both?",
 ];

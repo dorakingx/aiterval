@@ -30,15 +30,19 @@ After the repository became public, a scoped documentation-only history rewrite 
 
 The feature branch, annotated `v0.2.0` tag, tagged release commit, product source, release assets, and earlier Build Week evidence commits were not rewritten. The verified extension ZIP remains reproducible with SHA-256 `7e2bc8ed9195820aa526b3be0fd2de593c23a8a5d465693ca12a73b3f726bb58`.
 
-## What the GPT-5.6 upgrade added
+## Development experiment and final scope
 
-- A deliberate lecture-input workflow and a server-only OpenAI Responses API call.
-- GPT-5.6-family model enforcement and Zod-backed Structured Outputs.
-- Double validation, provenance, one bounded schema retry, cancellation, timeout, rate limits, and a daily demo quota.
-- A no-login public judge experience with explicitly curated sample data.
-- A schema-validated web export/extension import boundary, local pack lifecycle, and generated-exercise scheduling.
-- Aggregate-only, opt-in personalization; raw sessions, AI prompts, and AI responses are never sent.
-- API, schema, component, storage migration, and Chromium E2E coverage.
+The Git timeline records a GPT-5.6 runtime-generation experiment developed during
+the official period. The final submission direction subsequently archived that
+experience. The submitted product uses the 132 original pre-authored exercises;
+the public lecture route redirects, the generation endpoint returns HTTP 410,
+and the Vercel production project has no model, API-key, judge-code, or quota
+variables.
+
+Codex with GPT-5.6 remains an honest development tool: it helped implement and
+refine the architecture, adapters, state machine, UI, tests, security controls,
+deployment, and evidence. It is not a runtime exercise source for the submitted
+experience.
 
 ## Build and deployment evidence
 
@@ -52,4 +56,5 @@ pnpm install --frozen-lockfile
 pnpm check
 ```
 
-Sample mode is not evidence of a live model call. Live GPT-5.6 generation is available only on deployments configured with server-side credentials; the final status report states whether that configuration was present during verification.
+The final public judge path is deterministic, signed-out, and pre-authored. It
+makes no paid model call.

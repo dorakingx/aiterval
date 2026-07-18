@@ -39,7 +39,6 @@ const links = [
   ["/how-it-works", "How it works"],
   ["/demo", "Demo"],
   ["/demo/judge", "Judge demo"],
-  ["/lecture", "Lecture-to-Sprints"],
   ["/privacy", "Privacy"],
   ["/feedback", "Feedback"],
   ["/faq", "FAQ"],

@@ -2,10 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Badge, Card } from "@aiterval/ui";
 import { Demo } from "../../../components/demo";
-import {
-  sampleLecture,
-  sampleLectureExercises,
-} from "../../../lib/sample-lecture";
 
 export const metadata: Metadata = {
   title: "Build Week judge demo",
@@ -14,19 +10,19 @@ export const metadata: Metadata = {
 };
 
 export default function JudgeDemoPage() {
-  const sample = sampleLectureExercises[0]!;
   return (
     <main className="content-page judge-page">
       <header className="page-hero">
         <p className="kicker">OpenAI Build Week · Education</p>
         <h1>Understand the loop in two minutes.</h1>
         <p>
-          No login, API key, installation, or access code is required for this
-          interactive sample.
+          No login, API key, installation, or access code is required. Every
+          listening sprint comes from AIterval&apos;s 132 original pre-authored
+          exercises.
         </p>
         <div className="hero-actions">
-          <Link className="link-button" href="/lecture">
-            Open Lecture-to-Sprints
+          <Link className="link-button" href="#wait-demo-title">
+            Try the waiting-time loop
           </Link>
           <Link className="text-link" href="/install">
             Install the extension
@@ -43,42 +39,33 @@ export default function JudgeDemoPage() {
         </div>
         <Demo />
       </section>
-      <section className="sample-pack" aria-labelledby="sample-pack-title">
+      <section className="sample-pack" aria-labelledby="library-title">
         <div className="section-head">
           <div>
-            <p className="kicker">2 · Upcoming lecture</p>
-            <h2 id="sample-pack-title">{sampleLecture.title}</h2>
+            <p className="kicker">2 · Built-in learning system</p>
+            <h2 id="library-title">132 exercises, ready without a key.</h2>
           </div>
-          <Badge>Curated sample—not a live GPT-5.6 call</Badge>
+          <Badge>Original pre-authored library</Badge>
         </div>
-        <p>{sampleLecture.abstract}</p>
         <Card className="result-card">
-          <Badge>
-            {sample.estimatedSeconds}s · difficulty {sample.difficulty}
-          </Badge>
-          <h3>{sample.title}</h3>
-          <p>{sample.transcript}</p>
-          <strong>{sample.question.prompt}</strong>
-          <ol>
-            {sample.question.choices.map((choice) => (
-              <li key={choice}>{choice}</li>
-            ))}
-          </ol>
-          <small>Answer evidence: {sample.answerEvidence}</small>
+          <h3>Designed for 15–90 second waits</h3>
+          <p>
+            Exercises cover practical listening skills, international academic
+            English, review scheduling, and multiple difficulty levels. They run
+            locally in the extension and never require an OpenAI API key.
+          </p>
+          <ul>
+            <li>One focused listening question per wait</li>
+            <li>Immediate feedback and transcript evidence</li>
+            <li>Local progress, review queue, and weak-skill tracking</li>
+          </ul>
         </Card>
-        <p>
-          <Link className="link-button" href="/lecture">
-            Try the full form and live GPT-5.6 path
-          </Link>
-        </p>
       </section>
       <Card className="judge-notes">
         <h2>What judges are seeing</h2>
         <ul>
-          <li>The public sample never calls a paid API.</li>
-          <li>
-            Live generation requires a private access code and server-side key.
-          </li>
+          <li>The submitted product uses only pre-authored exercises.</li>
+          <li>No OpenAI API key, account, or access code is required.</li>
           <li>The extension never reads AI prompts or AI responses.</li>
           <li>
             Chrome Web Store publication is not yet complete; the ZIP is

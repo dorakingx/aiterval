@@ -14,3 +14,10 @@ test-results/
 *.tgz
 *.tsbuildinfo
 .DS_Store
+artifacts/demo/aiterval-real-product-silent-draft.webm
+artifacts/demo/raw/
+artifacts/demo/work/
+artifacts/demo/final/
+artifacts/demo/verification/
+artifacts/demo/*.log
+artifacts/demo/recorded-text.txt

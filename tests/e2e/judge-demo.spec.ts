@@ -1,31 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-const generated = {
-  id: "generated-1700000000000-1",
-  title: "A useful comparison point",
-  mode: "academic",
-  difficulty: 3,
-  estimatedSeconds: 45,
-  transcript:
-    "The speaker establishes a baseline before treatment, giving the team a clear comparison point.",
-  preferredLocales: ["en-GB"],
-  question: {
-    type: "main-idea",
-    prompt: "Why establish a baseline?",
-    choices: ["For comparison", "To stop the study"],
-    correctIndex: 0,
-  },
-  explanationJa: "比較のためです。",
-  keyExpression: "establishes a baseline",
-  answerEvidence: "establishes a baseline",
-  tags: ["academic", "main-idea"],
-  source: "gpt-5.6",
-  model: "gpt-5.6-sol",
-  generatedAt: 1_700_000_000_000,
-  lectureTitle: "Reliable experiments",
-  generationVersion: 1,
-};
-
 test("public judge demo completes the no-login waiting-time loop", async ({
   page,
 }) => {
@@ -65,78 +39,31 @@ test("judge demo visibly interrupts listening when simulated AI is ready", async
   ).toBeVisible();
 });
 
-test("Lecture-to-Sprints supports sample mode and Japanese UI", async ({
+test("the archived lecture route redirects to the pre-authored judge demo", async ({
   page,
 }) => {
   await page.goto("/lecture");
-  await page.getByRole("button", { name: "日本語" }).click();
+  await expect(page).toHaveURL(/\/demo\/judge$/);
   await expect(
-    page.getByRole("heading", { name: "次の講義を聞き取る準備" }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "APIキー不要のサンプル" }).click();
-  await expect(
-    page.getByText("Curated sample—not a live GPT-5.6 call"),
+    page.getByText("132 original pre-authored exercises"),
   ).toBeVisible();
 });
 
-test("mocked GPT-5.6 generation renders a validated result", async ({
-  page,
+test("the archived generation endpoint cannot perform runtime generation", async ({
+  request,
 }) => {
-  await page.route("**/api/generate-sprints", async (route) =>
-    route.fulfill({
-      contentType: "application/json",
-      body: JSON.stringify({
-        exercises: [generated],
-        metadata: { model: "gpt-5.6-sol" },
-      }),
-    }),
-  );
-  await page.goto("/lecture");
-  await page.getByLabel(/Lecture title/).fill("Reliable experiments");
-  await page
-    .getByLabel(/Abstract or description/)
-    .fill(
-      "This lecture explains why baseline measurements make experimental comparisons more reliable.",
-    );
-  await page.getByLabel(/Judge access code/).fill("test-code");
-  await page.getByRole("button", { name: "Generate with GPT-5.6" }).click();
-  await expect(page.getByText("Generated with gpt-5.6-sol")).toBeVisible();
-  await expect(
-    page.getByRole("button", { name: /Download validated/ }),
-  ).toBeVisible();
-});
-
-test("live-generation failure leaves the accessible sample fallback", async ({
-  page,
-}) => {
-  await page.route("**/api/generate-sprints", async (route) =>
-    route.fulfill({
-      status: 503,
-      contentType: "application/json",
-      body: JSON.stringify({
-        message: "Live GPT-5.6 generation is not configured.",
-      }),
-    }),
-  );
-  await page.goto("/lecture");
-  await page.getByLabel(/Lecture title/).fill("Reliable experiments");
-  await page
-    .getByLabel(/Abstract or description/)
-    .fill(
-      "This lecture explains why baseline measurements make experimental comparisons more reliable.",
-    );
-  await page.getByRole("button", { name: "Generate with GPT-5.6" }).click();
-  await expect(page.locator(".form-error")).toContainText("not configured");
-  await expect(
-    page.getByRole("button", { name: "Try the no-key sample" }),
-  ).toBeEnabled();
+  const response = await request.post("/api/generate-sprints", { data: {} });
+  expect(response.status()).toBe(410);
+  await expect(response.json()).resolves.toMatchObject({
+    error: "feature_archived",
+  });
 });
 
 test("primary judge actions are keyboard reachable", async ({ page }) => {
   await page.goto("/demo/judge");
   await page.keyboard.press("Tab");
   await expect(page.locator(":focus")).toBeVisible();
-  await page.goto("/lecture");
+  await page.goto("/privacy");
   await page.keyboard.press("Tab");
   await expect(page.locator(":focus")).toBeVisible();
 });

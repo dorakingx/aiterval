@@ -17,9 +17,10 @@ Use current desktop Google Chrome on macOS, Windows, or Linux. AIterval is a Man
 
 Automatic waits are supported on `chatgpt.com`, `claude.ai`, and `gemini.google.com`. If an interface update prevents detection, manual start remains available through the shortcut, popup, or context menu.
 
-## Generated lecture pack
+## Exercise library
 
-Open the [Lecture-to-Sprints page](https://aiterval-build-week.vercel.app/lecture), use sample or private live generation, and download the JSON. In the extension dashboard, open **Generated lecture packs**, choose import, and select that file. The extension validates it before writing local storage.
+The submitted experience includes 132 original pre-authored exercises. No
+OpenAI API key, model access, account, or generated pack is required.
 
 ## Remove AIterval
 

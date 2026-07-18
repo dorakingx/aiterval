@@ -1,35 +1,27 @@
 1
-00:00:00,000 --> 00:00:20,000
-At an international summer school, I struggled to follow lectures and conversations in English. I wanted to improve, but had little dedicated study time.
+00:00:01,000 --> 00:00:15,000
+At an international summer school, I struggled to follow lectures and conversations in English. As a researcher, I had little dedicated study time. Meanwhile, I kept waiting for AI tools to finish.
 
 2
-00:00:20,000 --> 00:00:40,000
-I also kept waiting for AI tools. AIterval turns that unused waiting time into one focused English listening sprint.
+00:00:16,000 --> 00:00:55,000
+AIterval connects those problems. I send normal work, and it observes only semantic generation-state controls—never my prompt or the response. During the wait, one short listening card appears. I play a pre-authored exercise, answer, and see immediate feedback. When the AI is ready, speech stops, my work regains focus, and recovered waiting time increases.
 
 3
-00:00:40,000 --> 00:01:02,000
-I send my normal request. AIterval observes only generation-state controls, never my prompt or response. Then one short question appears.
+00:00:56,000 --> 00:01:25,000
+This is the actual Manifest V3 extension running in a deterministic demo environment. The same isolated overlay, audio controls, answer flow, and completion interruption are tested against supported-site fixtures, without opening a personal AI account.
 
 4
-00:01:02,000 --> 00:01:15,000
-When the AI finishes, audio stops immediately. I return to work, and only real recovered seconds are added to progress.
+00:01:26,000 --> 00:01:50,000
+The dashboard turns tiny sessions into a learning system: recovered time, completed exercises, review queue, weak skills, difficulty, and voice settings. All 132 original exercises work without an API key.
 
 5
-00:01:15,000 --> 00:01:38,000
-For an upcoming lecture, I enter its title, abstract, terms, level, focus, locale, and duration, then explicitly request generation.
+00:01:51,000 --> 00:02:10,000
+Privacy is a product constraint. AIterval never reads prompts or responses. It observes generation-state controls only. Progress stays local, with no analytics, ads, tracking pixels, or remote extension code.
 
 6
-00:01:38,000 --> 00:01:50,000
-GPT-5.6 uses the Responses API and Structured Outputs. The pack is validated before the extension stores and schedules it.
+00:02:11,000 --> 00:02:35,000
+I supplied the lived problem, product decisions, learning loop, and privacy rules. Codex with GPT-5.6 implemented and refined the architecture, adapters, deterministic state machine, interface, tests, deployment, and submission evidence. The public repository, architecture notes, and green continuous integration make that work inspectable. GPT-5.6 supported development; it does not generate exercises in the submitted runtime.
 
 7
-00:01:50,000 --> 00:02:15,000
-The dashboard shows recovered time, weak skills, and reviews—without a punitive streak. The 132 built-in exercises still need no API key.
-
-8
-00:02:15,000 --> 00:02:40,000
-I made the product and privacy decisions. In one primary Codex task, Codex helped turn them into adapters, a state machine, schemas, tests, deployment, and evidence.
-
-9
-00:02:40,000 --> 00:02:52,000
+00:02:36,000 --> 00:02:45,000
 AIterval does not ask busy people to find more time. It turns time they already lose into a learning habit.

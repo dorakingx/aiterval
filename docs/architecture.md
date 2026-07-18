@@ -27,19 +27,24 @@ The helpers query controls and state attributes only. They never read page text,
 
 ## Packages
 
-- `@aiterval/core`: pure types, deterministic state/scheduling rules, transparent recommendation scoring, canonical built-in/generated exercise schemas, lecture-generation schemas, stats helpers, Zod-validated storage repository, and schema migration entry point.
+- `@aiterval/core`: pure types, deterministic state/scheduling rules, transparent recommendation scoring, canonical exercise schemas, stats helpers, Zod-validated storage repository, and schema migration entry point.
 - `@aiterval/content`: 132 original exercises and startup/test-time validation.
 - `@aiterval/ui`: shared accessible controls, design tokens, Web Speech provider, and the complete listening player used by extension and web demo.
 - `apps/extension`: WXT entry points, local repository adapter, site adapters, and isolated overlay.
-- `apps/web`: Next.js App Router pages, the no-login judge demo, Lecture-to-Sprints form, and a server-only Responses API route.
+- `apps/web`: Next.js App Router pages, the no-login judge demo, public privacy evidence, and an archived generation route that returns HTTP 410.
 
-## Lecture-to-Sprints boundary
+## Submitted runtime boundary
 
-The browser deliberately sends only fields the user enters in the lecture form plus explicit learning preferences. The Next.js route validates that request, authenticates the private demo code with a timing-safe comparison, applies per-session and daily limits, then calls the OpenAI Responses API from the server. `OPENAI_API_KEY` and `DEMO_ACCESS_CODE` are never serialized into props or client JavaScript.
+The submitted experience uses only the 132 exercises bundled by
+`@aiterval/content`. The public `/lecture` route redirects to `/demo/judge`, and
+`POST /api/generate-sprints` returns a fixed archived-feature response. No
+runtime model, key, judge credential, quota, or lecture form is configured in
+production.
 
-The server uses the same strict Zod schemas for Structured Outputs, post-response validation, exported packs, extension import, and tests. It allows one retry only for invalid structured output. It stores neither source input nor full API responses and logs only safe operational metadata.
-
-The extension does not call the generation API. The web app exports a schema-versioned JSON pack, and the extension validates it locally before saving it. This keeps the extension host permissions and Content Security Policy unchanged.
+Historical generation and pack-schema code remains in source for auditability
+and to avoid changing the verified v0.2.0 release asset. It is unreachable from
+the submitted public product. The extension has no OpenAI host permission and
+does not call the archived route.
 
 ## Audio
 
@@ -53,10 +58,16 @@ The local selector scores due reviews, weak skills with sufficient evidence, sel
 
 ## Storage and retention
 
-`StorageRepository` separates schema version, settings, detailed sessions, reviews, generated packs, runtime sprint state, and aggregates. `CURRENT_SCHEMA_VERSION` is 2; version 1 migrates by adding an empty generated-pack collection and an opt-in personalization setting. Imports pass a strict runtime schema before writes. Detailed history is capped at 500 sessions; aggregate total time and completions are preserved. Future migrations are added as explicit version-to-version functions inside `migrateStorage`.
+`StorageRepository` separates schema version, settings, detailed sessions,
+reviews, runtime sprint state, and aggregates. The version 2 schema retains
+backward-compatible fields from development, but submitted scheduling selects
+from the pre-authored library. Imports pass a strict runtime schema before
+writes. Detailed history is capped at 500 sessions; aggregate totals are
+preserved.
 
 ## Security boundaries
 
 The Manifest V3 policy allows self-hosted extension scripts only and blocks objects and external connections. The extension uses no remote code, analytics, cookies, secrets, or user HTML injection. User-controlled data is rendered as React text and never through `dangerouslySetInnerHTML`.
 
-The web app sets a restrictive production CSP and security headers. Generation responses are `no-store`. Access identities are one-way hashed in memory, abstract text is never logged, and error responses do not expose provider details. The in-memory limiter is intentionally a best-effort demo safeguard rather than a distributed production rate limiter.
+The web app sets a restrictive production CSP and security headers. The archived
+generation route returns no provider details and accepts no product input.

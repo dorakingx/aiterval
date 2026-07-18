@@ -1,0 +1,51 @@
+{
+  "durationSeconds": 165,
+  "exerciseAudio": {
+    "startSeconds": 28,
+    "text": "Before proceeding, check the calibration before thirty-one minutes have passed."
+  },
+  "scenes": [
+    {
+      "id": "problem",
+      "startSeconds": 1,
+      "endSeconds": 15,
+      "narration": "At an international summer school, I struggled to follow lectures and conversations in English. As a researcher, I had little dedicated study time. Meanwhile, I kept waiting for AI tools to finish."
+    },
+    {
+      "id": "core-loop",
+      "startSeconds": 16,
+      "endSeconds": 55,
+      "narration": "AIterval connects those problems. I send normal work, and it observes only semantic generation-state controls—never my prompt or the response. During the wait, one short listening card appears. I play a pre-authored exercise, answer, and see immediate feedback. When the AI is ready, speech stops, my work regains focus, and recovered waiting time increases."
+    },
+    {
+      "id": "extension",
+      "startSeconds": 56,
+      "endSeconds": 85,
+      "narration": "This is the actual Manifest V3 extension running in a deterministic demo environment. The same isolated overlay, audio controls, answer flow, and completion interruption are tested against supported-site fixtures, without opening a personal AI account."
+    },
+    {
+      "id": "dashboard",
+      "startSeconds": 86,
+      "endSeconds": 110,
+      "narration": "The dashboard turns tiny sessions into a learning system: recovered time, completed exercises, review queue, weak skills, difficulty, and voice settings. All 132 original exercises work without an API key."
+    },
+    {
+      "id": "privacy",
+      "startSeconds": 111,
+      "endSeconds": 130,
+      "narration": "Privacy is a product constraint. AIterval never reads prompts or responses. It observes generation-state controls only. Progress stays local, with no analytics, ads, tracking pixels, or remote extension code."
+    },
+    {
+      "id": "development",
+      "startSeconds": 131,
+      "endSeconds": 155,
+      "narration": "I supplied the lived problem, product decisions, learning loop, and privacy rules. Codex with GPT-5.6 implemented and refined the architecture, adapters, deterministic state machine, interface, tests, deployment, and submission evidence. The public repository, architecture notes, and green continuous integration make that work inspectable. GPT-5.6 supported development; it does not generate exercises in the submitted runtime."
+    },
+    {
+      "id": "closing",
+      "startSeconds": 156,
+      "endSeconds": 165,
+      "narration": "AIterval does not ask busy people to find more time. It turns time they already lose into a learning habit."
+    }
+  ]
+}

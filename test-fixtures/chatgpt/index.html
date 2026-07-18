@@ -6,21 +6,44 @@
     <style>
       body {
         font: 16px system-ui;
-        margin: 40px;
+        margin: 0;
         background: #f7f7f8;
+        color: #172638;
       }
       main {
         max-width: 760px;
-        margin: auto;
+        margin: 110px auto;
+        padding: 40px;
+        border: 1px solid #ddd;
+        border-radius: 22px;
+        background: white;
+        box-shadow: 0 24px 70px rgba(23, 38, 56, 0.1);
       }
       button {
         padding: 12px;
+        margin-right: 8px;
+      }
+      .fixture-label {
+        position: fixed;
+        left: 24px;
+        top: 24px;
+        z-index: 1000000;
+        border: 1px solid #d8cfc2;
+        border-radius: 999px;
+        background: rgba(255, 253, 247, 0.96);
+        padding: 8px 13px;
+        color: #8e3c2a;
+        font-size: 13px;
+        font-weight: 750;
+        letter-spacing: 0.02em;
       }
     </style>
   </head>
   <body>
+    <div class="fixture-label">Deterministic demo environment</div>
     <main>
-      <h1>ChatGPT test fixture</h1>
+      <p>Supported-site generation-state fixture</p>
+      <h1>AI work is in progress</h1>
       <button id="state" aria-label="Stop generating">Stop</button
       ><button id="mutate">Duplicate mutations</button
       ><button id="finish">Finish generation</button

@@ -1,16 +1,48 @@
-# Recording and YouTube checklist
+# Automated recording checklist
 
-- [ ] Final runtime is 2:40–2:55 and always under 3:00.
-- [ ] 1920×1080 capture, readable zoom, stable cursor, notifications and password managers hidden.
-- [ ] Every screen is the real product; no composited/fake API response.
-- [ ] Sample/live label is visible and narration matches what was actually run.
-- [ ] No API key, demo code, email, personal path, private notification, or user data appears.
-- [ ] AI prompt used on screen is harmless and contains no private work.
-- [ ] Narration is audible, paced, and reviewed on headphones and phone speaker.
-- [ ] English captions are synchronized; Japanese captions are uploaded as a second track when possible.
-- [ ] Product name, GPT-5.6, Codex, Responses API, Structured Outputs, and Education story are spoken or visible.
-- [ ] Public judge URL appears in the close and video description.
-- [ ] Export at H.264/AAC, 1080p, with no copyrighted music or footage.
-- [ ] Creator reviews the final file before upload.
-- [ ] Upload to YouTube using an authenticated account only after review.
-- [ ] Set visibility to **Public**, verify playback signed out, and paste the URL into Devpost.
+## Before recording
+
+- [ ] Clean `main` equals `origin/main` and the production alias is Ready.
+- [ ] Public judge, privacy, feedback, repository, release, and Actions are available.
+- [ ] `pnpm build` and `pnpm zip:extension` succeeded.
+- [ ] `/lecture` redirects and `/api/generate-sprints` returns archived status.
+- [ ] Production contains no OpenAI/model/access/quota variables.
+
+## Record and render
+
+```bash
+nohup pnpm demo:record > artifacts/demo/record-demo.log 2>&1 &
+RECORD_PID=$!
+```
+
+Capture the PID, poll until completion, and fail on a non-zero exit. Then run:
+
+```bash
+pnpm demo:render > artifacts/demo/render-demo.log 2>&1
+pnpm demo:verify
+```
+
+The recorder loads the real public demo and the real packaged extension in
+headless Chromium. Third-party AI pages are replaced by repository fixtures.
+
+## Automated verification
+
+- [ ] Duration is 2:25–2:50 and strictly under 3:00.
+- [ ] 1920×1080, 30 fps, H.264, yuv420p, fast-start MP4.
+- [ ] Narrated version contains normalized AAC audio; silent version has none.
+- [ ] No black section ≥1 second or unexpected freeze ≥4 seconds.
+- [ ] Captions match the narration source and stay within the video duration.
+- [ ] Recorded page text and logs contain no credential, UUID/Session ID, email,
+      notification content, or local absolute path.
+- [ ] Browser error-page phrases are absent.
+- [ ] Thumbnail is 1280×720.
+
+## Visual review
+
+Inspect frames at 00:10, 00:30, 01:00, 01:30, 02:00, and 02:35. Confirm the UI
+is readable, no private data is visible, the extension fixture has its
+deterministic-environment caption, no Lecture-to-Sprints surface appears, and
+the thumbnail remains legible at YouTube size.
+
+Allow at most three complete rendering attempts. Do not upload to YouTube from
+this workflow; account access and final upload remain manual.

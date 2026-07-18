@@ -1,29 +1,72 @@
-# Demo video script — English (target 2:52)
+# Demo video script — English (2:45 target)
 
-## 0:00–0:20 — Problem
+The narration is 257 words. Runtime exercise generation is never shown or
+claimed. All exercise scenes use the pre-authored library.
 
-At an international summer school, I struggled to follow lectures and conversations in English. I wanted to improve, but as a researcher I had very little dedicated study time.
+## 0:00–0:15 — Problem and insight
 
-## 0:20–0:40 — Insight
+**Visual:** AIterval title card and the Education-track framing.
 
-At the same time, I kept waiting for AI tools to finish. AIterval connects those two problems. It turns a short AI wait into one focused English listening sprint.
+**Narration:** At an international summer school, I struggled to follow lectures
+and conversations in English. As a researcher, I had little dedicated study
+time. Meanwhile, I kept waiting for AI tools to finish.
 
-## 0:40–1:15 — Core extension loop
+## 0:15–0:55 — Core waiting-time loop
 
-I send my normal request. AIterval observes only the AI’s generation-state controls—it never reads my prompt or the response. After the threshold, one short listening question appears. I listen and answer. As soon as the AI finishes, audio stops and AIterval tells me my work is ready. I return immediately, while the real waiting seconds are added to my recovered-time total.
+**Visual:** Real signed-out judge demo. Start the simulated AI wait, play one
+pre-authored exercise, answer, show feedback, show the AI-ready interruption,
+and complete the sprint so recovered time increases.
 
-## 1:15–1:50 — Lecture-to-Sprints
+**Narration:** AIterval connects those problems. I send normal work, and it
+observes only semantic generation-state controls—never my prompt or the response.
+During the wait, one short listening card appears. I play a pre-authored
+exercise, answer, and see immediate feedback. When the AI is ready, speech stops,
+my work regains focus, and recovered waiting time increases.
 
-Now I can prepare for a real upcoming lecture. I enter its title, abstract, technical terms, level, focus, locale, and target duration. This public demonstration uses a clearly labeled curated sample—not a live GPT-5.6 call. In the live path, the server uses GPT-5.6 through the OpenAI Responses API and Structured Outputs, then validates the result against the same strict schema used by the extension. I can export a validated pack, import it locally, and prioritize it during my next wait.
+## 0:55–1:25 — Actual extension
 
-## 1:50–2:15 — Sustainable habit
+**Visual:** Packaged Manifest V3 extension on the repository’s supported-site
+fixture. Keep the caption **Deterministic demo environment** visible.
 
-The dashboard shows recovered waiting time, weak listening skills, and a review queue. There is no punitive daily streak. The 132 built-in exercises still work without an API key, and generated packs can be paused, renamed, exported, or deleted.
+**Narration:** This is the actual Manifest V3 extension running in a
+deterministic demo environment. The same isolated overlay, audio controls,
+answer flow, and completion interruption are tested against supported-site
+fixtures, without opening a personal AI account.
 
-## 2:15–2:40 — Human and Codex
+## 1:25–1:50 — Dashboard
 
-I made the product decisions from my experience: one question, immediate interruption, and a strict privacy boundary. In one primary Codex task, Codex helped convert that direction into site adapters, a state machine, schemas, the GPT-5.6 server boundary, tests, deployment, and release evidence. Real Chromium tests cover both the web demo and packaged extension.
+**Visual:** Actual extension dashboard with deterministic local sessions. Show
+recovered time, completed sprints, weak skills, review queue, difficulty, and
+voice settings. Do not show the archived lecture-pack area.
 
-## 2:40–2:52 — Close
+**Narration:** The dashboard turns tiny sessions into a learning system:
+recovered time, completed exercises, review queue, weak skills, difficulty, and
+voice settings. All 132 original exercises work without an API key.
 
-AIterval does not ask busy people to find more time. It turns time they already lose into a learning habit.
+## 1:50–2:10 — Privacy
+
+**Visual:** Public privacy page.
+
+**Narration:** Privacy is a product constraint. AIterval never reads prompts or
+responses. It observes generation-state controls only. Progress stays local,
+with no analytics, ads, tracking pixels, or remote extension code.
+
+## 2:10–2:35 — Codex and GPT-5.6 development
+
+**Visual:** Public repository, architecture document, tests, and green GitHub
+Actions. Do not show the private Session ID.
+
+**Narration:** I supplied the lived problem, product decisions, learning loop,
+and privacy rules. Codex with GPT-5.6 implemented and refined the architecture,
+adapters, deterministic state machine, interface, tests, deployment, and
+submission evidence. The public repository, architecture notes, and green
+continuous integration make that work inspectable. GPT-5.6 supported
+development; it does not generate exercises in the submitted runtime.
+
+## 2:35–2:45 — Closing
+
+**Visual:** AIterval name, public demo, repository, and “OpenAI Build Week —
+Education.”
+
+**Narration:** AIterval does not ask busy people to find more time. It turns time
+they already lose into a learning habit.
