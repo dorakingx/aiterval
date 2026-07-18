@@ -21,6 +21,15 @@ The official rules state that the Submission Period opened **July 13, 2026 at 9:
 
 `git log --reverse --format='%H|%aI|%s' --all` shows no earlier AIterval commit. On the available repository evidence, the project began during the Submission Period; nothing in this repository predates it.
 
+## Privacy-only history maintenance
+
+After the repository became public, a scoped documentation-only history rewrite replaced a private feedback identifier with private-submission wording. Only `refs/heads/main` was rewritten. Author and committer identities and timestamps were preserved for the two rewritten documentation commits:
+
+- [`145aa94`](https://github.com/dorakingx/aiterval/commit/145aa946e93a505c7e3023ec05ed188fb2041b59) records the private feedback-submission boundary.
+- [`209f93c`](https://github.com/dorakingx/aiterval/commit/209f93c750c264e13f6f15062cb733590da308d2) records the public-repository documentation guidance.
+
+The feature branch, annotated `v0.2.0` tag, tagged release commit, product source, release assets, and earlier Build Week evidence commits were not rewritten. The verified extension ZIP remains reproducible with SHA-256 `7e2bc8ed9195820aa526b3be0fd2de593c23a8a5d465693ca12a73b3f726bb58`.
+
 ## What the GPT-5.6 upgrade added
 
 - A deliberate lecture-input workflow and a server-only OpenAI Responses API call.
