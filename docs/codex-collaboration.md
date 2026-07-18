@@ -20,4 +20,4 @@ Codex did not invent a user-test result, testimonial, live API call, deployment 
 
 Primary Codex task `/feedback` Session ID: **Submitted privately through Devpost.**
 
-This verified value came directly from `/feedback` in the primary task; it was not inferred. The creator should copy the same value into the Devpost submission form.
+The verified value came directly from `/feedback` in the primary task; it was not inferred. It is intentionally excluded from the repository and other public artifacts.

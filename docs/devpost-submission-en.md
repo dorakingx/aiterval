@@ -69,12 +69,12 @@ Codex, GPT-5.6, OpenAI Responses API, Structured Outputs, OpenAI JavaScript SDK,
 
 - Public demo: <https://aiterval-build-week.vercel.app/demo/judge>
 - Lecture-to-Sprints: <https://aiterval-build-week.vercel.app/lecture>
-- Private repository: <https://github.com/dorakingx/aiterval>
+- Public repository: <https://github.com/dorakingx/aiterval>
 - Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.0>
 
 ## Testing instructions
 
-The no-login path requires no key: open the judge demo, send the simulated prompt, complete one exercise, and observe the AI-ready interruption. Then open Lecture-to-Sprints and choose the clearly labeled sample. For live generation, enter the code supplied only in Devpost’s private testing field: **[PASTE PRIVATE JUDGE CODE IN DEVPOST ONLY]**. A local extension package and checksum are attached to the release; detailed steps are in `docs/judge-testing-guide.md`.
+The no-login path requires no key: open the judge demo, send the simulated prompt, complete one exercise, and observe the AI-ready interruption. Then open Lecture-to-Sprints and choose the clearly labeled sample. The live-generation code and primary Codex task `/feedback` Session ID are submitted privately through Devpost. A local extension package and checksum are attached to the release; detailed steps are in `docs/judge-testing-guide.md`.
 
 ## Privacy and limitations
 

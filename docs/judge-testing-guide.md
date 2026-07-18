@@ -2,6 +2,9 @@
 
 No build, account, OpenAI key, or access code is required for the primary judging path.
 
+- Public repository: <https://github.com/dorakingx/aiterval>
+- Primary Codex task `/feedback` Session ID: Submitted privately through Devpost.
+
 ## Two-minute path
 
 1. Open [the public judge demo](https://aiterval-build-week.vercel.app/demo/judge).
@@ -12,7 +15,7 @@ No build, account, OpenAI key, or access code is required for the primary judgin
 
 ## Live GPT-5.6 path
 
-Judge access code: **[PROVIDE ONLY IN PRIVATE DEVPOST TESTING INSTRUCTIONS]**
+Judge access code: **Submitted privately through Devpost.**
 
 Enter the private code on the lecture page and choose live generation. Expected behavior is a loading state followed by 1–5 schema-validated exercises labeled **Generated with GPT-5.6**. If server credentials or quota are unavailable, the page provides a clear error while sample mode continues to work.
 

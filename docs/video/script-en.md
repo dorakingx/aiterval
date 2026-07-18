@@ -14,7 +14,7 @@ I send my normal request. AIterval observes only the AI’s generation-state con
 
 ## 1:15–1:50 — Lecture-to-Sprints
 
-Now I can prepare for a real upcoming lecture. I enter its title, abstract, technical terms, level, focus, locale, and target duration, then explicitly request generation. On the server, GPT-5.6 uses the OpenAI Responses API and Structured Outputs. The result is validated against the same strict schema used by the extension. I export the pack, import it locally, and the next wait gives me a personalized technical exercise labeled Generated with GPT-5.6.
+Now I can prepare for a real upcoming lecture. I enter its title, abstract, technical terms, level, focus, locale, and target duration. This public demonstration uses a clearly labeled curated sample—not a live GPT-5.6 call. In the live path, the server uses GPT-5.6 through the OpenAI Responses API and Structured Outputs, then validates the result against the same strict schema used by the extension. I can export a validated pack, import it locally, and prioritize it during my next wait.
 
 ## 1:50–2:15 — Sustainable habit
 

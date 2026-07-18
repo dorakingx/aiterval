@@ -28,7 +28,7 @@ TypeScript、React、WXT、Chrome Manifest V3、Next.js App Router、Zod、OpenA
 
 主要実装とBuild Weekアップグレードの大部分は、同じプライマリCodexタスクで行いました。人間は実体験、1問だけの体験、プライバシー境界、優先順位、Education部門のストーリーを決定しました。Codexは仕様をアーキテクチャ、アダプター、状態機械、スキーマ、UI、テスト、セキュリティ、デプロイ、提出証拠へ落とし込みました。
 
-プライマリタスクの`/feedback` Session ID: **[実際のIDを貼る]**
+プライマリタスクの`/feedback` Session ID: **Submitted privately through Devpost.**
 
 ## GPT-5.6が必要な理由
 
@@ -50,6 +50,6 @@ TypeScript、React、WXT、Chrome Manifest V3、Next.js App Router、Zod、OpenA
 
 - 公開デモ: <https://aiterval-build-week.vercel.app/demo/judge>
 - 講義生成: <https://aiterval-build-week.vercel.app/lecture>
-- 非公開リポジトリ: <https://github.com/dorakingx/aiterval>
+- 公開リポジトリ: <https://github.com/dorakingx/aiterval>
 
 公開デモはログイン・キー不要です。ライブ生成コードはDevpostの非公開テスト欄だけへ記載します。AI作業中のプロンプトや回答は読み取りも送信もしません。講義情報は生成ボタンを押した時だけOpenAIへ送られ、分析・広告・追跡SDKはありません。ライブ生成はサーバー認証情報と上限に依存し、Chrome Web Store公開と5名の実地テストは未完了の手動作業です。

@@ -15,7 +15,7 @@ AIterval 0.2.0 is the Education-track Build Week edition. It was created with Co
 
 - Public no-login judge demo: <https://aiterval-build-week.vercel.app/demo/judge>
 - Lecture-to-Sprints: <https://aiterval-build-week.vercel.app/lecture>
-- Private source repository: <https://github.com/dorakingx/aiterval>
+- Public source repository: <https://github.com/dorakingx/aiterval>
 - Submission track: **Education**
 
 Live generation and sample mode are deliberately distinct. Sample mode is public, free, and labeled as curated sample data. Live GPT-5.6 generation runs only when the deployment has a server-side `OPENAI_API_KEY`, a GPT-5.6-family `OPENAI_MODEL`, and a private `DEMO_ACCESS_CODE`.
@@ -86,6 +86,7 @@ See [docs/privacy.md](docs/privacy.md) for the exact data and permission model.
 4. For the packaged extension, download the `v0.2.0` release ZIP, load its unpacked directory from `chrome://extensions`, and follow [docs/judge-testing-guide.md](docs/judge-testing-guide.md).
 
 The private live-generation access code belongs only in the Devpost testing instructions. It is never committed. Chrome Web Store publication is not complete.
+The primary Codex task `/feedback` Session ID is also submitted privately through Devpost and is never published in this repository, screenshots, client bundles, or the demo video.
 
 ## What was built during the Submission Period
 
@@ -171,7 +172,7 @@ Coverage includes canonical output/input schemas, storage migration, provenance,
 
 ## Deployment
 
-The public Next.js deployment runs on the already-authenticated Vercel account and exposes static sample pages plus the server-side generation route. The earlier owner-only Sites deployment at <https://aiterval.doraking.chatgpt.site> is retained and was not made public or deleted. Production secrets are configured only in the hosting provider. If the API key or access code is absent, live generation returns a safe unavailable response and the sample remains usable.
+The public Next.js deployment runs on the already-authenticated Vercel account and exposes static sample pages plus the server-side generation route. An earlier owner-only Sites deployment is retained, but its private URL is intentionally omitted. Production secrets are configured only in the hosting provider. If the API key or access code is absent, live generation returns a safe unavailable response and the sample remains usable.
 
 ## How wait detection works
 
