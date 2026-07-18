@@ -69,7 +69,7 @@ describe("LectureForm", () => {
       screen.getByRole("button", { name: "Try the no-key sample" }),
     );
     expect(
-      screen.getByText("Curated sample · not live GPT-5.6 output"),
+      screen.getByText("Curated sample—not a live GPT-5.6 call"),
     ).toBeVisible();
     expect(
       screen.getByRole("heading", { name: "Why establish a baseline?" }),

@@ -39,7 +39,7 @@ await page.goto("http://127.0.0.1:3000/lecture", {
 });
 await page.waitForTimeout(1_000);
 await page.getByRole("button", { name: "Try the no-key sample" }).click();
-await page.getByText("Curated sample · not live GPT-5.6 output").waitFor();
+await page.getByText("Curated sample—not a live GPT-5.6 call").waitFor();
 await page.waitForTimeout(3_000);
 await page.getByRole("button", { name: "日本語" }).click();
 await page.waitForTimeout(2_000);

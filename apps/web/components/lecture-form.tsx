@@ -402,7 +402,7 @@ export function LectureForm() {
             <Badge>
               {result.kind === "live"
                 ? `Generated with ${result.model}`
-                : "Curated sample · not live GPT-5.6 output"}
+                : "Curated sample—not a live GPT-5.6 call"}
             </Badge>
           </div>
           {result.kind === "sample" && <p>{sampleLecture.abstract}</p>}

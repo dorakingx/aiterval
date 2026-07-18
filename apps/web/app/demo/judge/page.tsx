@@ -49,7 +49,7 @@ export default function JudgeDemoPage() {
             <p className="kicker">2 · Upcoming lecture</p>
             <h2 id="sample-pack-title">{sampleLecture.title}</h2>
           </div>
-          <Badge>Curated sample · not live GPT-5.6 output</Badge>
+          <Badge>Curated sample—not a live GPT-5.6 call</Badge>
         </div>
         <p>{sampleLecture.abstract}</p>
         <Card className="result-card">

@@ -75,7 +75,7 @@ test("Lecture-to-Sprints supports sample mode and Japanese UI", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "APIキー不要のサンプル" }).click();
   await expect(
-    page.getByText("Curated sample · not live GPT-5.6 output"),
+    page.getByText("Curated sample—not a live GPT-5.6 call"),
   ).toBeVisible();
 });
 
