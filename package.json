@@ -19,7 +19,7 @@
     "capture:demo": "node tests/capture-demo.mjs",
     "build": "pnpm -r --if-present build",
     "build:web-worker": "pnpm --filter @aiterval/web build:sites",
-    "zip:extension": "pnpm --filter @aiterval/extension zip",
+    "zip:extension": "pnpm --filter @aiterval/extension zip && node scripts/package-extension.mjs",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:e2e && pnpm zip:extension",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
