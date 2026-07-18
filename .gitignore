@@ -1,10 +1,10 @@
 node_modules/
 .next/
+out/
 .wxt/
 .output/
 .open-next/
 .wrangler/
-dist/
 dist/
 coverage/
 playwright-report/

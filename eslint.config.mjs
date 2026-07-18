@@ -4,6 +4,7 @@ export default tseslint.config(
   {
     ignores: [
       "**/.next/**",
+      "**/out/**",
       "**/.output/**",
       "**/.open-next/**",
       "**/.wxt/**",
