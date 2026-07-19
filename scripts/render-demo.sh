@@ -9,9 +9,9 @@ FINAL_DIR="$REPO_ROOT/artifacts/demo/final"
 
 mkdir -p "$WORK_DIR" "$FINAL_DIR"
 
-names=(01-intro 02-judge 03-extension-dashboard 04-privacy 05-development 06-closing)
-durations=(15 40 55 20 25 10)
-offsets=(0 0 8 0 0 1.5)
+names=(01-intro 02-judge 03-ai-ready 04-dashboard 05-privacy 06-development 07-closing)
+durations=(16 42 32 25 20 23 10)
+offsets=(0 0 0 0 0 0 0)
 
 for index in "${!names[@]}"; do
   input="$RAW_DIR/${names[$index]}.webm"
@@ -43,24 +43,47 @@ ffmpeg -hide_banner -loglevel warning -y -i "$SILENT" -i "$WORK_DIR/mixed-audio.
 cp "$REPO_ROOT/docs/video/captions-en.srt" "$FINAL_DIR/aiterval-build-week-demo-en.srt"
 cp "$REPO_ROOT/docs/video/captions-ja.srt" "$FINAL_DIR/aiterval-build-week-demo-ja.srt"
 
-ffmpeg -hide_banner -loglevel warning -y -ss 10 -i "$NARRATED" -frames:v 1 \
-  -vf "scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=#fffdf7" \
-  -update 1 \
-  "$FINAL_DIR/thumbnail.png"
+node "$SCRIPT_DIR/render-demo-assets.mjs"
+
+for item in "01:00:30" "02:01:15" "03:01:43"; do
+  number="${item%%:*}"
+  timestamp="${item#*:}"
+  ffmpeg -hide_banner -loglevel warning -y -ss "$timestamp" -i "$NARRATED" \
+    -frames:v 1 -update 1 "$FINAL_DIR/devpost-gallery-$number.png"
+done
 
 voice="$(tr -d '\r\n' < "$WORK_DIR/narration-voice.txt")"
 duration="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$NARRATED")"
-cat > "$FINAL_DIR/metadata.txt" <<EOF
-Title: AIterval — OpenAI Build Week Education Demo
-Runtime scope: 132 original pre-authored exercises; no runtime AI generation
-Narration voice: $voice
-Duration seconds: $duration
-Resolution: 1920x1080
-Frame rate: 30 fps
-Video: H.264, yuv420p, fast start
-Audio: AAC narration with low-volume exercise speech; no music
+cat > "$FINAL_DIR/youtube-metadata.txt" <<EOF
+Title: AIterval — Turn AI Waiting Time into English Listening Practice
+
+Description:
+AIterval is a local-first Chrome extension that turns 15–90 seconds of AI waiting time into one focused English listening exercise. The submitted v0.2.1 runtime includes 132 original pre-authored exercises, works without an API key, and keeps progress in the browser.
+
 Public demo: https://aiterval-build-week.vercel.app/demo/judge
 Repository: https://github.com/dorakingx/aiterval
+Release: https://github.com/dorakingx/aiterval/releases/tag/v0.2.1
+
+Built for OpenAI Build Week — Education. Codex with GPT-5.6 supported design, implementation, testing, security, deployment, and release work. GPT-5.6 is not a runtime exercise generator in the submitted product.
+
+Narration voice: $voice
+Duration seconds: $duration
+Resolution: 1920x1080 at 30 fps
+Video: H.264, yuv420p, fast start
+Audio: AAC narration with low-volume exercise speech; no music
 EOF
 
-printf 'Rendered narrated and silent demo artifacts.\n'
+cp "$REPO_ROOT/docs/devpost-submission-en.md" "$FINAL_DIR/devpost-final-en.md"
+cat > "$FINAL_DIR/devpost-private-fields-checklist.txt" <<'EOF'
+DEVPOST PRIVATE FIELDS — MANUAL ONLY
+
+[ ] Paste the primary Codex task /feedback Session ID into Devpost's private Session ID field.
+[ ] Upload the narrated MP4 to YouTube as Public.
+[ ] Paste the resulting public YouTube URL into the Devpost video field.
+[ ] Confirm that no judge access code is requested or supplied; none exists.
+[ ] Proofread all public fields and submit before the deadline.
+
+Never paste the private Session ID into the repository, video, subtitles, screenshots, YouTube metadata, or public description.
+EOF
+
+printf 'Rendered narrated and silent demo artifacts and submission package.\n'

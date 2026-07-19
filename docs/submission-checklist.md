@@ -23,7 +23,7 @@
 ## Public access
 
 - [x] Confirm the public repository opens while signed out.
-- [x] Confirm the v0.2.0 release and both assets are public.
+- [x] Confirm the v0.2.1 release and both assets are public.
 - [x] Confirm the release ZIP checksum.
 - [ ] Reconfirm the final production deployment while signed out.
 
@@ -32,8 +32,8 @@
 - [x] Recorder uses headless Playwright, the real product, and deterministic fixtures.
 - [x] Narration identifies all exercises as pre-authored.
 - [x] No personal account, microphone, camera, copyrighted music, or live API call.
-- [ ] Review the final English and Japanese captions.
-- [ ] Confirm runtime is strictly below 3:00 and all verification checks pass.
+- [ ] Review the final English and Japanese captions and all eight extracted frames.
+- [ ] Confirm runtime is 2:25–2:50, strictly below 3:00, and all verification checks pass.
 - [ ] Upload to YouTube manually; automation must not access the account.
 
 ## Final technical review
@@ -42,5 +42,5 @@
 - [ ] Public judge demo uses the 132-exercise flow without login or a key.
 - [ ] `/lecture` redirects and the generation API remains archived.
 - [ ] Secret, production-bundle, video-frame, subtitle, narration, log, and metadata scans are clean.
-- [ ] ZIP checksum and v0.2.0 tag/release remain unchanged.
+- [ ] v0.2.1 ZIP checksum is unchanged; v0.2.0 and v0.2.1 tags/releases remain unchanged.
 - [ ] Devpost contains the `/feedback` Session ID privately and no public artifact does.

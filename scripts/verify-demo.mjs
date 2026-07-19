@@ -9,18 +9,22 @@ const finalDir = path.join(artifactRoot, "final");
 const verificationDir = path.join(artifactRoot, "verification");
 const narrated = path.join(finalDir, "aiterval-build-week-demo-en.mp4");
 const silent = path.join(finalDir, "aiterval-build-week-demo-silent.mp4");
-const thumbnail = path.join(finalDir, "thumbnail.png");
+const englishSrtPath = path.join(finalDir, "aiterval-build-week-demo-en.srt");
+const japaneseSrtPath = path.join(finalDir, "aiterval-build-week-demo-ja.srt");
+const thumbnail = path.join(finalDir, "aiterval-youtube-thumbnail.png");
+const gallery = [1, 2, 3].map((number) =>
+  path.join(finalDir, `devpost-gallery-${String(number).padStart(2, "0")}.png`),
+);
 const plan = JSON.parse(
   await readFile(path.join(root, "scripts", "demo-scenes.json"), "utf8"),
 );
 
 function run(command, args, options = {}) {
   const result = spawnSync(command, args, { encoding: "utf8", ...options });
-  if (result.status !== 0) {
+  if (result.status !== 0)
     throw new Error(
       `${command} failed: ${(result.stderr || result.stdout).trim()}`,
     );
-  }
   return result;
 }
 
@@ -68,7 +72,15 @@ function parseSrt(source) {
     });
 }
 
-for (const file of [narrated, silent, thumbnail]) await access(file);
+for (const file of [
+  narrated,
+  silent,
+  englishSrtPath,
+  japaneseSrtPath,
+  thumbnail,
+  ...gallery,
+])
+  await access(file);
 const narratedProbe = probe(narrated);
 const silentProbe = probe(silent);
 const duration = Number(narratedProbe.format.duration);
@@ -84,6 +96,10 @@ assert(
   `Duration ${duration}s is outside 2:25–2:50`,
 );
 assert(duration < 180, "Duration is not strictly below three minutes");
+assert(
+  Math.abs(duration - plan.durationSeconds) <= 0.25,
+  "Duration differs from the scene plan",
+);
 assert(
   video?.width === 1920 && video?.height === 1080,
   "Video is not 1920x1080",
@@ -109,16 +125,8 @@ assert(
   "Silent video contains audio",
 );
 
-const englishSrt = await readFile(
-  path.join(finalDir, "aiterval-build-week-demo-en.srt"),
-  "utf8",
-);
-const japaneseSrt = await readFile(
-  path.join(finalDir, "aiterval-build-week-demo-ja.srt"),
-  "utf8",
-);
-const englishCues = parseSrt(englishSrt);
-const japaneseCues = parseSrt(japaneseSrt);
+const englishCues = parseSrt(await readFile(englishSrtPath, "utf8"));
+const japaneseCues = parseSrt(await readFile(japaneseSrtPath, "utf8"));
 assert(
   englishCues.length === plan.scenes.length,
   "English caption count does not match narration scenes",
@@ -144,7 +152,7 @@ const normalize = (value) => value.replace(/\s+/g, " ").trim();
 assert(
   normalize(englishCues.map((cue) => cue.text).join(" ")) ===
     normalize(plan.scenes.map((scene) => scene.narration).join(" ")),
-  "English captions do not match the narration source",
+  "English captions do not match narration source",
 );
 const wordCount = plan.scenes
   .map((scene) => scene.narration)
@@ -152,8 +160,8 @@ const wordCount = plan.scenes
   .trim()
   .split(/\s+/).length;
 assert(
-  wordCount >= 230 && wordCount <= 260,
-  `Narration word count ${wordCount} is outside 230–260`,
+  wordCount >= 235 && wordCount <= 260,
+  `Narration word count ${wordCount} is outside 235–260`,
 );
 
 const black = run(
@@ -194,7 +202,6 @@ assert(
   !/freeze_start:/.test(freeze.stderr),
   "An unexpected frozen frame of at least twelve seconds was detected",
 );
-
 const volume = run("ffmpeg", [
   "-hide_banner",
   "-i",
@@ -219,12 +226,13 @@ await mkdir(verificationDir, { recursive: true });
 for (const timestamp of [
   "00:10",
   "00:30",
-  "01:00",
-  "01:30",
-  "02:00",
-  "02:35",
+  "01:05",
+  "01:25",
+  "01:45",
+  "02:05",
+  "02:28",
+  "02:42",
 ]) {
-  const safeName = timestamp.replace(":", "-");
   run("ffmpeg", [
     "-hide_banner",
     "-loglevel",
@@ -236,7 +244,7 @@ for (const timestamp of [
     narrated,
     "-frames:v",
     "1",
-    path.join(verificationDir, `${safeName}.png`),
+    path.join(verificationDir, `${timestamp.replace(":", "-")}.png`),
   ]);
 }
 
@@ -244,9 +252,11 @@ const textFiles = [
   path.join(artifactRoot, "recorded-text.txt"),
   path.join(artifactRoot, "record-demo.log"),
   path.join(artifactRoot, "render-demo.log"),
-  path.join(finalDir, "metadata.txt"),
-  path.join(finalDir, "aiterval-build-week-demo-en.srt"),
-  path.join(finalDir, "aiterval-build-week-demo-ja.srt"),
+  path.join(finalDir, "youtube-metadata.txt"),
+  path.join(finalDir, "devpost-final-en.md"),
+  path.join(finalDir, "devpost-private-fields-checklist.txt"),
+  englishSrtPath,
+  japaneseSrtPath,
 ];
 const forbidden = [
   [/\bsk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{20,}\b/, "API credential pattern"],
@@ -256,12 +266,27 @@ const forbidden = [
   ],
   [/\/Users\//, "local absolute path"],
   [/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i, "email address"],
+  [/DEMO_ACCESS_CODE\s*=/, "access-code assignment"],
+  [/speech stops automatically/i, "obsolete interruption claim"],
+  [/exercises? (?:are|is) generated at runtime/i, "runtime generation claim"],
 ];
 for (const file of textFiles) {
   const source = await readFile(file, "utf8");
   for (const [pattern, label] of forbidden)
     assert(!pattern.test(source), `${label} found in ${path.basename(file)}`);
 }
+
+let binaryText = "";
+for (const file of [narrated, silent, thumbnail, ...gallery]) {
+  binaryText += run("strings", [file]).stdout;
+}
+for (const [pattern, label] of [
+  forbidden[0],
+  forbidden[1],
+  forbidden[2],
+  forbidden[4],
+])
+  assert(!pattern.test(binaryText), `${label} found in media strings`);
 
 const thumbnailProbe = probe(thumbnail).streams.find(
   (stream) => stream.codec_type === "video",
@@ -270,7 +295,16 @@ assert(
   thumbnailProbe?.width === 1280 && thumbnailProbe?.height === 720,
   "Thumbnail is not 1280x720",
 );
+for (const image of gallery) {
+  const imageProbe = probe(image).streams.find(
+    (stream) => stream.codec_type === "video",
+  );
+  assert(
+    imageProbe?.width === 1920 && imageProbe?.height === 1080,
+    `${path.basename(image)} is not 1920x1080`,
+  );
+}
 
 process.stdout.write(
-  `Verified ${duration.toFixed(3)}s, 1920x1080, 30 fps, H.264/yuv420p, AAC narration, silent alternate, ${wordCount} narration words, clean text/privacy scan, and six review frames.\n`,
+  `Verified ${duration.toFixed(3)}s, 1920x1080, 30 fps, H.264/yuv420p, AAC narration, silent alternate, ${wordCount} narration words, clean privacy/claim scans, and eight review frames.\n`,
 );

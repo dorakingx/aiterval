@@ -53,7 +53,7 @@ This is a development role, not a runtime product claim. The submitted extension
 uses deterministic pre-authored exercises and makes no OpenAI API call.
 
 The primary Codex task `/feedback` Session ID is submitted privately through
-Devpost.
+Devpost and does not appear in public project artifacts.
 
 ## Challenges and accomplishments
 
@@ -87,14 +87,21 @@ GitHub Actions.
 
 - Public demo: <https://aiterval-build-week.vercel.app/demo/judge>
 - Public repository: <https://github.com/dorakingx/aiterval>
-- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.1>
+- v0.2.1 release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.1>
+- Chrome ZIP: <https://github.com/dorakingx/aiterval/releases/download/v0.2.1/aitervalextension-0.2.1-chrome.zip>
 
 ## Testing instructions
 
-Open the signed-out judge demo, select **Send prompt and try it**, complete the
-pre-authored exercise, and observe the non-destructive AI-ready notice and
-recovered-time update. The release ZIP can be installed without rebuilding; detailed steps are
-in `docs/judge-testing-guide.md`.
+For the fastest signed-out test, open the public judge demo, select **Send prompt
+and try it**, complete the pre-authored exercise, and observe the readable,
+non-destructive AI-ready notice and recovered-time update.
+
+To test the actual extension, download the v0.2.1 Chrome ZIP and extract it.
+Open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**,
+and select the extracted folder that directly contains `manifest.json`. Chrome
+Web Store publication is not complete, and Chrome cannot install this ZIP
+directly. Detailed instructions and troubleshooting are in the public install
+page and `docs/judge-testing-guide.md`.
 
 ## Privacy and limitations
 
@@ -102,4 +109,4 @@ The extension observes generation-state controls only. It never reads prompts
 or responses. Progress is stored locally, and there are no analytics, ads,
 tracking pixels, or remote extension scripts. Speech voices and automatic
 detection depend on the browser and changing third-party interfaces. Chrome Web
-Store publication and real five-person testing remain incomplete.
+Store publication and the planned five-person usability study remain incomplete.

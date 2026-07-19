@@ -1,27 +1,27 @@
 1
-00:00:01,000 --> 00:00:15,000
-At an international summer school, I struggled to follow lectures and conversations in English. As a researcher, I had little dedicated study time. Meanwhile, I kept waiting for AI tools to finish.
+00:00:01,000 --> 00:00:16,000
+At an international summer school, I struggled to follow lectures and conversations in English. As a researcher, I had little dedicated study time. Meanwhile, AI tools repeatedly made me wait.
 
 2
-00:00:16,000 --> 00:00:55,000
-AIterval connects those problems. I send normal work, and it observes only semantic generation-state controls—never my prompt or the response. During the wait, one short listening card appears. When the AI is ready, AIterval notifies me without cutting off the current sentence. I can finish the question or return immediately, and completed learning time is recorded locally.
+00:00:17,000 --> 00:00:58,000
+AIterval connects them. It observes only semantic generation-state controls—never my prompt or the response. After the threshold, one pre-authored listening exercise appears. I play the sentence, choose an answer, get clear feedback, and turn lost seconds into recovered learning time.
 
 3
-00:00:56,000 --> 00:01:25,000
-This is the actual Manifest V3 extension running in a deterministic demo environment. The same isolated overlay, audio controls, answer flow, and non-destructive completion notice are tested against supported-site fixtures, without opening a personal AI account.
+00:00:59,000 --> 00:01:30,000
+Here is the released Manifest V3 extension in a deterministic fixture. The host AI becomes ready while speech is still playing. The readable notice appears, but audio continues naturally and every exercise control remains available. I can finish the question or use Return to AI now.
 
 4
-00:01:26,000 --> 00:01:50,000
-The dashboard turns tiny sessions into a learning system: recovered time, completed exercises, review queue, weak skills, difficulty, and voice settings. All 132 original exercises work without an API key.
+00:01:31,000 --> 00:01:55,000
+Those tiny sessions form a learning system: recovered time, completed exercises, a review queue, weak skills, difficulty and topic preferences, and English voice selection. All 132 original, pre-authored exercises work locally without an API key.
 
 5
-00:01:51,000 --> 00:02:10,000
-Privacy is a product constraint. AIterval never reads prompts or responses. It observes generation-state controls only. Progress stays local, with no analytics, ads, tracking pixels, or remote extension code.
+00:01:56,000 --> 00:02:15,000
+Privacy is a product constraint. AIterval never reads prompts or responses. It observes only narrow generation-state controls. Learning progress remains local, with no analytics, advertising, tracking SDK, or remote extension code.
 
 6
-00:02:11,000 --> 00:02:35,000
-I supplied the lived problem, product decisions, learning loop, and privacy rules. Codex with GPT-5.6 implemented and refined the architecture, adapters, deterministic state machine, interface, tests, deployment, and submission evidence. The public repository, architecture notes, and green continuous integration make that work inspectable. GPT-5.6 supported development; it does not generate exercises in the submitted runtime.
+00:02:16,000 --> 00:02:38,000
+I supplied the lived problem, core interaction, product direction, privacy boundaries, and final design decisions. Codex with GPT-5.6 implemented and refined the state machine, browser adapters, interface, accessibility, tests, deployment, and release workflow. The public repository, architecture notes, tests, and green continuous integration make that inspectable. GPT-5.6 supported development; it does not generate exercises at runtime.
 
 7
-00:02:36,000 --> 00:02:45,000
+00:02:39,000 --> 00:02:48,000
 AIterval does not ask busy people to find more time. It turns time they already lose into a learning habit.
