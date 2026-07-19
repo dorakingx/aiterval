@@ -16,7 +16,7 @@ exercise-generation service.
 
 - Public judge demo: <https://aiterval-build-week.vercel.app/demo/judge>
 - Privacy model: <https://aiterval-build-week.vercel.app/privacy>
-- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.0>
+- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.1>
 - Judge guide: [docs/judge-testing-guide.md](docs/judge-testing-guide.md)
 
 The public demo is signed-out and uses the same pre-authored exercise library.
@@ -62,12 +62,12 @@ the deterministic pre-authored library. See
 
 ## Install the release
 
-1. Download `aitervalextension-0.2.0-chrome.zip` and `SHA256SUMS.txt` from
-   [v0.2.0](https://github.com/dorakingx/aiterval/releases/tag/v0.2.0).
+1. Download `aitervalextension-0.2.1-chrome.zip` and `SHA256SUMS.txt` from
+   [v0.2.1](https://github.com/dorakingx/aiterval/releases/tag/v0.2.1).
 2. Verify the ZIP SHA-256:
 
    ```text
-   7e2bc8ed9195820aa526b3be0fd2de593c23a8a5d465693ca12a73b3f726bb58
+   92bca4f885e99519fcda0ad02b077b4c90e25ffb303d086bc9d53a168715e95d
    ```
 
 3. Unzip it, open `chrome://extensions`, enable Developer mode, choose

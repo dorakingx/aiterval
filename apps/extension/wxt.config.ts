@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: {
     name: "AIterval — English in AI wait time",
     description: "Turn AI waiting time into short English listening practice.",
-    version: "0.2.0",
+    version: "0.2.1",
     permissions: ["storage", "activeTab", "scripting", "contextMenus"],
     host_permissions: [
       "https://chatgpt.com/*",

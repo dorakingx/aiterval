@@ -4,7 +4,7 @@ No build, login, OpenAI key, or access code is required.
 
 - Public demo: <https://aiterval-build-week.vercel.app/demo/judge>
 - Public repository: <https://github.com/dorakingx/aiterval>
-- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.0>
+- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.1>
 
 The primary Codex task `/feedback` Session ID is submitted privately through
 Devpost.
@@ -22,13 +22,13 @@ exercise generation and Lecture-to-Sprints are not submitted product features.
 
 ## Extension package
 
-- ZIP: `aitervalextension-0.2.0-chrome.zip`
-- SHA-256: `7e2bc8ed9195820aa526b3be0fd2de593c23a8a5d465693ca12a73b3f726bb58`
+- ZIP: `aitervalextension-0.2.1-chrome.zip`
+- SHA-256: `92bca4f885e99519fcda0ad02b077b4c90e25ffb303d086bc9d53a168715e95d`
 - Requirements: current desktop Chrome, Manifest V3, and browser speech synthesis
 
 Installation:
 
-1. Download the ZIP and `SHA256SUMS.txt` from the v0.2.0 release.
+1. Download the ZIP and `SHA256SUMS.txt` from the v0.2.1 release.
 2. Verify the checksum.
 3. Unzip it.
 4. Open `chrome://extensions`, enable Developer mode, choose **Load unpacked**,

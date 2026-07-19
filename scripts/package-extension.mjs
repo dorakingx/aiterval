@@ -15,7 +15,7 @@ const zipPath = path.join(
   "apps",
   "extension",
   ".output",
-  "aitervalextension-0.2.0-chrome.zip",
+  "aitervalextension-0.2.1-chrome.zip",
 );
 const fixedTime = new Date("2000-01-01T00:00:00.000Z");
 

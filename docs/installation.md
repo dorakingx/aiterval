@@ -1,4 +1,4 @@
-# AIterval 0.2.0 installation
+# AIterval 0.2.1 installation
 
 ## Supported setup
 
@@ -6,12 +6,12 @@ Use current desktop Google Chrome on macOS, Windows, or Linux. AIterval is a Man
 
 ## Install the verified release
 
-1. Download `aitervalextension-0.2.0-chrome.zip` and `SHA256SUMS.txt` from [GitHub Releases](https://github.com/dorakingx/aiterval/releases/tag/v0.2.0).
+1. Download `aitervalextension-0.2.1-chrome.zip` and `SHA256SUMS.txt` from [GitHub Releases](https://github.com/dorakingx/aiterval/releases/tag/v0.2.1).
 2. Verify the file:
-   - macOS/Linux: `shasum -a 256 aitervalextension-0.2.0-chrome.zip`
-   - Windows PowerShell: `Get-FileHash -Algorithm SHA256 .\aitervalextension-0.2.0-chrome.zip`
+   - macOS/Linux: `shasum -a 256 aitervalextension-0.2.1-chrome.zip`
+   - Windows PowerShell: `Get-FileHash -Algorithm SHA256 .\aitervalextension-0.2.1-chrome.zip`
 3. Extract the ZIP.
-4. Open `chrome://extensions`.
+4. Open `chrome://extensions` in Chrome or `brave://extensions` in Brave.
 5. Enable **Developer mode**, select **Load unpacked**, and choose the extracted folder that directly contains `manifest.json`.
 6. Complete onboarding and test with the manual shortcut: `Command+Shift+L` on macOS or `Ctrl+Shift+L` on Windows/Linux.
 

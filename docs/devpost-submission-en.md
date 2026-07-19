@@ -87,7 +87,7 @@ GitHub Actions.
 
 - Public demo: <https://aiterval-build-week.vercel.app/demo/judge>
 - Public repository: <https://github.com/dorakingx/aiterval>
-- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.0>
+- Release: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.1>
 
 ## Testing instructions
 

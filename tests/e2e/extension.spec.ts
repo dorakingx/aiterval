@@ -8,7 +8,10 @@ import {
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
-const extensionPath = path.resolve("apps/extension/.output/chrome-mv3");
+const extensionPath = path.resolve(
+  process.env.AITERVAL_EXTENSION_PATH ?? "apps/extension/.output/chrome-mv3",
+);
+const browserExecutable = process.env.AITERVAL_BROWSER_EXECUTABLE;
 const fixtureRoot = path.resolve("test-fixtures");
 let context: BrowserContext;
 
@@ -225,7 +228,9 @@ function contrast(foreground: string, background: string): number {
 
 test.beforeAll(async () => {
   context = await chromium.launchPersistentContext("", {
-    channel: "chromium",
+    ...(browserExecutable
+      ? { executablePath: browserExecutable }
+      : { channel: "chromium" }),
     headless: true,
     args: [
       `--disable-extensions-except=${extensionPath}`,
@@ -283,10 +288,10 @@ test("active listening reaches its natural end after ChatGPT becomes ready", asy
 });
 
 test("duplicate AI-ready signals do not duplicate UI, sessions, or recovered time", async () => {
-  const before = await storedData();
   const page = await openFixture("chatgpt");
   const host = page.locator("#aiterval-shadow-host");
   await expect(host).toHaveCount(1, { timeout: 8_000 });
+  const before = await storedData();
   await page
     .getByRole("button", { name: "Finish generation" })
     .evaluate((button) => (button as HTMLButtonElement).click());
@@ -309,12 +314,13 @@ test("duplicate AI-ready signals do not duplicate UI, sessions, or recovered tim
 for (const action of [
   { button: "Return to AI now", state: "dismissed" },
   { button: "Save for later", state: "saved_for_later" },
+  { button: "Close listening sprint", state: "dismissed" },
 ] as const) {
   test(`${action.button} closes once without completing a session`, async () => {
-    const before = await storedData();
     const page = await openFixture("chatgpt");
     const host = page.locator("#aiterval-shadow-host");
     await expect(host).toHaveCount(1, { timeout: 8_000 });
+    const before = await storedData();
     await page.getByRole("button", { name: "Finish generation" }).click();
     await host.getByRole("button", { name: action.button }).click();
     await expect(host).toHaveCount(0);
@@ -327,6 +333,34 @@ for (const action of [
     await page.close();
   });
 }
+
+test("AI-ready controls remain usable at 200% page scale", async () => {
+  const page = await openFixture("chatgpt");
+  const devtools = await context.newCDPSession(page);
+  await devtools.send("Emulation.setPageScaleFactor", { pageScaleFactor: 2 });
+  await expect
+    .poll(() =>
+      page.evaluate(() => ({
+        scale: window.visualViewport?.scale,
+        width: window.visualViewport?.width,
+      })),
+    )
+    .toMatchObject({ scale: 2 });
+
+  const host = page.locator("#aiterval-shadow-host");
+  await expect(host).toHaveCount(1, { timeout: 8_000 });
+  await page.getByRole("button", { name: "Finish generation" }).click();
+  const notice = host.getByLabel("Your AI is ready");
+  await expect(notice).toBeVisible();
+  await expect(
+    notice.getByRole("button", { name: "Return to AI now" }),
+  ).toBeVisible();
+  await expect(
+    notice.getByRole("button", { name: "Save for later" }),
+  ).toBeVisible();
+  await devtools.detach();
+  await page.close();
+});
 
 for (const theme of ["light", "dark"] as const) {
   test(`AI-ready notice maintains AA contrast on a ${theme} host`, async () => {

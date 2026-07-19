@@ -69,7 +69,7 @@ Devpost.
 
 - 公開デモ: <https://aiterval-build-week.vercel.app/demo/judge>
 - 公開リポジトリ: <https://github.com/dorakingx/aiterval>
-- リリース: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.0>
+- リリース: <https://github.com/dorakingx/aiterval/releases/tag/v0.2.1>
 
 公開デモはログイン・キー不要です。拡張は生成状態を示すコントロールだけを観察し、
 プロンプトや回答を読みません。進捗はローカル保存され、分析、広告、追跡ピクセル、
