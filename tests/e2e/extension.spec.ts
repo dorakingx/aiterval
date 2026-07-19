@@ -1,4 +1,10 @@
-import { chromium, expect, test, type BrowserContext } from "@playwright/test";
+import {
+  chromium,
+  expect,
+  test,
+  type BrowserContext,
+  type Page,
+} from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -26,6 +32,133 @@ async function storedData(): Promise<{
   });
   await page.close();
   return data;
+}
+
+async function installSpeechProbe(page: Page): Promise<void> {
+  const worker =
+    context.serviceWorkers()[0] ??
+    (await context.waitForEvent("serviceworker"));
+  await worker.evaluate(async (url) => {
+    const [tab] = await chrome.tabs.query({ url });
+    if (!tab?.id) throw new Error("Fixture tab not found");
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: "ISOLATED",
+      func: () => {
+        class FakeSpeechSynthesisUtterance {
+          lang = "";
+          onend: (() => void) | null = null;
+          onerror: (() => void) | null = null;
+          rate = 1;
+          text: string;
+          voice: SpeechSynthesisVoice | null = null;
+          volume = 1;
+          constructor(text: string) {
+            this.text = text;
+          }
+        }
+        const probe = {
+          cancelCount: 0,
+          speakCount: 0,
+          utterance: undefined as FakeSpeechSynthesisUtterance | undefined,
+        };
+        Object.defineProperty(globalThis, "SpeechSynthesisUtterance", {
+          configurable: true,
+          value: FakeSpeechSynthesisUtterance,
+        });
+        Object.defineProperties(speechSynthesis, {
+          cancel: {
+            configurable: true,
+            value: () => {
+              probe.cancelCount += 1;
+            },
+          },
+          getVoices: {
+            configurable: true,
+            value: () => [
+              {
+                default: true,
+                lang: "en-US",
+                localService: true,
+                name: "AIterval test voice",
+                voiceURI: "aiterval-test",
+              },
+            ],
+          },
+          speak: {
+            configurable: true,
+            value: (utterance: FakeSpeechSynthesisUtterance) => {
+              probe.speakCount += 1;
+              probe.utterance = utterance;
+            },
+          },
+        });
+        Object.defineProperty(globalThis, "__aitervalSpeechProbe", {
+          configurable: true,
+          value: probe,
+        });
+      },
+    });
+  }, page.url());
+}
+
+async function speechProbe(page: Page): Promise<{
+  cancelCount: number;
+  speakCount: number;
+}> {
+  const worker =
+    context.serviceWorkers()[0] ??
+    (await context.waitForEvent("serviceworker"));
+  return worker.evaluate(async (url) => {
+    const [tab] = await chrome.tabs.query({ url });
+    if (!tab?.id) throw new Error("Fixture tab not found");
+    const [injection] = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: "ISOLATED",
+      func: () => {
+        const probe = (
+          globalThis as typeof globalThis & {
+            __aitervalSpeechProbe: {
+              cancelCount: number;
+              speakCount: number;
+            };
+          }
+        ).__aitervalSpeechProbe;
+        return {
+          cancelCount: probe.cancelCount,
+          speakCount: probe.speakCount,
+        };
+      },
+    });
+    if (!injection?.result) throw new Error("Speech probe not installed");
+    return injection.result;
+  }, page.url());
+}
+
+async function finishProbedSpeech(page: Page): Promise<void> {
+  const worker =
+    context.serviceWorkers()[0] ??
+    (await context.waitForEvent("serviceworker"));
+  await worker.evaluate(async (url) => {
+    const [tab] = await chrome.tabs.query({ url });
+    if (!tab?.id) throw new Error("Fixture tab not found");
+    await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: "ISOLATED",
+      func: () => {
+        const probe = (
+          globalThis as typeof globalThis & {
+            __aitervalSpeechProbe: {
+              utterance?: { onend: (() => void) | null };
+            };
+          }
+        ).__aitervalSpeechProbe;
+        if (!probe.utterance?.onend)
+          throw new Error("No active speech utterance");
+        probe.utterance.onend();
+      },
+    });
+  }, page.url());
 }
 
 type FixtureTheme = "light" | "dark";
@@ -128,6 +261,26 @@ for (const site of ["chatgpt", "claude", "gemini"] as const) {
     await page.close();
   });
 }
+
+test("active listening reaches its natural end after ChatGPT becomes ready", async () => {
+  const page = await openFixture("chatgpt");
+  await installSpeechProbe(page);
+  const host = page.locator("#aiterval-shadow-host");
+  await expect(host).toHaveCount(1, { timeout: 8_000 });
+  await host.getByRole("button", { name: "Play audio" }).click();
+  await expect.poll(async () => (await speechProbe(page)).speakCount).toBe(1);
+  const playbackStart = await speechProbe(page);
+
+  await page.getByRole("button", { name: "Finish generation" }).click();
+  await expect(host.getByLabel("Your AI is ready")).toBeVisible();
+  await expect(host.getByRole("button", { name: "Pause audio" })).toBeVisible();
+  expect(await speechProbe(page)).toEqual(playbackStart);
+
+  await finishProbedSpeech(page);
+  await expect(host.locator(".ai-choices button").first()).toBeVisible();
+  expect(await speechProbe(page)).toEqual(playbackStart);
+  await page.close();
+});
 
 test("duplicate AI-ready signals do not duplicate UI, sessions, or recovered time", async () => {
   const before = await storedData();
