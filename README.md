@@ -5,7 +5,8 @@
 AIterval is a local-first Manifest V3 Chrome extension for busy people who want
 to improve English listening without finding another study block. While a
 supported AI interface is visibly working, AIterval offers one short exercise.
-When the AI is ready, speech stops immediately and the user returns to work.
+When the AI is ready, AIterval notifies the learner without cutting off the
+current listening sentence. They can finish the question or return immediately.
 
 The OpenAI Build Week submission uses **132 original pre-authored exercises**.
 It works without an OpenAI API key, account, analytics service, or runtime
@@ -29,7 +30,8 @@ AI work starts
 → AIterval observes a semantic generation-state control
 → one pre-authored listening exercise appears
 → the learner listens and answers
-→ AI completion stops speech immediately
+→ AI completion adds a non-destructive readiness notice
+→ the current sentence and question remain usable
 → recovered waiting time and review progress stay local
 ```
 

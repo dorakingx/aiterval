@@ -7,6 +7,7 @@ import {
   importData,
   recoveredSeconds,
   selectExercise,
+  SprintMachine,
   suggestedDifficulty,
   transition,
   updateReview,
@@ -52,9 +53,11 @@ describe("core", () => {
     expect(transition("idle", { type: "DETECT", at: 1 })).toBe(
       "opportunity_detected",
     );
-    expect(transition("listening", { type: "AI_READY" })).toBe(
-      "paused_ai_ready",
-    );
+    expect(transition("listening", { type: "AI_READY" })).toBe("listening");
+    const machine = new SprintMachine("listening");
+    expect(machine.send({ type: "AI_READY" })).toBe("listening");
+    expect(machine.hostGenerationStatus).toBe("ready");
+    expect(machine.send({ type: "AI_READY" })).toBe("listening");
     expect(transition("completed", { type: "START" })).toBe("completed");
   });
   it("enforces cooldown and hourly limits", () => {
@@ -124,6 +127,12 @@ describe("core", () => {
   });
   it("validates imports and migration defaults", () => {
     expect(importData(emptyStoredData()).schemaVersion).toBe(2);
+    const legacyPaused = emptyStoredData();
+    legacyPaused.runtime.sprintState = "paused_ai_ready";
+    expect(importData(legacyPaused).runtime).toMatchObject({
+      sprintState: "listening",
+      hostGenerationStatus: "ready",
+    });
     expect(() =>
       importData({ ...emptyStoredData(), sessions: [{ unsafe: "x" }] }),
     ).toThrow();

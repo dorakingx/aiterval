@@ -14,7 +14,7 @@ Devpost.
 1. Open the public judge demo.
 2. Select **Send prompt and try it**.
 3. Play the pre-authored listening exercise, answer it, and inspect the feedback.
-4. Observe the **Your AI is ready** interruption and recovered-time update.
+4. Observe the **Your AI is ready** notice while the listening flow remains usable.
 5. Review the privacy page and the built-in-library explanation.
 
 The submitted experience uses 132 original pre-authored exercises. Runtime AI
@@ -40,7 +40,8 @@ Installation:
 
 - One pre-authored card appears after the configured wait threshold.
 - Playback uses an English voice reported by the browser.
-- AI completion stops speech and changes the card to **Your AI is ready**.
+- AI completion shows **Your AI is ready** without cutting off the current
+  sentence; the learner can finish the question or select **Return to AI now**.
 - Progress, reviews, settings, and recovered time remain local.
 - The extension never reads or displays conversation content.
 

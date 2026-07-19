@@ -19,7 +19,8 @@ A small success is listening once, answering once, or reviewing one missed expre
 3. One listening sprint appears in a non-blocking corner overlay.
 4. The transcript remains hidden during audio.
 5. User answers one question and receives evidence-grounded feedback.
-6. If the AI finishes, audio pauses and the user chooses return, finish, or save.
+6. If the AI finishes, a readiness notice appears while the current sentence
+   continues; the user chooses return, finish, or save.
 7. Progress is stored locally immediately.
 
 ## Content and personalization

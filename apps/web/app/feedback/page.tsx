@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: "Feedback" };
 const questions = [
   "What did you think AIterval did within the first 10 seconds?",
   "Could you start the first listening sprint without help?",
-  "Was the AI-ready interruption understandable?",
+  "Was the non-destructive AI-ready notice understandable?",
   "Would you use this during normal AI work? Why or why not?",
   "Which listening topics would make the built-in library more useful?",
   "What was confusing?",

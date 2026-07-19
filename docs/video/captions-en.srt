@@ -4,11 +4,11 @@ At an international summer school, I struggled to follow lectures and conversati
 
 2
 00:00:16,000 --> 00:00:55,000
-AIterval connects those problems. I send normal work, and it observes only semantic generation-state controls—never my prompt or the response. During the wait, one short listening card appears. I play a pre-authored exercise, answer, and see immediate feedback. When the AI is ready, speech stops, my work regains focus, and recovered waiting time increases.
+AIterval connects those problems. I send normal work, and it observes only semantic generation-state controls—never my prompt or the response. During the wait, one short listening card appears. When the AI is ready, AIterval notifies me without cutting off the current sentence. I can finish the question or return immediately, and completed learning time is recorded locally.
 
 3
 00:00:56,000 --> 00:01:25,000
-This is the actual Manifest V3 extension running in a deterministic demo environment. The same isolated overlay, audio controls, answer flow, and completion interruption are tested against supported-site fixtures, without opening a personal AI account.
+This is the actual Manifest V3 extension running in a deterministic demo environment. The same isolated overlay, audio controls, answer flow, and non-destructive completion notice are tested against supported-site fixtures, without opening a personal AI account.
 
 4
 00:01:26,000 --> 00:01:50,000

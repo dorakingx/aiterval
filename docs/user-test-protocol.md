@@ -13,7 +13,8 @@ This protocol collects direct feedback without analytics, tracking pixels, accou
 
 1. After ten seconds on the first screen, ask: “What do you think this does?” Record whether the core idea was understood.
 2. Ask the participant to start the first sprint. Record whether they succeed without help and where they hesitate.
-3. Let AI completion interrupt the exercise. Ask what the **AI is ready** screen means and what they would do next.
+3. Let AI completion occur during playback. Confirm the sentence continues, then
+   ask what the **Your AI is ready** notice means and what they would do next.
 4. Ask whether they would use this during normal AI work, and why or why not.
 5. Show the dashboard and ask whether the 132-exercise library, review queue,
    and weak-skill view would support a small daily habit.

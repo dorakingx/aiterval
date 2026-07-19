@@ -1,5 +1,6 @@
 "use client";
 import {
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -181,19 +182,21 @@ export function ListeningMap({ sessions }: { sessions: SessionRecord[] }) {
   );
 }
 
-type Stage = "listen" | "answer" | "feedback" | "ai-ready";
+type Stage = "listen" | "answer" | "feedback";
 export interface ListeningPlayerProps {
   exercise: ListeningExercise;
   audioProvider?: AudioProvider;
   locale?: string;
   voiceName?: string;
   initialStage?: Stage;
+  aiReady?: boolean;
   onComplete?: (result: {
     correct: boolean;
     replayCount: number;
     activeSeconds: number;
   }) => void;
   onSave?: () => void;
+  onReturnToAi?: () => void;
   onClose?: () => void;
 }
 
@@ -203,8 +206,10 @@ export function ListeningPlayer({
   locale = "en-US",
   voiceName = "",
   initialStage = "listen",
+  aiReady = false,
   onComplete,
   onSave,
+  onReturnToAi,
   onClose,
 }: ListeningPlayerProps) {
   const provider = useMemo(
@@ -212,16 +217,43 @@ export function ListeningPlayer({
     [audioProvider],
   );
   const [stage, setStage] = useState<Stage>(initialStage);
-  const [playing, setPlaying] = useState(false);
+  const [playback, setPlayback] = useState<"idle" | "playing" | "paused">(
+    "idle",
+  );
   const [rate, setRate] = useState<0.8 | 1 | 1.2>(1);
   const [replays, setReplays] = useState(0);
   const [selected, setSelected] = useState<number>();
   const [error, setError] = useState("");
   const start = useRef(Date.now());
+  const playbackRequest = useRef(0);
+  const playbackStopped = useRef(false);
+  const exitHandled = useRef(false);
+  const completionHandled = useRef(false);
+
+  const stopPlayback = () => {
+    playbackRequest.current += 1;
+    if (!playbackStopped.current) provider.stop();
+    playbackStopped.current = true;
+    setPlayback("idle");
+  };
+
+  useEffect(
+    () => () => {
+      playbackRequest.current += 1;
+      if (!playbackStopped.current) provider.stop();
+      playbackStopped.current = true;
+    },
+    [provider],
+  );
+
   const play = async () => {
+    const request = playbackRequest.current + 1;
+    playbackRequest.current = request;
+    playbackStopped.current = false;
     setError("");
-    setPlaying(true);
+    setPlayback("playing");
     setReplays((value) => value + 1);
+    let endedNaturally = false;
     try {
       await provider.play({
         text: exercise.transcript,
@@ -230,42 +262,57 @@ export function ListeningPlayer({
         rate,
         volume: 1,
       });
+      endedNaturally = true;
     } catch (cause) {
-      setError(
-        cause instanceof Error ? cause.message : "Audio is unavailable.",
-      );
+      if (playbackRequest.current === request)
+        setError(
+          cause instanceof Error ? cause.message : "Audio is unavailable.",
+        );
     } finally {
-      setPlaying(false);
+      if (playbackRequest.current === request) {
+        playbackStopped.current = true;
+        setPlayback("idle");
+        if (endedNaturally) setStage("answer");
+      }
     }
   };
-  const close = () => {
-    provider.stop();
-    onClose?.();
+  const pause = () => {
+    provider.pause();
+    setPlayback("paused");
   };
-  if (stage === "ai-ready")
-    return (
-      <Card
-        className="ai-player ai-ready"
-        aria-label="AIterval: your AI is ready"
-      >
-        <Badge>Your AI is ready</Badge>
-        <h2>Return when you’re ready</h2>
-        <p>Your listening sprint is paused. Your progress is safe.</p>
-        <div className="ai-actions">
-          <Button onClick={() => setStage("answer")}>
-            Finish this question
-          </Button>
-          <Button className="secondary" onClick={onSave}>
-            Save for later
-          </Button>
-          <Button className="ghost" onClick={close}>
-            Return to AI
-          </Button>
-        </div>
-      </Card>
-    );
+  const resume = () => {
+    provider.resume();
+    setPlayback("playing");
+  };
+  const exit = (callback?: () => void) => {
+    if (exitHandled.current) return;
+    exitHandled.current = true;
+    stopPlayback();
+    callback?.();
+  };
   return (
     <Card className="ai-player" aria-label="AIterval listening sprint">
+      {aiReady && (
+        <section className="ai-ready-notice" aria-label="Your AI is ready">
+          <div role="status" aria-live="polite">
+            <Badge>Your AI is ready</Badge>
+            <p>
+              You can finish this listening question, or return to your AI now.
+            </p>
+          </div>
+          <div className="ai-ready-actions">
+            <Button
+              className="secondary"
+              onClick={() => exit(onReturnToAi ?? onClose)}
+            >
+              Return to AI now
+            </Button>
+            <Button className="ghost" onClick={() => exit(onSave)}>
+              Save for later
+            </Button>
+          </div>
+        </section>
+      )}
       <header>
         <div>
           <div className="ai-badge-row">
@@ -287,7 +334,10 @@ export function ListeningPlayer({
           </h2>
         </div>
         {onClose && (
-          <IconButton label="Close listening sprint" onClick={close}>
+          <IconButton
+            label="Close listening sprint"
+            onClick={() => exit(onClose)}
+          >
             <X />
           </IconButton>
         )}
@@ -297,13 +347,39 @@ export function ListeningPlayer({
           <p>The transcript stays hidden until you answer.</p>
           <button
             className="ai-play"
-            onClick={() => void play()}
+            onClick={() => {
+              if (playback === "playing") pause();
+              else if (playback === "paused") resume();
+              else void play();
+            }}
             aria-label={
-              playing ? "Pause audio" : replays ? "Replay audio" : "Play audio"
+              playback === "playing"
+                ? "Pause audio"
+                : playback === "paused"
+                  ? "Resume audio"
+                  : replays
+                    ? "Replay audio"
+                    : "Play audio"
             }
           >
-            {playing ? <Pause /> : replays ? <RotateCcw /> : <Play />}
-            <span>{playing ? "Listening…" : replays ? "Replay" : "Play"}</span>
+            {playback === "playing" ? (
+              <Pause />
+            ) : playback === "paused" ? (
+              <Play />
+            ) : replays ? (
+              <RotateCcw />
+            ) : (
+              <Play />
+            )}
+            <span>
+              {playback === "playing"
+                ? "Listening…"
+                : playback === "paused"
+                  ? "Continue"
+                  : replays
+                    ? "Replay"
+                    : "Play"}
+            </span>
           </button>
           {error && (
             <p role="alert" className="ai-error">
@@ -324,11 +400,12 @@ export function ListeningPlayer({
           <Button
             disabled={!replays}
             onClick={() => {
-              provider.stop();
+              stopPlayback();
               setStage("answer");
             }}
           >
-            Answer one question <ChevronRight />
+            {aiReady ? "Finish this question" : "Answer one question"}{" "}
+            <ChevronRight />
           </Button>
         </>
       )}
@@ -402,7 +479,9 @@ export function ListeningPlayer({
           </div>
           <Button
             onClick={() => {
-              provider.stop();
+              if (completionHandled.current) return;
+              completionHandled.current = true;
+              stopPlayback();
               onComplete?.({
                 correct: selected === exercise.question.correctIndex,
                 replayCount: replays,

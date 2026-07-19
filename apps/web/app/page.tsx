@@ -42,7 +42,7 @@ export default function Home() {
             </span>
             <span>
               <PauseCircle />
-              Stops when AI is ready
+              Never cuts off a sentence
             </span>
             <span>
               <Target />
@@ -87,8 +87,8 @@ export default function Home() {
           <PauseCircle />
           <h3>Return to work</h3>
           <p>
-            When your AI finishes, audio pauses and your progress is saved
-            immediately.
+            When your AI finishes, a notice appears without cutting off the
+            sentence. Finish the question or return immediately.
           </p>
         </article>
       </section>

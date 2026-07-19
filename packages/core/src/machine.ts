@@ -1,4 +1,8 @@
-import type { SprintEvent, SprintStateName } from "./types";
+import type {
+  HostGenerationStatus,
+  SprintEvent,
+  SprintStateName,
+} from "./types";
 
 const transitions: Partial<
   Record<SprintStateName, Partial<Record<SprintEvent["type"], SprintStateName>>>
@@ -17,24 +21,24 @@ const transitions: Partial<
   },
   sprint_ready: {
     START: "listening",
-    AI_READY: "paused_ai_ready",
+    AI_READY: "sprint_ready",
     DISMISS: "dismissed",
     SAVE: "saved_for_later",
   },
   listening: {
     LISTENED: "answering",
-    AI_READY: "paused_ai_ready",
+    AI_READY: "listening",
     DISMISS: "dismissed",
     SAVE: "saved_for_later",
   },
   answering: {
     ANSWER: "feedback",
-    AI_READY: "paused_ai_ready",
+    AI_READY: "answering",
     SAVE: "saved_for_later",
   },
   feedback: {
     FINISH: "completed",
-    AI_READY: "paused_ai_ready",
+    AI_READY: "feedback",
     SAVE: "saved_for_later",
   },
   paused_ai_ready: {
@@ -57,8 +61,13 @@ export function transition(
 }
 
 export class SprintMachine {
-  constructor(public state: SprintStateName = "idle") {}
+  constructor(
+    public state: SprintStateName = "idle",
+    public hostGenerationStatus: HostGenerationStatus = "generating",
+  ) {}
   send(event: SprintEvent): SprintStateName {
+    if (event.type === "AI_READY") this.hostGenerationStatus = "ready";
+    if (event.type === "RESET") this.hostGenerationStatus = "generating";
     this.state = transition(this.state, event);
     return this.state;
   }

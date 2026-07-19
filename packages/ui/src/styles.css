@@ -490,25 +490,36 @@ a:focus-visible {
   border-radius: 6px;
   white-space: nowrap;
 }
-.ai-ready {
-  isolation: isolate;
-  background: var(--ai-surface);
-  color: var(--ai-text-primary);
+.ai-ready-notice {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.85rem;
   border: 2px solid var(--ai-boundary-strong);
-  box-shadow: var(--ai-shadow);
-}
-.ai-ready h2 {
+  border-radius: 14px;
+  background: var(--ai-surface-subtle);
   color: var(--ai-text-primary);
+  box-shadow: 0 4px 14px rgba(16, 29, 43, 0.12);
 }
-.ai-ready > p {
+.ai-ready-notice > div:first-child {
+  display: grid;
+  gap: 0.45rem;
+}
+.ai-ready-notice p {
+  margin: 0;
   color: var(--ai-text-secondary);
 }
-.ai-ready .ai-actions {
-  margin-top: 0.25rem;
+.ai-ready-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.ai-ready-actions .ai-button {
+  min-height: 40px;
+  padding: 0.55rem 0.8rem;
 }
 @media (prefers-contrast: more) {
   .ai-card,
-  .ai-ready,
+  .ai-ready-notice,
   .ai-button,
   .ai-choices button,
   .ai-field select,
@@ -518,6 +529,7 @@ a:focus-visible {
 }
 @media (forced-colors: active) {
   .ai-card,
+  .ai-ready-notice,
   .ai-button,
   .ai-badge,
   .ai-choices button,
@@ -536,6 +548,9 @@ a:focus-visible {
     grid-template-columns: 1fr;
   }
   .ai-feedback-actions {
+    display: grid;
+  }
+  .ai-ready-actions {
     display: grid;
   }
   .ai-play {

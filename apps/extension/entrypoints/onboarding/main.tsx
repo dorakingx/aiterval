@@ -83,7 +83,8 @@ function Onboarding() {
             <h2>Listen while your AI thinks.</h2>
             <p>
               One 15–90 second listening sprint appears during generation. When
-              your AI is ready, the sprint pauses and you return to work.
+              your AI is ready, AIterval notifies you without cutting off the
+              current sentence. Finish the question or return immediately.
             </p>
             <div className="lecture-onboarding">
               <strong>Prepare for an upcoming lecture with GPT-5.6</strong>

@@ -2,7 +2,7 @@
 
 ## Product flow
 
-The content script owns the opportunity lifecycle. A site adapter emits idle or generating. The controller applies per-site settings, snooze, cooldown, hourly cap, and minimum wait threshold before mounting one Shadow DOM host. AI completion replaces the active sprint with the `paused_ai_ready` recovery screen. Every meaningful transition is persisted immediately.
+The content script owns the opportunity lifecycle. A site adapter emits idle or generating. The controller applies per-site settings, snooze, cooldown, hourly cap, and minimum wait threshold before mounting one Shadow DOM host. Exercise lifecycle and host readiness are independent: AI completion sets `hostGenerationStatus` to `ready` and rerenders a notice without unmounting the listening player or stopping its audio provider. Every meaningful transition is persisted immediately.
 
 The deterministic state machine supports:
 
@@ -10,10 +10,12 @@ The deterministic state machine supports:
 idle → opportunity_detected → waiting_for_threshold → sprint_ready
 → listening → answering → feedback → completed
 
-Interruption: paused_ai_ready, dismissed, snoozed, saved_for_later
+Parallel host status: generating → ready
+Exit states: dismissed, snoozed, saved_for_later
 ```
 
-Unknown events are idempotent, so duplicate mutations do not create duplicate records or overlays.
+Unknown and repeated AI-ready events are idempotent, so duplicate mutations do
+not create duplicate records, recovered-time increments, notices, or overlays.
 
 ## Site adapters and observed signals
 
@@ -48,7 +50,7 @@ does not call the archived route.
 
 ## Audio
 
-`SpeechAudioProvider` waits for asynchronous voice discovery and listens once for `voiceschanged`, filters actual English system voices, selects the saved name or requested locale when available, and falls back to another reported English voice. `play` cancels any queued utterance first. Overlay close stops speech. Missing voices produce a user-facing troubleshooting message.
+`SpeechAudioProvider` waits for asynchronous voice discovery and listens once for `voiceschanged`, filters actual English system voices, selects the saved name or requested locale when available, and falls back to another reported English voice. A user-initiated `play` cancels any previously queued utterance before starting a new one. AI readiness never calls `stop` or reconstructs the provider. Return to AI, Save for later, overlay close, replacement, and unload cleanup stop speech; natural completion advances to answering. Missing voices produce a user-facing troubleshooting message.
 
 The exercise schema already permits a future `audioUrl`; static recorded audio can implement the same `AudioProvider` contract later.
 
@@ -63,7 +65,9 @@ reviews, runtime sprint state, and aggregates. The version 2 schema retains
 backward-compatible fields from development, but submitted scheduling selects
 from the pre-authored library. Imports pass a strict runtime schema before
 writes. Detailed history is capped at 500 sessions; aggregate totals are
-preserved.
+preserved. Recovered time is recorded once, only when the normal feedback flow
+completes; an AI-ready notification alone never creates a session or increments
+an aggregate.
 
 ## Security boundaries
 

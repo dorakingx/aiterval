@@ -1,7 +1,14 @@
 import { browser } from "wxt/browser";
 import { canAutoStart } from "@aiterval/core";
 import { adapterForHost } from "../lib/adapters";
-import { hideOverlay, overlayVisible, showOverlay } from "../lib/overlay";
+import {
+  dismissOverlayForNavigation,
+  hideOverlay,
+  notifyOverlayAiReady,
+  overlayVisible,
+  showOverlay,
+} from "../lib/overlay";
+import { AITERVAL_NAVIGATION_EVENT } from "../lib/adapters/helpers";
 import { repository } from "../lib/repository";
 
 export default defineContentScript({
@@ -42,13 +49,12 @@ export default defineContentScript({
       } else if (state.status === "idle" && previous === "generating") {
         previous = "idle";
         window.clearTimeout(thresholdTimer);
-        if (overlayVisible()) {
-          hideOverlay();
-          void showOverlay({ aiReady: true });
-        }
+        if (overlayVisible()) void notifyOverlayAiReady();
       }
     };
     const stop = adapter.observe((state) => void handle(state));
+    const handleNavigation = () => void dismissOverlayForNavigation();
+    window.addEventListener(AITERVAL_NAVIGATION_EVENT, handleNavigation);
     browser.runtime.onMessage.addListener((message: unknown) => {
       if (
         typeof message === "object" &&
@@ -58,6 +64,14 @@ export default defineContentScript({
       )
         void showOverlay();
     });
-    window.addEventListener("pagehide", stop, { once: true });
+    window.addEventListener(
+      "pagehide",
+      () => {
+        stop();
+        window.removeEventListener(AITERVAL_NAVIGATION_EVENT, handleNavigation);
+        hideOverlay();
+      },
+      { once: true },
+    );
   },
 });

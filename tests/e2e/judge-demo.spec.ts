@@ -26,7 +26,7 @@ test("public judge demo completes the no-login waiting-time loop", async ({
   );
 });
 
-test("judge demo visibly interrupts listening when simulated AI is ready", async ({
+test("judge demo notifies without replacing listening when simulated AI is ready", async ({
   page,
 }) => {
   await page.goto("/demo/judge");
@@ -35,8 +35,9 @@ test("judge demo visibly interrupts listening when simulated AI is ready", async
     timeout: 12_000,
   });
   await expect(
-    page.getByRole("button", { name: "Return to AI" }),
+    page.getByRole("button", { name: "Return to AI now" }),
   ).toBeVisible();
+  await expect(page.getByText("Listen first")).toBeVisible();
 });
 
 test("the archived lecture route redirects to the pre-authored judge demo", async ({

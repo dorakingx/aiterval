@@ -12,6 +12,22 @@ async function extensionId(): Promise<string> {
   return new URL(worker.url()).host;
 }
 
+async function storedData(): Promise<{
+  sessions: unknown[];
+  aggregates: { totalRecoveredSeconds: number };
+  runtime: { sprintState: string; hostGenerationStatus?: string };
+}> {
+  const id = await extensionId();
+  const page = await context.newPage();
+  await page.goto(`chrome-extension://${id}/options.html`);
+  const data = await page.evaluate(async () => {
+    const stored = await chrome.storage.local.get("aiterval-data");
+    return stored["aiterval-data"];
+  });
+  await page.close();
+  return data;
+}
+
 type FixtureTheme = "light" | "dark";
 
 async function openFixture(
@@ -89,10 +105,14 @@ test.afterAll(async () => {
 });
 
 for (const site of ["chatgpt", "claude", "gemini"] as const) {
-  test(`${site} generation opens one isolated sprint and pauses when ready`, async () => {
+  test(`${site} generation keeps the active sprint mounted when ready`, async () => {
     const page = await openFixture(site);
     const host = page.locator("#aiterval-shadow-host");
     await expect(host).toHaveCount(1, { timeout: 8_000 });
+    const player = host.getByLabel("AIterval listening sprint");
+    await player.evaluate((element) =>
+      element.setAttribute("data-mounted-before-ready", "true"),
+    );
     await expect(
       host.getByRole("button", { name: "Play audio" }),
     ).toBeVisible();
@@ -100,12 +120,63 @@ for (const site of ["chatgpt", "claude", "gemini"] as const) {
     await expect(host.getByText("Your AI is ready")).toBeVisible({
       timeout: 3_000,
     });
+    await expect(player).toHaveAttribute("data-mounted-before-ready", "true");
+    await expect(
+      host.getByRole("button", { name: "Play audio" }),
+    ).toBeVisible();
+    await expect(host).toHaveCount(1);
+    await page.close();
+  });
+}
+
+test("duplicate AI-ready signals do not duplicate UI, sessions, or recovered time", async () => {
+  const before = await storedData();
+  const page = await openFixture("chatgpt");
+  const host = page.locator("#aiterval-shadow-host");
+  await expect(host).toHaveCount(1, { timeout: 8_000 });
+  await page
+    .getByRole("button", { name: "Finish generation" })
+    .evaluate((button) => (button as HTMLButtonElement).click());
+  await expect(host.getByLabel("Your AI is ready")).toBeVisible();
+  await page.locator("#state").evaluate((element) => {
+    element.setAttribute("aria-label", "Stop generating");
+  });
+  await page.getByRole("button", { name: "Finish generation" }).click();
+  await expect(host.getByLabel("Your AI is ready")).toHaveCount(1);
+  await expect(host).toHaveCount(1);
+  const after = await storedData();
+  expect(after.sessions).toHaveLength(before.sessions.length);
+  expect(after.aggregates.totalRecoveredSeconds).toBe(
+    before.aggregates.totalRecoveredSeconds,
+  );
+  expect(after.runtime.hostGenerationStatus).toBe("ready");
+  await page.close();
+});
+
+for (const action of [
+  { button: "Return to AI now", state: "dismissed" },
+  { button: "Save for later", state: "saved_for_later" },
+] as const) {
+  test(`${action.button} closes once without completing a session`, async () => {
+    const before = await storedData();
+    const page = await openFixture("chatgpt");
+    const host = page.locator("#aiterval-shadow-host");
+    await expect(host).toHaveCount(1, { timeout: 8_000 });
+    await page.getByRole("button", { name: "Finish generation" }).click();
+    await host.getByRole("button", { name: action.button }).click();
+    await expect(host).toHaveCount(0);
+    const after = await storedData();
+    expect(after.sessions).toHaveLength(before.sessions.length);
+    expect(after.aggregates.totalRecoveredSeconds).toBe(
+      before.aggregates.totalRecoveredSeconds,
+    );
+    expect(after.runtime.sprintState).toBe(action.state);
     await page.close();
   });
 }
 
 for (const theme of ["light", "dark"] as const) {
-  test(`AI-ready recovery state maintains AA contrast on a ${theme} host`, async () => {
+  test(`AI-ready notice maintains AA contrast on a ${theme} host`, async () => {
     const page = await openFixture("chatgpt", theme);
     const host = page.locator("#aiterval-shadow-host");
     await expect(host).toHaveAttribute("data-ai-theme", theme, {
@@ -129,9 +200,9 @@ for (const theme of ["light", "dark"] as const) {
     ).toBeGreaterThanOrEqual(4.5);
 
     await page.getByRole("button", { name: "Finish generation" }).click();
-    const readyCard = host.getByLabel("AIterval: your AI is ready");
-    await expect(readyCard).toBeVisible({ timeout: 3_000 });
-    const stylePairs = await readyCard.evaluate((card) => {
+    const readyNotice = host.getByLabel("Your AI is ready");
+    await expect(readyNotice).toBeVisible({ timeout: 3_000 });
+    const stylePairs = await readyNotice.evaluate((notice) => {
       const pair = (element: Element) => {
         const elementStyles = getComputedStyle(element);
         let background = elementStyles.backgroundColor;
@@ -145,17 +216,16 @@ for (const theme of ["light", "dark"] as const) {
           background,
         };
       };
-      const cardStyles = getComputedStyle(card);
+      const noticeStyles = getComputedStyle(notice);
       return {
-        card: {
-          background: cardStyles.backgroundColor,
-          border: cardStyles.borderTopColor,
+        notice: {
+          background: noticeStyles.backgroundColor,
+          border: noticeStyles.borderTopColor,
         },
         text: [
-          pair(card.querySelector(".ai-badge")!),
-          pair(card.querySelector("h2")!),
-          pair(card.querySelector("p")!),
-          ...Array.from(card.querySelectorAll("button"), pair),
+          pair(notice.querySelector(".ai-badge")!),
+          pair(notice.querySelector("p")!),
+          ...Array.from(notice.querySelectorAll("button"), pair),
         ],
       };
     });
@@ -165,14 +235,14 @@ for (const theme of ["light", "dark"] as const) {
       );
     }
     expect(
-      contrast(stylePairs.card.border, stylePairs.card.background),
+      contrast(stylePairs.notice.border, stylePairs.notice.background),
     ).toBeGreaterThanOrEqual(3);
 
-    const primaryButton = readyCard.getByRole("button", {
-      name: "Finish this question",
+    const returnButton = readyNotice.getByRole("button", {
+      name: "Return to AI now",
     });
-    await primaryButton.hover();
-    const hoverStyles = await primaryButton.evaluate((element) => {
+    await returnButton.hover();
+    const hoverStyles = await returnButton.evaluate((element) => {
       const styles = getComputedStyle(element);
       return { foreground: styles.color, background: styles.backgroundColor };
     });
@@ -180,21 +250,21 @@ for (const theme of ["light", "dark"] as const) {
       contrast(hoverStyles.foreground, hoverStyles.background),
     ).toBeGreaterThanOrEqual(4.5);
 
-    await primaryButton.evaluate((element) => (element as HTMLElement).blur());
+    await returnButton.evaluate((element) => (element as HTMLElement).blur());
     await page.mouse.move(0, 0);
     for (let index = 0; index < 12; index += 1) {
       await page.keyboard.press("Tab");
-      const primaryHasFocus = await host.evaluate((element) =>
+      const actionHasFocus = await host.evaluate((element) =>
         element.shadowRoot?.activeElement?.textContent?.includes(
-          "Finish this question",
+          "Return to AI now",
         ),
       );
-      if (primaryHasFocus) break;
+      if (actionHasFocus) break;
     }
-    await expect(primaryButton).toBeFocused();
-    const focusStyles = await primaryButton.evaluate((element) => {
+    await expect(returnButton).toBeFocused();
+    const focusStyles = await returnButton.evaluate((element) => {
       const styles = getComputedStyle(element);
-      const cardStyles = getComputedStyle(element.closest(".ai-ready")!);
+      const cardStyles = getComputedStyle(element.closest(".ai-card")!);
       return {
         outline: styles.outlineColor,
         outlineWidth: Number.parseFloat(styles.outlineWidth),
@@ -206,7 +276,11 @@ for (const theme of ["light", "dark"] as const) {
       contrast(focusStyles.outline, focusStyles.surface),
     ).toBeGreaterThanOrEqual(3);
 
-    await primaryButton.click();
+    await host.getByRole("button", { name: "Play audio" }).click();
+    const finishButton = host.getByRole("button", {
+      name: "Finish this question",
+    });
+    if (await finishButton.isVisible()) await finishButton.click();
     const answerCard = host.getByLabel("AIterval listening sprint");
     const choices = answerCard.locator(".ai-choices button");
     await expect(choices.first()).toBeVisible();
@@ -255,13 +329,41 @@ for (const theme of ["light", "dark"] as const) {
   });
 }
 
-test("duplicate mutations and SPA navigation never create duplicate overlays", async () => {
+test("AI-ready notice and actions reflow in a narrow viewport", async () => {
+  const page = await openFixture("chatgpt");
+  await page.setViewportSize({ width: 320, height: 800 });
+  const host = page.locator("#aiterval-shadow-host");
+  await expect(host).toHaveCount(1, { timeout: 8_000 });
+  await page
+    .getByRole("button", { name: "Finish generation" })
+    .evaluate((button) => (button as HTMLButtonElement).click());
+  const notice = host.getByLabel("Your AI is ready");
+  await expect(notice).toBeVisible();
+  const playerBox = await host
+    .getByLabel("AIterval listening sprint")
+    .boundingBox();
+  expect(playerBox).not.toBeNull();
+  expect(playerBox!.x).toBeGreaterThanOrEqual(0);
+  expect(playerBox!.x + playerBox!.width).toBeLessThanOrEqual(320);
+  await expect(
+    notice.getByRole("button", { name: "Return to AI now" }),
+  ).toBeVisible();
+  await expect(
+    notice.getByRole("button", { name: "Save for later" }),
+  ).toBeVisible();
+  await page.close();
+});
+
+test("duplicate mutations do not duplicate overlays and SPA navigation cleans up", async () => {
   const page = await openFixture("chatgpt");
   const host = page.locator("#aiterval-shadow-host");
   await expect(host).toHaveCount(1, { timeout: 8_000 });
   await page.getByRole("button", { name: "Duplicate mutations" }).click();
   await page.getByRole("button", { name: "SPA navigation" }).click();
-  await expect(host).toHaveCount(1);
+  await expect(host).toHaveCount(0);
+  await expect
+    .poll(async () => (await storedData()).runtime.sprintState)
+    .toBe("dismissed");
   await page.close();
 });
 

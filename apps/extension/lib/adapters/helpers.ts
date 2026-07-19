@@ -1,5 +1,7 @@
 import type { AIWaitState } from "@aiterval/core";
 
+export const AITERVAL_NAVIGATION_EVENT = "aiterval:navigation";
+
 const generatingLabels = [
   "stop generating",
   "stop response",
@@ -33,6 +35,7 @@ export function createObserver(
   callback: (state: AIWaitState) => void,
 ): () => void {
   let timer = 0;
+  let lastUrl = location.href;
   let last = "";
   const emit = () => {
     const state = detect();
@@ -52,17 +55,28 @@ export function createObserver(
     attributes: true,
     attributeFilter: ["aria-label", "aria-busy", "disabled", "data-state"],
   });
-  window.addEventListener("popstate", emit);
+  const navigation = () => {
+    lastUrl = location.href;
+    window.dispatchEvent(new Event(AITERVAL_NAVIGATION_EVENT));
+    emit();
+  };
+  window.addEventListener("popstate", navigation);
   const originalPush = history.pushState;
   history.pushState = function (...args) {
     originalPush.apply(this, args);
-    window.setTimeout(emit, 0);
+    window.setTimeout(navigation, 0);
   };
+  const navigationPoll = window.setInterval(() => {
+    if (location.href === lastUrl) return;
+    lastUrl = location.href;
+    navigation();
+  }, 250);
   emit();
   return () => {
     observer.disconnect();
     window.clearTimeout(timer);
-    window.removeEventListener("popstate", emit);
+    window.clearInterval(navigationPoll);
+    window.removeEventListener("popstate", navigation);
     history.pushState = originalPush;
   };
 }

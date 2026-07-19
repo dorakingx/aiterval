@@ -64,11 +64,11 @@ export function Demo({ compact = false }: { compact?: boolean }) {
       {sprint && (
         <div className="demo-overlay">
           <ListeningPlayer
-            key={state}
             exercise={exercises[18]!}
-            initialStage={state === "ready" ? "ai-ready" : "listen"}
+            aiReady={state === "ready"}
             onClose={() => setSprint(false)}
             onSave={() => setSprint(false)}
+            onReturnToAi={() => setSprint(false)}
             onComplete={(result) => {
               setRecoveredSeconds((current) => current + result.activeSeconds);
               setSprint(false);

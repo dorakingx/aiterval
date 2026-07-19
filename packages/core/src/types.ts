@@ -3,6 +3,8 @@ export type AIWaitState =
   | { status: "generating"; startedAt: number }
   | { status: "completed"; completedAt: number };
 
+export type HostGenerationStatus = "generating" | "ready";
+
 export type SprintStateName =
   | "idle"
   | "opportunity_detected"

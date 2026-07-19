@@ -46,10 +46,10 @@ export default function Page() {
           <PauseCircle />
           <div>
             <span>AI completes</span>
-            <h2>The sprint pauses</h2>
+            <h2>The sentence continues</h2>
             <p>
-              Choose Return to AI, Finish this question, or Save for later.
-              Audio never competes with your work.
+              A readiness notice appears without replacing the exercise. Finish
+              the question, return to AI now, or save it for later.
             </p>
           </div>
         </article>

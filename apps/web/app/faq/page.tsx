@@ -23,7 +23,7 @@ const items = [
   ],
   [
     "What happens when my AI finishes early?",
-    "Audio pauses and AIterval shows Return to AI, Finish this question, and Save for later.",
+    "AIterval shows a readiness notice without cutting off the current sentence. You can finish the question, return to AI now, or save it for later.",
   ],
   [
     "Will it interrupt every prompt?",

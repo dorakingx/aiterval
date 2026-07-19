@@ -14,14 +14,16 @@ time. Meanwhile, I kept waiting for AI tools to finish.
 ## 0:15–0:55 — Core waiting-time loop
 
 **Visual:** Real signed-out judge demo. Start the simulated AI wait, play one
-pre-authored exercise, answer, show feedback, show the AI-ready interruption,
+pre-authored exercise, show the AI-ready notice without cutting off playback,
+answer, show feedback,
 and complete the sprint so recovered time increases.
 
 **Narration:** AIterval connects those problems. I send normal work, and it
 observes only semantic generation-state controls—never my prompt or the response.
 During the wait, one short listening card appears. I play a pre-authored
-exercise, answer, and see immediate feedback. When the AI is ready, speech stops,
-my work regains focus, and recovered waiting time increases.
+exercise. When the AI is ready, AIterval notifies me without cutting off the
+current sentence. I can finish the question or return immediately, and completed
+learning time is recorded locally.
 
 ## 0:55–1:25 — Actual extension
 
@@ -30,7 +32,7 @@ fixture. Keep the caption **Deterministic demo environment** visible.
 
 **Narration:** This is the actual Manifest V3 extension running in a
 deterministic demo environment. The same isolated overlay, audio controls,
-answer flow, and completion interruption are tested against supported-site
+answer flow, and non-destructive completion notice are tested against supported-site
 fixtures, without opening a personal AI account.
 
 ## 1:25–1:50 — Dashboard

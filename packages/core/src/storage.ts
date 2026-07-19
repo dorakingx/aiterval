@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   defaultSettings,
   type GeneratedExercisePack,
+  type HostGenerationStatus,
   type ReviewState,
   type SessionRecord,
   type Settings,
@@ -74,6 +75,7 @@ export interface StoredData {
     exerciseId?: string | undefined;
     startedAt?: number | undefined;
     generatedPackId?: string | undefined;
+    hostGenerationStatus?: HostGenerationStatus | undefined;
   };
   aggregates: {
     totalRecoveredSeconds: number;
@@ -93,6 +95,7 @@ const storedDataSchema = z.object({
     exerciseId: z.string().optional(),
     startedAt: z.number().optional(),
     generatedPackId: z.string().max(120).optional(),
+    hostGenerationStatus: z.enum(["generating", "ready"]).optional(),
   }),
   aggregates: z.object({
     totalRecoveredSeconds: z.number().min(0),
@@ -155,11 +158,17 @@ export function migrateStorage(input: unknown): StoredData {
 
 export function importData(input: unknown): StoredData {
   const parsed = storedDataSchema.parse(input);
+  const wasPausedForAi = parsed.runtime.sprintState === "paused_ai_ready";
   return {
     ...parsed,
     runtime: {
       ...parsed.runtime,
-      sprintState: parsed.runtime.sprintState as SprintStateName,
+      sprintState: wasPausedForAi
+        ? "listening"
+        : (parsed.runtime.sprintState as SprintStateName),
+      hostGenerationStatus:
+        parsed.runtime.hostGenerationStatus ??
+        (wasPausedForAi ? "ready" : undefined),
     },
     settings: parsed.settings as Settings,
   };

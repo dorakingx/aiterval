@@ -25,7 +25,8 @@ problems by turning time already lost into a small learning habit.
 AIterval detects visible generation state through narrow semantic controls such
 as busy states and stop-generation buttons. It never reads a prompt or response.
 After the wait threshold, one short exercise appears. The learner listens and
-answers; when the AI is ready, speech stops immediately and work resumes.
+answers; when the AI is ready, AIterval notifies them without cutting off the
+current sentence. They can finish the question or return to the AI immediately.
 
 The library contains 132 original exercises across practical and academic
 listening skills. Progress, review scheduling, weak-skill signals, settings, and
@@ -57,7 +58,7 @@ Devpost.
 ## Challenges and accomplishments
 
 - Detecting AI work without touching conversation content across changing sites.
-- Interrupting speech promptly when the user’s real work is ready.
+- Separating AI readiness from the learning state so speech is not cut off.
 - Delivering 132 original exercises without accounts, remote content, or an API.
 - Keeping progress local while supporting review and weak-skill prioritization.
 - Testing the actual Manifest V3 extension against deterministic site fixtures.
@@ -91,8 +92,8 @@ GitHub Actions.
 ## Testing instructions
 
 Open the signed-out judge demo, select **Send prompt and try it**, complete the
-pre-authored exercise, and observe the AI-ready interruption and recovered-time
-update. The release ZIP can be installed without rebuilding; detailed steps are
+pre-authored exercise, and observe the non-destructive AI-ready notice and
+recovered-time update. The release ZIP can be installed without rebuilding; detailed steps are
 in `docs/judge-testing-guide.md`.
 
 ## Privacy and limitations
