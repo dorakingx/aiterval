@@ -24,14 +24,10 @@ nav a {
   gap: 0.55rem;
   font-weight: 900;
 }
-.brand span {
-  display: grid;
-  place-items: center;
+.brand svg {
   width: 34px;
   height: 34px;
-  border-radius: 10px;
-  background: #e96c4c;
-  color: white;
+  flex: none;
 }
 .brand + div {
   display: flex;

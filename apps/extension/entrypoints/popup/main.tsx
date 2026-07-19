@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { browser } from "wxt/browser";
-import { Button, ProgressBar, Toggle, formatDuration } from "@aiterval/ui";
+import {
+  BrandIcon,
+  Button,
+  ProgressBar,
+  Toggle,
+  formatDuration,
+} from "@aiterval/ui";
 import "@aiterval/ui/styles.css";
 import { repository } from "../../lib/repository";
 import type { StoredData } from "@aiterval/core";
@@ -45,7 +51,7 @@ function Popup() {
   return (
     <main>
       <header>
-        <span className="mark">AI</span>
+        <BrandIcon className="mark" />
         <div>
           <strong>AIterval</strong>
           <small>Listen while AI thinks</small>

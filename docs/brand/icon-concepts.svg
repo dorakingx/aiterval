@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" role="img" aria-labelledby="title desc">
+  <title id="title">AIterval icon concepts</title>
+  <desc id="desc">Three candidate product icon directions</desc>
+  <rect width="1200" height="540" fill="#f7f4ed"/>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#10263d}.name{font-size:25px;font-weight:800}.copy{font-size:15px;fill:#516173}.label{font-size:13px;font-weight:700;fill:#9a4935}.card{fill:#fff;stroke:#ddd7cc;stroke-width:1.5}
+  </style>
+  <text x="60" y="55" font-size="31" font-weight="850">AIterval icon directions</text>
+  <text x="60" y="82" font-size="16" fill="#516173">Compact symbols evaluated at 128, 48, 32, and 16 pixels</text>
+
+  <g transform="translate(45 110)">
+    <rect class="card" width="350" height="380" rx="24"/>
+    <g transform="translate(111 30)">
+      <rect x="4" y="4" width="120" height="120" rx="30" fill="#132d46"/>
+      <path d="M64 22c-25 0-45 17.5-45 39.5 0 12.7 6.7 24.2 17 32l-5 21 23-12c3.3.7 6.6 1 10 1 25 0 45-18.8 45-42S89 22 64 22Z" fill="#79d6b0"/>
+      <path d="M64 34c19.3 0 33 12.4 33 27.5S83.3 91.5 64 91.5c-4 0-7.6-.5-11.2-1.5l-7.5 3.9 2-7.6-4.4-3.2C35.2 77.5 31 70 31 61.5 31 46.4 44.7 34 64 34Z" fill="#132d46"/>
+      <path d="M57 46.5v30.9c0 3 3.3 4.8 5.8 3.2l24-15.5c2.3-1.5 2.3-4.9 0-6.4l-24-15.5c-2.5-1.6-5.8.2-5.8 3.3Z" fill="#ff7355"/>
+    </g>
+    <text class="label" x="28" y="220">DIRECTION 1 · CHOSEN</text>
+    <text class="name" x="28" y="255">Interval Loop</text>
+    <text class="copy" x="28" y="283">Speech bubble + interval ring + play.</text>
+    <text class="copy" x="28" y="306">Best concept balance and small-size clarity.</text>
+    <text class="copy" x="28" y="345">✓ Distinct silhouette  ✓ No text dependency</text>
+  </g>
+
+  <g transform="translate(425 110)">
+    <rect class="card" width="350" height="380" rx="24"/>
+    <g transform="translate(111 30)">
+      <rect x="4" y="4" width="120" height="120" rx="30" fill="#132d46"/>
+      <path d="M24 70V58c0-23 17-40 40-40s40 17 40 40v12H91V58c0-16-11-28-27-28S37 42 37 58v12Z" fill="#79d6b0"/>
+      <rect x="23" y="64" width="20" height="34" rx="10" fill="#79d6b0"/><rect x="85" y="64" width="20" height="34" rx="10" fill="#79d6b0"/>
+      <path d="M57 46.5v30.9c0 3 3.3 4.8 5.8 3.2l24-15.5c2.3-1.5 2.3-4.9 0-6.4l-24-15.5c-2.5-1.6-5.8.2-5.8 3.3Z" fill="#ff7355"/>
+    </g>
+    <text class="label" x="28" y="220">DIRECTION 2</text>
+    <text class="name" x="28" y="255">Listening A</text>
+    <text class="copy" x="28" y="283">Headphone arch and play form a subtle A.</text>
+    <text class="copy" x="28" y="306">Strong audio cue, weaker waiting-time cue.</text>
+    <text class="copy" x="28" y="345">✓ Familiar audio cue  · Less ownable</text>
+  </g>
+
+  <g transform="translate(805 110)">
+    <rect class="card" width="350" height="380" rx="24"/>
+    <g transform="translate(111 30)">
+      <rect x="4" y="4" width="120" height="120" rx="30" fill="#132d46"/>
+      <circle cx="62" cy="66" r="42" fill="#f7f4ed"/><circle cx="62" cy="66" r="31" fill="#132d46"/>
+      <circle cx="101" cy="31" r="7" fill="#ff7355"/>
+      <rect x="40" y="56" width="8" height="20" rx="4" fill="#79d6b0"/><rect x="53" y="47" width="8" height="38" rx="4" fill="#79d6b0"/><rect x="66" y="52" width="8" height="28" rx="4" fill="#79d6b0"/><rect x="79" y="59" width="8" height="14" rx="4" fill="#79d6b0"/>
+    </g>
+    <text class="label" x="28" y="220">DIRECTION 3</text>
+    <text class="name" x="28" y="255">Wait Wave</text>
+    <text class="copy" x="28" y="283">Timer loop + listening waveform.</text>
+    <text class="copy" x="28" y="306">Clear function, but busy below 32 pixels.</text>
+    <text class="copy" x="28" y="345">✓ Explicit interval cue  · More detail</text>
+  </g>
+</svg>

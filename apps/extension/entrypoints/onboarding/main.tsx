@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { ArrowRight, Check, Headphones } from "lucide-react";
 import {
   Button,
+  BrandIcon,
   ListeningPlayer,
   ProgressBar,
   SpeechAudioProvider,
@@ -66,7 +67,7 @@ function Onboarding() {
   return (
     <main>
       <aside>
-        <div className="logo">AI</div>
+        <BrandIcon className="logo" />
         <h1>Make the pause count.</h1>
         <p>AIの待ち時間を、英語が聞こえる時間に。</p>
         <ProgressBar value={step / 8} label="Onboarding progress" />

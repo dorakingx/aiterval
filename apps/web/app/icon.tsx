@@ -1,25 +1,26 @@
 import { ImageResponse } from "next/og";
+
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 export const dynamic = "force-static";
+
 export default function Icon() {
   return new ImageResponse(
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 9,
-        background: "#e96c4c",
-        color: "white",
-        fontSize: 13,
-        fontWeight: 900,
-      }}
-    >
-      AI
-    </div>,
+    <svg width="32" height="32" viewBox="0 0 128 128">
+      <rect x="4" y="4" width="120" height="120" rx="30" fill="#132d46" />
+      <path
+        d="M64 22c-25 0-45 17.5-45 39.5 0 12.7 6.7 24.2 17 32l-5 21 23-12c3.3.7 6.6 1 10 1 25 0 45-18.8 45-42S89 22 64 22Z"
+        fill="#79d6b0"
+      />
+      <path
+        d="M64 34c19.3 0 33 12.4 33 27.5S83.3 91.5 64 91.5c-4 0-7.6-.5-11.2-1.5l-7.5 3.9 2-7.6-4.4-3.2C35.2 77.5 31 70 31 61.5 31 46.4 44.7 34 64 34Z"
+        fill="#132d46"
+      />
+      <path
+        d="M57 46.5v30.9c0 3 3.3 4.8 5.8 3.2l24-15.5c2.3-1.5 2.3-4.9 0-6.4l-24-15.5c-2.5-1.6-5.8.2-5.8 3.3Z"
+        fill="#ff7355"
+      />
+    </svg>,
     size,
   );
 }

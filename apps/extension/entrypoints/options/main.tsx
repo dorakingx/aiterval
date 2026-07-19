@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import {
   Button,
+  BrandIcon,
   Card,
   EmptyState,
   ListeningMap,
@@ -93,7 +94,8 @@ function Dashboard() {
     <>
       <nav>
         <a className="brand" href="#today">
-          <span>AI</span>AIterval
+          <BrandIcon />
+          AIterval
         </a>
         <div>
           <a href="#today">Today</a>

@@ -20,14 +20,9 @@ header small {
   color: #66717f;
 }
 .mark {
-  display: grid;
-  place-items: center;
   width: 38px;
   height: 38px;
-  border-radius: 12px;
-  background: #e96c4c;
-  color: white;
-  font-weight: 900;
+  flex: none;
 }
 main > .ai-button {
   width: 100%;

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BrandIcon } from "@aiterval/ui";
 import "@aiterval/ui/styles.css";
 import "./globals.css";
 const publicOrigin = "https://aiterval-build-week.vercel.app";
@@ -53,7 +54,8 @@ export default function RootLayout({
       <body>
         <header className="site-nav">
           <Link className="site-brand" href="/">
-            <span>AI</span>AIterval
+            <BrandIcon className="site-brand-mark" />
+            AIterval
           </Link>
           <nav aria-label="Primary navigation">
             {links.map(([href, label]) => (
@@ -70,7 +72,8 @@ export default function RootLayout({
         <footer className="site-footer">
           <div>
             <Link className="site-brand" href="/">
-              <span>AI</span>AIterval
+              <BrandIcon className="site-brand-mark" />
+              AIterval
             </Link>
             <p>Turn AI waiting time into English listening practice.</p>
             <p lang="ja">AIの待ち時間を、英語が聞こえる時間に。</p>

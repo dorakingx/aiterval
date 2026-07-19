@@ -39,15 +39,10 @@ body {
   font-weight: 900;
   font-size: 1.05rem;
 }
-.site-brand span {
-  display: grid;
-  place-items: center;
+.site-brand-mark {
   width: 35px;
   height: 35px;
-  border-radius: 11px;
-  background: #e96c4c;
-  color: white;
-  font-size: 0.8rem;
+  flex: none;
 }
 .site-nav nav {
   display: flex;
