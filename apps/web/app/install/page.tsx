@@ -13,8 +13,8 @@ import {
 import { CopyableValue } from "../../components/copyable-value";
 
 const downloadUrl =
-  "https://github.com/dorakingx/aiterval/releases/download/v0.2.0/aitervalextension-0.2.0-chrome.zip";
-const releaseUrl = "https://github.com/dorakingx/aiterval/releases/tag/v0.2.0";
+  "https://github.com/dorakingx/aiterval/releases/download/v0.2.1/aitervalextension-0.2.1-chrome.zip";
+const releaseUrl = "https://github.com/dorakingx/aiterval/releases/tag/v0.2.1";
 
 export const metadata: Metadata = { title: "Installation guide" };
 
@@ -32,7 +32,7 @@ export default function Page() {
         <div className="install-download-card">
           <div>
             <span className="install-download-label">Official release</span>
-            <h2>AIterval v0.2.0 for Chrome</h2>
+            <h2>AIterval v0.2.1 for Chrome</h2>
             <p>
               Chrome cannot install this ZIP directly. Download it, extract it,
               then load the extracted folder by following the steps below.
@@ -41,7 +41,7 @@ export default function Page() {
           <div className="install-download-actions">
             <a className="primary-link" href={downloadUrl}>
               <Download aria-hidden="true" />
-              Download AIterval v0.2.0 for Chrome
+              Download AIterval v0.2.1 for Chrome
             </a>
             <a className="install-release-link" href={releaseUrl}>
               View release details and checksum
@@ -55,14 +55,14 @@ export default function Page() {
         aria-labelledby="chrome-page"
       >
         <div>
-          <p className="kicker">Chrome settings page</p>
-          <h2 id="chrome-page">Copy this address for step 3</h2>
-          <p>
-            Paste it into Chrome&apos;s address bar, just like a website
-            address.
-          </p>
+          <p className="kicker">Browser extensions page</p>
+          <h2 id="chrome-page">Copy the address for your browser</h2>
+          <p>Paste it into the address bar, just like a website address.</p>
         </div>
-        <CopyableValue value="chrome://extensions" />
+        <div className="install-browser-values">
+          <CopyableValue value="chrome://extensions" />
+          <CopyableValue value="brave://extensions" />
+        </div>
       </section>
       <section className="install-steps">
         <article>
@@ -70,7 +70,7 @@ export default function Page() {
           <span>1</span>
           <h2>Download the ZIP</h2>
           <p>
-            Use the orange download button above to save the official v0.2.0
+            Use the orange download button above to save the official v0.2.1
             release ZIP to your computer.
           </p>
         </article>
@@ -86,10 +86,10 @@ export default function Page() {
         <article>
           <Archive aria-hidden="true" />
           <span>3</span>
-          <h2>Open Chrome extensions</h2>
+          <h2>Open browser extensions</h2>
           <p>
-            Paste <code>chrome://extensions</code> into Chrome&apos;s address
-            bar and press Enter.
+            Open <code>chrome://extensions</code> in Chrome or{" "}
+            <code>brave://extensions</code> in Brave.
           </p>
         </article>
         <article>

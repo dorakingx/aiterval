@@ -783,6 +783,10 @@ body {
   color: #66717f;
   line-height: 1.5;
 }
+.install-browser-values {
+  display: grid;
+  gap: 0.65rem;
+}
 .copyable-value {
   display: flex;
   align-items: center;
