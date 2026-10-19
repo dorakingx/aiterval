@@ -4,7 +4,11 @@
 
 - 公開URL: <https://aiterval.lolipop-now.app/>
 - 公式要項: <https://lolipop.jp/deploy-now/contest/>
-- 応募状況: 公開後の最終確認中。フォーム送信の受領確認前。
+- 応募状況: **Submitted**。公式の応募リンクからMicrosoft Formsを送信し、完了画面「ご応募ありがとうございました！」を確認。
+- 応募日時: **2026年10月19日21:35 JST**。
+- 受付番号: 完了画面に表示なし。確認時点で受領メールは未着。
+- 提出URL: <https://aiterval.lolipop-now.app/>。
+- 公開したコードのcommit: `66493c019ee974d9b0b27438af5db3a84c714072`。
 - 目標: 2026年10月31日23:59 JSTの月間賞締切。
 - 最終締切: 2026年12月8日23:59 JST。
 - 作業ブランチ: `contest/deploy-now-2026`。既存Vercel本番に使うmainは変更しない。
@@ -47,6 +51,10 @@ lolipop deploy --dir . --project <existing-project-id>
 - 公開サイトはログイン不要のHTTP 200。CSP / nosniff / DENY / Referrer-Policy / Permissions-Policyを確認。
 - `.env`は403、`.git/config`と`package.json`は404。秘密情報はアップロードしない。
 - 実ブラウザで英語音声41種類と`speechSynthesis.speaking=true`を確認。公開URLのコンソールエラー0件。
+- 最終デプロイの390px幅で、画面幅390px・文書幅390px（横はみ出しなし）。音声開始までの2クリックは441ms。約8.5秒後のAI完了通知時にも`speaking=true`と一時停止ボタンを確認し、音声が継続した。
+- 公開URLで回答→正解→英文の根拠→日本語解説→学習完了→サンプルAIへ復帰まで成功。JavaScriptエラー0、読み込み失敗0。PC表示でも同じ一連の操作を確認。
+- 公開HTMLが参照する静的アセット12件はすべて取得成功。キー形式の文字列0件。旧生成APIはHTTP 410の固定応答。
+- origin/mainは元の`0ea0a5f5df2cd456de7778a1ca909f266f4925cf`のまま。既存Vercelデモの英語見出しとHTTP 200を確認。
 
 ## 依存関係の制約
 
@@ -54,6 +62,6 @@ Next.jsは16.4.2、PostCSSは8.5.31へ更新。開発ツールの修正可能な
 
 ## 応募・公開の維持
 
-受領確認後に応募状況と日時を追記する。本名・メールアドレス・認証情報・受付番号・個人情報入りスクリーンショットはpublic repositoryへ追加しない。
+応募フォーム送信後の完了画面を確認済み。スクリーンショットと非公開記録はGitで除外した`.submission-private/deploy-now-2026/`に保存した。本名・メールアドレス・認証情報・受付番号・個人情報入りスクリーンショットはpublic repositoryへ追加しない。
 
 審査終了までは公開を維持し、応募後の大幅変更と締切後の修正は避ける。公式結果発表は2027年1月中旬予定。受賞後も一定期間の公開維持が求められる。無料プランの利用上限に達した場合に停止する制約は残る。
