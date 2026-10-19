@@ -12,6 +12,12 @@ The OpenAI Build Week submission uses **132 original pre-authored exercises**.
 It works without an OpenAI API key, account, analytics service, or runtime
 exercise-generation service.
 
+## Deploy Now contest edition
+
+The Japanese interactive demo is hosted at <https://aiterval.lolipop-now.app/>.
+This version simulates AI waiting and does not detect real AI-service state.
+Deployment and verification notes: [docs/deploy-now-2026.md](docs/deploy-now-2026.md).
+
 ## Try it
 
 - Public judge demo: <https://aiterval-build-week.vercel.app/demo/judge>

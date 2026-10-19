@@ -10,7 +10,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
   webServer: {
-    command: "pnpm dev:web --hostname 127.0.0.1",
+    command: "pnpm --filter @aiterval/web start --hostname 127.0.0.1",
     url: "http://127.0.0.1:3000/demo/judge",
     reuseExistingServer: true,
     timeout: 120_000,

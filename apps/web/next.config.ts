@@ -2,7 +2,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   ...(process.env.AITERVAL_STATIC_EXPORT === "1"
     ? { output: "export" as const }
-    : {}),
+    : process.env.AITERVAL_STANDALONE === "1"
+      ? { output: "standalone" as const }
+      : {}),
   transpilePackages: ["@aiterval/core", "@aiterval/content", "@aiterval/ui"],
   async headers() {
     return [

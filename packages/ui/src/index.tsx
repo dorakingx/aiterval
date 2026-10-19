@@ -217,6 +217,7 @@ export interface ListeningPlayerProps {
   exercise: ListeningExercise;
   audioProvider?: AudioProvider;
   locale?: string;
+  uiLanguage?: "en" | "ja";
   voiceName?: string;
   initialStage?: Stage;
   aiReady?: boolean;
@@ -234,6 +235,7 @@ export function ListeningPlayer({
   exercise,
   audioProvider,
   locale = "en-US",
+  uiLanguage = "en",
   voiceName = "",
   initialStage = "listen",
   aiReady = false,
@@ -242,6 +244,46 @@ export function ListeningPlayer({
   onReturnToAi,
   onClose,
 }: ListeningPlayerProps) {
+  const labels: Record<string, string> = {
+    "AIterval listening sprint": "AIterval リスニング",
+    "Your AI is ready": "AIの回答が完成しました",
+    "You can finish this listening question, or return to your AI now.":
+      "音声は止まりません。この問題を続けても、AIの回答に戻っても大丈夫。",
+    "Return to AI now": "AIの回答を見る",
+    "Save for later": "あとで学ぶ",
+    "Generated with GPT-5.6": "GPT-5.6で生成",
+    "Built-in exercise": "オリジナル教材",
+    "Listen first": "まずは、聞いてみよう",
+    "One quick question": "聞こえた内容を選ぼう",
+    "That’s right": "そのとおり！",
+    "Almost — listen for this": "ここを聞き取ってみよう",
+    "Close listening sprint": "リスニングを閉じる",
+    "The transcript stays hidden until you answer.":
+      "英文は答え合わせで表示されます。まずは音だけに集中。",
+    "Pause audio": "音声を一時停止",
+    "Resume audio": "音声を再開",
+    "Replay audio": "音声をもう一度再生",
+    "Play audio": "音声を再生",
+    "Listening…": "リスニング中…",
+    Continue: "再開する",
+    Replay: "もう一度聞く",
+    Play: "聞いてみる",
+    "Playback rate": "再生速度",
+    "Finish this question": "この問題を続ける",
+    "Answer one question": "回答へ進む",
+    "Check answer": "答え合わせ",
+    Correct: "正解",
+    Expression: "覚えたい表現",
+    "Shadowing (optional)": "声に出して練習（任意）",
+    Easy: "簡単",
+    Okay: "まあまあ",
+    Difficult: "難しい",
+    "I understood it after seeing the transcript": "英文を見たら分かった",
+    "Still difficult": "まだ難しい",
+    "Complete sprint": "学習を完了する",
+  };
+  const t = (text: string) =>
+    uiLanguage === "ja" ? (labels[text] ?? text) : text;
   const provider = useMemo(
     () => audioProvider ?? new SpeechAudioProvider(),
     [audioProvider],
@@ -321,13 +363,15 @@ export function ListeningPlayer({
     callback?.();
   };
   return (
-    <Card className="ai-player" aria-label="AIterval listening sprint">
+    <Card className="ai-player" aria-label={t("AIterval listening sprint")}>
       {aiReady && (
-        <section className="ai-ready-notice" aria-label="Your AI is ready">
+        <section className="ai-ready-notice" aria-label={t("Your AI is ready")}>
           <div role="status" aria-live="polite">
-            <Badge>Your AI is ready</Badge>
+            <Badge>{t("Your AI is ready")}</Badge>
             <p>
-              You can finish this listening question, or return to your AI now.
+              {t(
+                "You can finish this listening question, or return to your AI now.",
+              )}
             </p>
           </div>
           <div className="ai-ready-actions">
@@ -335,37 +379,42 @@ export function ListeningPlayer({
               className="secondary"
               onClick={() => exit(onReturnToAi ?? onClose)}
             >
-              Return to AI now
+              {t("Return to AI now")}
             </Button>
-            <Button className="ghost" onClick={() => exit(onSave)}>
-              Save for later
-            </Button>
+            {(onSave || uiLanguage === "en") && (
+              <Button className="ghost" onClick={() => exit(onSave)}>
+                {t("Save for later")}
+              </Button>
+            )}
           </div>
         </section>
       )}
       <header>
         <div>
           <div className="ai-badge-row">
-            <Badge>{exercise.estimatedSeconds}s sprint</Badge>
+            <Badge>
+              {exercise.estimatedSeconds}
+              {uiLanguage === "ja" ? "秒のリスニング" : "s sprint"}
+            </Badge>
             <Badge>
               {"source" in exercise && exercise.source === "gpt-5.6"
-                ? "Generated with GPT-5.6"
-                : "Built-in exercise"}
+                ? t("Generated with GPT-5.6")
+                : t("Built-in exercise")}
             </Badge>
           </div>
           <h2>
             {stage === "listen"
-              ? "Listen first"
+              ? t("Listen first")
               : stage === "answer"
-                ? "One quick question"
+                ? t("One quick question")
                 : selected === exercise.question.correctIndex
-                  ? "That’s right"
-                  : "Almost — listen for this"}
+                  ? t("That’s right")
+                  : t("Almost — listen for this")}
           </h2>
         </div>
         {onClose && (
           <IconButton
-            label="Close listening sprint"
+            label={t("Close listening sprint")}
             onClick={() => exit(onClose)}
           >
             <X />
@@ -374,7 +423,7 @@ export function ListeningPlayer({
       </header>
       {stage === "listen" && (
         <>
-          <p>The transcript stays hidden until you answer.</p>
+          <p>{t("The transcript stays hidden until you answer.")}</p>
           <button
             className="ai-play"
             onClick={() => {
@@ -384,12 +433,12 @@ export function ListeningPlayer({
             }}
             aria-label={
               playback === "playing"
-                ? "Pause audio"
+                ? t("Pause audio")
                 : playback === "paused"
-                  ? "Resume audio"
+                  ? t("Resume audio")
                   : replays
-                    ? "Replay audio"
-                    : "Play audio"
+                    ? t("Replay audio")
+                    : t("Play audio")
             }
           >
             {playback === "playing" ? (
@@ -403,12 +452,12 @@ export function ListeningPlayer({
             )}
             <span>
               {playback === "playing"
-                ? "Listening…"
+                ? t("Listening…")
                 : playback === "paused"
-                  ? "Continue"
+                  ? t("Continue")
                   : replays
-                    ? "Replay"
-                    : "Play"}
+                    ? t("Replay")
+                    : t("Play")}
             </span>
           </button>
           {error && (
@@ -416,7 +465,7 @@ export function ListeningPlayer({
               {error}
             </p>
           )}
-          <div className="ai-rate" aria-label="Playback rate">
+          <div className="ai-rate" aria-label={t("Playback rate")}>
             {([0.8, 1, 1.2] as const).map((value) => (
               <button
                 aria-pressed={rate === value}
@@ -434,7 +483,7 @@ export function ListeningPlayer({
               setStage("answer");
             }}
           >
-            {aiReady ? "Finish this question" : "Answer one question"}{" "}
+            {aiReady ? t("Finish this question") : t("Answer one question")}{" "}
             <ChevronRight />
           </Button>
         </>
@@ -458,7 +507,7 @@ export function ListeningPlayer({
             disabled={selected === undefined}
             onClick={() => setStage("feedback")}
           >
-            Check answer
+            {t("Check answer")}
           </Button>
         </>
       )}
@@ -473,8 +522,8 @@ export function ListeningPlayer({
           >
             <Check />
             {selected === exercise.question.correctIndex
-              ? "Correct"
-              : `Correct answer: ${exercise.question.choices[exercise.question.correctIndex]}`}
+              ? t("Correct")
+              : `${uiLanguage === "ja" ? "正解" : "Correct answer"}: ${exercise.question.choices[exercise.question.correctIndex]}`}
           </div>
           <p className="ai-transcript">
             {exercise.transcript
@@ -490,23 +539,29 @@ export function ListeningPlayer({
           </p>
           <p>{exercise.explanationJa}</p>
           <dl>
-            <dt>Expression</dt>
+            <dt>{t("Expression")}</dt>
             <dd>{exercise.keyExpression}</dd>
           </dl>
-          <div className="ai-shadow">
-            <Volume2 />
-            <span>Shadowing (optional)</span>
-            <strong>{exercise.answerEvidence}</strong>
-            <div>
-              <button>Easy</button>
-              <button>Okay</button>
-              <button>Difficult</button>
-            </div>
-          </div>
-          <div className="ai-feedback-actions">
-            <button>I understood it after seeing the transcript</button>
-            <button>Still difficult</button>
-          </div>
+          {uiLanguage === "en" && (
+            <>
+              <div className="ai-shadow">
+                <Volume2 />
+                <span>{t("Shadowing (optional)")}</span>
+                <strong>{exercise.answerEvidence}</strong>
+                <div>
+                  <button>{t("Easy")}</button>
+                  <button>{t("Okay")}</button>
+                  <button>{t("Difficult")}</button>
+                </div>
+              </div>
+              <div className="ai-feedback-actions">
+                <button>
+                  {t("I understood it after seeing the transcript")}
+                </button>
+                <button>{t("Still difficult")}</button>
+              </div>
+            </>
+          )}
           <Button
             onClick={() => {
               if (completionHandled.current) return;
@@ -522,7 +577,7 @@ export function ListeningPlayer({
               });
             }}
           >
-            Complete sprint
+            {t("Complete sprint")}
           </Button>
         </div>
       )}

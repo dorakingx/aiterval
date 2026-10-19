@@ -9,7 +9,9 @@ import {
   Target,
 } from "lucide-react";
 import { Demo } from "../components/demo";
+import ContestPage from "./contest/page";
 export default function Home() {
+  if (process.env.AITERVAL_CONTEST === "1") return <ContestPage />;
   return (
     <main>
       <section className="home-hero">

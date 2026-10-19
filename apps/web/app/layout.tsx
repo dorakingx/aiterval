@@ -3,21 +3,29 @@ import Link from "next/link";
 import { BrandIcon } from "@aiterval/ui";
 import "@aiterval/ui/styles.css";
 import "./globals.css";
-const publicOrigin = "https://aiterval-build-week.vercel.app";
+const contest = process.env.AITERVAL_CONTEST === "1";
+const publicOrigin =
+  process.env.AITERVAL_PUBLIC_ORIGIN ??
+  "https://aiterval-build-week.vercel.app";
 const socialImage = `${publicOrigin}/og.png`;
 export const metadata: Metadata = {
   metadataBase: new URL(publicOrigin),
   title: {
-    default: "AIterval — Listen while AI thinks",
+    default: contest
+      ? "AIterval — AIの待ち時間を英語学習時間に変える"
+      : "AIterval — Listen while AI thinks",
     template: "%s · AIterval",
   },
-  description:
-    "Turn AI waiting time into 15–90 second English listening practice. Local-first, private, and designed for busy professionals.",
+  description: contest
+    ? "AIの回答を待つ15〜90秒を、英語リスニングに。インストール不要のWebデモで体験できます。"
+    : "Turn AI waiting time into 15–90 second English listening practice. Local-first, private, and designed for busy professionals.",
   openGraph: {
-    title: "AIterval — Listen while AI thinks",
+    title: contest
+      ? "AIterval — AIの待ち時間を英語学習時間に変える"
+      : "AIterval — Listen while AI thinks",
     description: "Turn AI waiting time into English listening practice.",
     type: "website",
-    locale: "en_US",
+    locale: contest ? "ja_JP" : "en_US",
     alternateLocale: "ja_JP",
     images: [
       {
@@ -50,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang={contest ? "ja" : "en"}>
       <body>
         <header className="site-nav">
           <Link className="site-brand" href="/">

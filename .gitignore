@@ -6,6 +6,10 @@ out/
 .open-next/
 .wrangler/
 .vercel/
+.lolipop/
+.env*
+!.env.example
+.submission-private/
 dist/
 coverage/
 playwright-report/

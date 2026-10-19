@@ -49,6 +49,46 @@ class DeferredAudioProvider implements AudioProvider {
 }
 
 describe("ListeningPlayer", () => {
+  it("keeps Japanese demo audio playing through readiness and completes feedback", async () => {
+    const user = userEvent.setup();
+    const audio = new DeferredAudioProvider();
+    const onComplete = vi.fn();
+    const view = render(
+      <ListeningPlayer
+        exercise={exercise}
+        audioProvider={audio}
+        uiLanguage="ja"
+        onComplete={onComplete}
+      />,
+    );
+    await user.click(screen.getByRole("button", { name: "音声を再生" }));
+    view.rerender(
+      <ListeningPlayer
+        exercise={exercise}
+        audioProvider={audio}
+        uiLanguage="ja"
+        aiReady
+        onComplete={onComplete}
+      />,
+    );
+    expect(screen.getByText("AIの回答が完成しました")).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: "音声を一時停止" }),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "あとで学ぶ" }),
+    ).not.toBeInTheDocument();
+    expect(audio.stop).not.toHaveBeenCalled();
+    await act(async () => audio.finish());
+    await user.click(screen.getByRole("button", { name: /Friday/ }));
+    await user.click(screen.getByRole("button", { name: "答え合わせ" }));
+    expect(screen.getByText("正解", { exact: true })).toBeVisible();
+    expect(screen.getByRole("mark")).toHaveTextContent("on Friday");
+    await user.click(screen.getByRole("button", { name: "学習を完了する" }));
+    expect(onComplete).toHaveBeenCalledWith(
+      expect.objectContaining({ correct: true }),
+    );
+  });
   it("keeps transcript and answer hidden until feedback", async () => {
     const user = userEvent.setup();
     const audio = new DeferredAudioProvider();
